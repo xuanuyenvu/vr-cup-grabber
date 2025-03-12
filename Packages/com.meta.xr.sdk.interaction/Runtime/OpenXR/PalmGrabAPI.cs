@@ -33,8 +33,8 @@ namespace Oculus.Interaction.GrabAPI
 
         private static readonly Vector3 POSE_VOLUME_OFFSET = new Vector3(0.07f, -0.03f, 0.0f);
 
-        private static readonly float START_THRESHOLD = 0.9f;
-        private static readonly float RELEASE_THRESHOLD = 0.6f;
+        private static readonly float START_THRESHOLD = 0.4f;
+        private static readonly float RELEASE_THRESHOLD = 0.3f;
 
         private static readonly Vector2[] CURL_RANGE = new Vector2[5]
         {
@@ -76,6 +76,7 @@ namespace Oculus.Interaction.GrabAPI
 
             public void UpdateIsGrabbing(float startThreshold, float releaseThreshold)
             {
+                Debug.Log("GrabStrength: " + GrabStrength);
                 if (GrabStrength > startThreshold)
                 {
                     if (!IsGrabbing)

@@ -451,20 +451,24 @@ namespace Oculus.Interaction.GrabAPI
 
                 if (fingers[finger] == FingerRequirement.Ignored)
                 {
+                    Debug.Log("Ignored finger: " + finger);
                     continue;
                 }
 
                 if (fingers[finger] == FingerRequirement.Optional)
                 {
+                    Debug.Log("Optional finger: " + finger);
                     optionalMax = Mathf.Max(optionalMax, fingerAPI.GetFingerGrabScore(finger));
                 }
                 else if (fingers[finger] == FingerRequirement.Required)
                 {
+                    Debug.Log("Required finger: " + finger);
                     anyRequired = true;
                     requiredMin = Mathf.Min(requiredMin, fingerAPI.GetFingerGrabScore(finger));
                 }
             }
 
+            Debug.Log("requiredMin: " + requiredMin + " optionalMax: " + optionalMax);
             return usesOptionals ? optionalMax : anyRequired ? requiredMin : 0f;
         }
 
