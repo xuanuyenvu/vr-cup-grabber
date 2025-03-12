@@ -76,7 +76,6 @@ namespace Oculus.Interaction.GrabAPI
 
             public void UpdateIsGrabbing(float startThreshold, float releaseThreshold)
             {
-                Debug.Log("GrabStrength: " + GrabStrength);
                 if (GrabStrength > startThreshold)
                 {
                     if (!IsGrabbing)

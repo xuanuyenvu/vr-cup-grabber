@@ -199,10 +199,8 @@ namespace Oculus.Interaction.HandGrab
             if (SupportsPinch(handGrabInteractor, handGrabInteractable))
             {
                 float pinchStrength = api.GetHandPinchScore(handGrabInteractable.PinchGrabRules, includeSelecting);
-                // Debug.Log("pinchStrength : " + pinchStrength);
                 if (pinchStrength > handGrabScore)
                 {
-                    // Debug.Log("handGrabScore : " + handGrabScore);
                     handGrabScore = pinchStrength;
                     handGrabTypes = GrabTypeFlags.Pinch;
                 }
@@ -211,11 +209,8 @@ namespace Oculus.Interaction.HandGrab
             if (SupportsPalm(handGrabInteractor, handGrabInteractable))
             {
                 float palmStrength = api.GetHandPalmScore(handGrabInteractable.PalmGrabRules, includeSelecting);
-                // Debug.Log("palmStrength : " + palmStrength);
-                // Debug.Log("handGrabScore : " + handGrabScore);
                 if (palmStrength > handGrabScore)
                 {
-                    // Debug.Log("handGrabScore : " + handGrabScore);
                     handGrabScore = palmStrength;
                     handGrabTypes = GrabTypeFlags.Palm;
                 }
