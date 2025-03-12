@@ -10,8 +10,7 @@
     "versionDefines": [
         {
             "name": "Unity",
-            "expression": "2021.2.0a17",
-            "define": "SUPPORTS_SCENE_VIEW_OVERLAYS"
+            "expression": "2021.2.0a17"
         }
     ],
     "excludePlatforms": [],

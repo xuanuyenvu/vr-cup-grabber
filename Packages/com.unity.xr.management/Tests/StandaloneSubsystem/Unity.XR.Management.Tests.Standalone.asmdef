@@ -15,7 +15,9 @@
     "versionDefines": [
         {
             "name": "com.unity.subsystemregistration",
-            "define": "USE_LEGACY_SUBSYS_REGISTRATION"
+            "define": "USE_LEGACY_SUBSYS_REGISTRATION",
+            "expression": "true"
+
         }
     ]
 }
