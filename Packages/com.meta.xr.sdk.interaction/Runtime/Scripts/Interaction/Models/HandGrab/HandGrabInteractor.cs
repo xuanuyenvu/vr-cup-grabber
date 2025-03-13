@@ -635,12 +635,17 @@ namespace Oculus.Interaction.HandGrab
                     Physics.ComputePenetration(
                         volume, volume.transform.position, volume.transform.rotation,
                         collider, collider.transform.position, collider.transform.rotation,
-                        out _, out _))
+                        // out _, out _))
+                        out Vector3 direction, out float distance))
                 {
-                    return true;
+                    Debug.Log("OverlapsVolume : true");
+                    Debug.Log($"Va chạm! Hướng: {direction}, Khoảng cách cần dịch chuyển: {distance}");
+                    if(distance >= 0.045f)
+                    {
+                        return true;
+                    }
                 }
             }
-
             return false;
         }
 

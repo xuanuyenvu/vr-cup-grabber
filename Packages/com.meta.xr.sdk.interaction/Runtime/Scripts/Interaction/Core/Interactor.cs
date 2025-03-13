@@ -90,6 +90,7 @@ namespace Oculus.Interaction
         /// </summary>
         public virtual bool ShouldHover
         {
+            // Xuan Uyen
             get
             {
                 if (State != InteractorState.Normal)
@@ -626,6 +627,7 @@ namespace Oculus.Interaction
         /// Implementation of <see cref="IInteractor.ProcessCandidate"/>; for details, please refer to the related
         /// documentation provided for that interface.
         /// </summary>
+        /// Drive() in InteractorGroup.cs
         public virtual void ProcessCandidate()
         {
             _candidate = null;
@@ -641,7 +643,7 @@ namespace Oculus.Interaction
             }
             else
             {
-                _candidate = ComputeCandidate();
+                _candidate = ComputeCandidate(); // HandGrabInteractor.cs
             }
         }
 
