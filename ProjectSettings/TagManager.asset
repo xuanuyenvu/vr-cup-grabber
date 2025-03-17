@@ -5,6 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - SamplesInfoPanel
+  - QDSUIToggleButton
+  - QDSUIToggleSwitch
+  - QDSUISharedThemeColor
+  - QDSUIAccentColor
+  - QDSUIIcon
+  - QDSUITextSecondaryColor
+  - QDSUIBorderlessButton
+  - QDSUISecondaryButton
+  - QDSUITooltip
+  - QDSUIToggleBorderlessButton
+  - Table
   layers:
   - Default
   - TransparentFX

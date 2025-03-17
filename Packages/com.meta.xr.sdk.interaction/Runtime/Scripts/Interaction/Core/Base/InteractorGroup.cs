@@ -577,7 +577,7 @@ namespace Oculus.Interaction
                 {
                     if (ShouldUnselect)
                     {
-                        Unselect();
+                        Unselect(); // HandGrabInteractor.cs
                         continue;
                     }
                     break;

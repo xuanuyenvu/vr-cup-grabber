@@ -159,7 +159,7 @@ namespace Oculus.Interaction
                     return _computeShouldUnselectOverride.Invoke();
                 }
 
-                return ComputeShouldUnselect();
+                return ComputeShouldUnselect(); // HandGrabInteractor.cs
             }
         }
 
