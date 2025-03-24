@@ -1,19 +1,85 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace Cup
 {
+    public struct HandInfo
+    {
+        public Vector3 position;
+        public Quaternion rotation;
+
+        public HandInfo(Vector3 pos, Quaternion rot)
+        {
+            position = pos;
+            rotation = rot;
+        }
+    }
+
     public class CupStateController : MonoBehaviour
     {
+        public GameObject cuppSphere;
+        public GameObject wristPoint ; // vị trí cổ tay
+        public GameObject cupAttachPoint ; 
         private bool isOnTable = true;
         private bool isNearTable = false;
-        private float tableOffset = 0.03f;
+        private bool isPendingRegrab = false;
+        private bool isGrabbing = false;
+        private float maxTableOffset = 0.03f;
+        private float minTableOffset = -0.06f;
+        private float floorOffset = -0.15f;
+
+
+        public enum GrabbedBy { LeftHand, RightHand, None };
+        public GrabbedBy grabbedByHand = GrabbedBy.None;
+
+        [HideInInspector] public Vector3 cupPosition = new Vector3(0, 0, 0);
+        [HideInInspector] public Quaternion cupRotation = Quaternion.identity;
+        [HideInInspector] public HandInfo leftHand = new HandInfo(Vector3.zero, Quaternion.identity);
+        [HideInInspector] public HandInfo rightHand = new HandInfo(Vector3.zero, Quaternion.identity);
+
+
+        [HideInInspector] public bool IsTrackedDataValid = false;
+        public bool IsOnTable
+        {
+            get { return isOnTable; }
+        }
 
         public bool IsNearTable
         {
             get { return isNearTable; }
         }
+
+        public bool IsPendingRegrab
+        {
+            get { return isPendingRegrab; }
+        }
+
+        public bool IsGrabbing
+        {
+            get { return isGrabbing; }
+            set { isGrabbing = value; }
+        }
+
+
+        public bool IsLeftHandGrabbing()
+        {
+            return grabbedByHand == GrabbedBy.LeftHand;
+        }
+
+        public bool IsRightHandGrabbing()
+        {
+            return grabbedByHand == GrabbedBy.RightHand;
+        }
+
+        public TextMeshProUGUI debugText;
+
+        public void UpdateGrabState(bool isGrabbing, bool isLeftHand)
+        {
+            grabbedByHand = isGrabbing ? (isLeftHand ? GrabbedBy.LeftHand : GrabbedBy.RightHand)
+                                    : GrabbedBy.None;
+        }
+
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -21,7 +87,7 @@ namespace Cup
             {
                 isOnTable = true;
                 Debug.Log("Cup has landed on the table!");
-                HandleCupLanded();
+                AlignCupOnLanding();
             }
         }
 
@@ -35,24 +101,52 @@ namespace Cup
             }
         }
 
-        private void HandleCupLanded()
+        private void AlignCupOnLanding()
         {
             // Since the cup does not remain stable after being released,
             // it must be rotated to align with its upright position.
             Vector3 currentRotation = transform.rotation.eulerAngles;
             transform.rotation = Quaternion.Euler(0, currentRotation.y, 0);
+
+            grabbedByHand = GrabbedBy.None;
+
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.useGravity = true;
+            }
         }
 
         private void HandleCupLifted()
         {
-
+            // UpdateCupAttachPoint();
         }
 
         void Update()
         {
+            UpdateSpherePosition();
+
             if (!isOnTable)
             {
                 CheckCupPosition();
+            }
+        }
+
+        private void UpdateSpherePosition()
+        {
+            cupPosition = transform.position;
+            cupRotation = transform.rotation;
+            cuppSphere.transform.position = this.transform.position;
+
+            if (grabbedByHand == GrabbedBy.RightHand)
+            {
+                wristPoint.transform.position = rightHand.position;
+                wristPoint.transform.rotation = rightHand.rotation;
+            }
+            else if (grabbedByHand == GrabbedBy.LeftHand)
+            {
+                wristPoint.transform.position = leftHand.position;
+                wristPoint.transform.rotation = leftHand.rotation;
             }
         }
 
@@ -61,12 +155,14 @@ namespace Cup
             if (CheckIfNearTable())
             {
                 isNearTable = true;
-                Debug.Log("Cup is near the table!");
             }
             else
             {
                 isNearTable = false;
-                Debug.Log("Cup is NOT near the table!");
+                if (CheckIfOnFloor())
+                {
+                    ResetCupPosition();
+                }
             }
 
         }
@@ -74,8 +170,87 @@ namespace Cup
         private bool CheckIfNearTable()
         {
             float cupHeight = transform.localPosition.y;
-            Debug.Log("Cup height: " + cupHeight);
-            return cupHeight <= tableOffset;
+            return cupHeight <= maxTableOffset && cupHeight >= minTableOffset;
+        }
+
+        private bool CheckIfOnFloor()
+        {
+            return transform.localPosition.y <= floorOffset;
+        }
+
+        private void ResetCupPosition()
+        {
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.useGravity = false;
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+
+                transform.localPosition = new Vector3(0.45f, 0.02f, 0.45f);
+                transform.rotation = Quaternion.identity;
+
+                StartCoroutine(ReenableGravity(rb));
+            }
+        }
+
+        private IEnumerator ReenableGravity(Rigidbody rb)
+        {
+            yield return new WaitForSeconds(0.5f);
+            rb.useGravity = true;
+        }
+
+        private void HideCup()
+        {
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.useGravity = false;
+            }
+            gameObject.SetActive(false);
+        }
+
+        private void ShowCup()
+        {
+            gameObject.SetActive(true);
+        }
+
+        private void MoveToHandPosition()
+        {
+            transform.position = cupAttachPoint.transform.position;
+            transform.rotation = cupAttachPoint.transform.rotation;
+        }
+
+        public void MakeCupInvisible()
+        {
+            isPendingRegrab = true;
+            HideCup();
+        }
+
+        public void PlaceCupInHand()
+        {
+            MoveToHandPosition();
+            ShowCup();
+
+            if (isGrabbing)
+            {
+                isPendingRegrab = false;
+            }
+        }
+
+        public void DetermineGrabbingHand()
+        {
+            float distanceToLeftHand = Vector3.Distance(transform.position, leftHand.position);
+            float distanceToRightHand = Vector3.Distance(transform.position, rightHand.position);
+
+            grabbedByHand = (distanceToLeftHand < distanceToRightHand) ? GrabbedBy.LeftHand : GrabbedBy.RightHand;
+            UpdateCupAttachPoint();
+        }
+
+        private void UpdateCupAttachPoint()
+        {
+            cupAttachPoint.transform.position = this.transform.position;
+            cupAttachPoint.transform.rotation = this.transform.rotation;
         }
     }
 }

@@ -441,7 +441,7 @@ namespace Oculus.Interaction.HandGrab
             }
         }
 
-        protected override Pose ComputePointerPose()
+        protected override Pose ComputePointerPose() // Duoc goi tu PointerInteractor.cs
         {
             if (Movement != null)
             {
