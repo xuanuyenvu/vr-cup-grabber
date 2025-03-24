@@ -23,7 +23,7 @@ public class CoordinateReceiver : MonoBehaviour
     public GameObject cupCube;
 
     [Header("Transform Settings")]
-    public float scaleFactor = 0.001f;
+    public float scaleFactor;
 
     private CupData latestCupData;
 
