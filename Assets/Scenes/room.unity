@@ -1770,15 +1770,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4921080726140519945, guid: 0f075367b1273a24ca16bcfcd0eb313c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.037857145
+      value: 0.055000003
       objectReference: {fileID: 0}
     - target: {fileID: 4921080726140519945, guid: 0f075367b1273a24ca16bcfcd0eb313c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.03785714
+      value: 0.055000003
       objectReference: {fileID: 0}
     - target: {fileID: 4921080726140519945, guid: 0f075367b1273a24ca16bcfcd0eb313c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.037857145
+      value: 0.055000003
       objectReference: {fileID: 0}
     - target: {fileID: 4921080726140519945, guid: 0f075367b1273a24ca16bcfcd0eb313c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2782,7 +2782,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &960131871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2923,8 +2923,8 @@ Transform:
   m_GameObject: {fileID: 988353955}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.842, y: 0.7865556, z: 0.164}
-  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
+  m_LocalPosition: {x: 0.564, y: 0.7865556, z: 0.164}
+  m_LocalScale: {x: 0.93, y: 0.93, z: 0.93}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1891196091}
@@ -2944,7 +2944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4477df0c6af7dbb4baffe65eb008183b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cupCube: {fileID: 9171853019591378434}
+  cupCube: {fileID: 1376997603}
   scaleFactor: 0.001
 --- !u!1 &989512981
 GameObject:
@@ -3739,6 +3739,10 @@ PrefabInstance:
     - target: {fileID: 4937379865432097441, guid: 8c2261fc4057c674fa8782830c371cae, type: 3}
       propertyPath: m_Name
       value: SimpleGrab2PalmGrab Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937379865432097441, guid: 8c2261fc4057c674fa8782830c371cae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5475982612088100150, guid: 8c2261fc4057c674fa8782830c371cae, type: 3}
       propertyPath: _usesHandPose
