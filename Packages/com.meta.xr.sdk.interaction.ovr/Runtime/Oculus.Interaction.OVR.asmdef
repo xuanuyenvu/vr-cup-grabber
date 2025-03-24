@@ -14,9 +14,9 @@
     "defineConstraints": [],
     "versionDefines": [
         {
-            "define": "OVR_UNITY_PACKAGE_MANAGER",
             "name": "com.meta.xr.sdk.interaction.ovr",
-            "expression": ""
+            "expression": "",
+            "define": "OVR_UNITY_PACKAGE_MANAGER"
         }
     ],
     "noEngineReferences": false

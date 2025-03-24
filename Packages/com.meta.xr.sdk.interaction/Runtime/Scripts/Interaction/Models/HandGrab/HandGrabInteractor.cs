@@ -24,6 +24,7 @@ using Oculus.Interaction.Input;
 using Oculus.Interaction.Throw;
 using System;
 using UnityEngine;
+using Cup;
 
 namespace Oculus.Interaction.HandGrab
 {
@@ -209,6 +210,10 @@ namespace Oculus.Interaction.HandGrab
         /// provided for that interface.
         /// </summary>
         public IHandGrabInteractable TargetInteractable => Interactable;
+        #endregion
+
+        #region CupState
+        private CupStateController cupStateController = null;
         #endregion
 
         #region IHandGrabState
@@ -454,8 +459,14 @@ namespace Oculus.Interaction.HandGrab
 
         protected override bool ComputeShouldUnselect()
         {
-            return _handGrabShouldUnselect
-                || (_selectedInteractableOverride != null && _selectedInteractableOverride != SelectedInteractable);
+            if (cupStateController == null)
+            {
+                cupStateController = FindObjectOfType<CupStateController>();
+            }
+            
+            return cupStateController.IsNearTable &&
+                (_handGrabShouldUnselect
+                || (_selectedInteractableOverride != null && _selectedInteractableOverride != SelectedInteractable));
         }
 
         /// <summary>
@@ -622,9 +633,9 @@ namespace Oculus.Interaction.HandGrab
                     || SelectedInteractable == null))
             {
                 _selectedInteractableOverride = null;
-                ClearComputeShouldUnselectOverride();
+                ClearComputeShouldUnselectOverride(); // Interactor.cs
             }
-            base.Unselect();
+            base.Unselect(); // Interactor.cs
         }
 
         private bool OverlapsVolume(HandGrabInteractable interactable, Collider volume)
@@ -635,12 +646,16 @@ namespace Oculus.Interaction.HandGrab
                     Physics.ComputePenetration(
                         volume, volume.transform.position, volume.transform.rotation,
                         collider, collider.transform.position, collider.transform.rotation,
-                        out _, out _))
+                        // out _, out _))
+                        out Vector3 direction, out float distance))
                 {
-                    return true;
+                    // Debug.Log($"Va chạm! Hướng: {direction}, Khoảng cách cần dịch chuyển: {distance}");
+                    if(distance >= 0.055f)
+                    {
+                        return true;
+                    }
                 }
             }
-
             return false;
         }
 
