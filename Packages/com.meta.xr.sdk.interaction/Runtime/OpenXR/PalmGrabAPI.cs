@@ -21,7 +21,6 @@
 using Oculus.Interaction.Input;
 using Oculus.Interaction.PoseDetection;
 using UnityEngine;
-using TMPro;
 
 namespace Oculus.Interaction.GrabAPI
 {
@@ -76,21 +75,8 @@ namespace Oculus.Interaction.GrabAPI
             }
 
 
-            public TextMeshProUGUI debugText = null;
             public void UpdateIsGrabbing(float startThreshold, float releaseThreshold)
             {
-                if (debugText == null)
-                {
-                    GameObject debugObject = GameObject.Find("DebugText"); 
-                    if (debugObject != null)
-                    {
-                        debugText = debugObject.GetComponent<TextMeshProUGUI>(); 
-                    }
-                }
-                if (debugText != null)
-                {
-                    debugText.text = GrabStrength.ToString();
-                }
                 if (GrabStrength > startThreshold)
                 {
                     if (!IsGrabbing)

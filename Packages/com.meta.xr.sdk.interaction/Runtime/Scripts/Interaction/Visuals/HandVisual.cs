@@ -22,6 +22,7 @@ using Oculus.Interaction.Input;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Cup;
 
 namespace Oculus.Interaction
 {
@@ -30,6 +31,13 @@ namespace Oculus.Interaction
     /// </summary>
     public class HandVisual : MonoBehaviour, IHandVisual
     {
+        /// <summary>
+        /// Properties supporting region "Custom Support Code for Thesis".
+        /// </summary>
+        private Vector3 handPosition = Vector3.zero;
+        private Quaternion handRotation = Quaternion.identity;
+        private CupStateController cupStateController = null;
+
         /// <summary>
         /// The hand to render.
         /// </summary>
@@ -187,6 +195,11 @@ namespace Oculus.Interaction
                 _openXRRoot.gameObject.SetActive(false);
             }
 #endif
+
+            if(cupStateController == null)
+            {
+                cupStateController = FindObjectOfType<CupStateController>();
+            }
         }
 
         protected virtual void Start()
@@ -227,13 +240,19 @@ namespace Oculus.Interaction
 
             if (!Hand.IsTrackedDataValid)
             {
+                UpdateTrackedDataValidity(false);
                 if (IsVisible || ForceOffVisibility)
                 {
+                    TryMakeCupInvisible();
                     SkinnedMeshRenderer.enabled = false;
                 }
             }
             else
             {
+                UpdateTrackedDataValidity(true);
+                UpdateHandPosition();
+                HandleGrabbingState();
+
                 if (!IsVisible && !ForceOffVisibility)
                 {
                     SkinnedMeshRenderer.enabled = true;
@@ -244,6 +263,56 @@ namespace Oculus.Interaction
                 }
             }
         }
+
+        #region Custom Support Code for Thesis
+        private void UpdateTrackedDataValidity(bool _isTrackedDataValid)
+        {
+            if ((_isTrackedDataValid != cupStateController.IsTrackedDataValid)
+                && (((Hand.Handedness == Handedness.Left) && cupStateController.IsLeftHandGrabbing())
+                    || ((Hand.Handedness == Handedness.Right) && cupStateController.IsRightHandGrabbing())))
+            {
+                cupStateController.IsTrackedDataValid = _isTrackedDataValid;
+            }
+        }
+
+        private void TryMakeCupInvisible()
+        {
+            if (!cupStateController.IsOnTable  
+                && (((Hand.Handedness == Handedness.Left) && cupStateController.IsLeftHandGrabbing())
+                    || ((Hand.Handedness == Handedness.Right) && cupStateController.IsRightHandGrabbing())))
+            {
+                cupStateController.MakeCupInvisible();
+            }
+        }
+
+        private void UpdateHandPosition()
+        {
+            Hand.GetRootPose(out Pose handRootPose);
+            handPosition = handRootPose.position;
+            handRotation = handRootPose.rotation;
+
+            if (Hand.Handedness == Handedness.Left)
+            {
+                cupStateController.leftHand.position = handPosition;
+                cupStateController.leftHand.rotation = handRotation;
+            }
+            else if (Hand.Handedness == Handedness.Right)
+            {
+                cupStateController.rightHand.position = handPosition;
+                cupStateController.rightHand.rotation = handRotation;
+            }
+        }
+
+        private void HandleGrabbingState()
+        {
+            if (cupStateController.IsPendingRegrab
+                && (((Hand.Handedness == Handedness.Left) && cupStateController.IsLeftHandGrabbing())
+                    || ((Hand.Handedness == Handedness.Right) && cupStateController.IsRightHandGrabbing())))
+            {
+                cupStateController.PlaceCupInHand();
+            }
+        }
+        #endregion
 
         public void UpdateSkeleton()
         {
