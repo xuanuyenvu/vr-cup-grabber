@@ -38,9 +38,9 @@ namespace Oculus.Interaction
                                     where TInteractor : Interactor<TInteractor, TInteractable>
                                     where TInteractable : PointerInteractable<TInteractor, TInteractable>
     {
-        protected void GeneratePointerEvent(PointerEventType pointerEventType, TInteractable interactable)
+        protected void GeneratePointerEvent(PointerEventType pointerEventType, TInteractable interactable) // duoc goi tu cac ham khac trong script nay
         {
-            Pose pose = ComputePointerPose();
+            Pose pose = ComputePointerPose(); // HandGrabInteractor.cs
 
             if (interactable == null)
             {
@@ -62,7 +62,7 @@ namespace Oculus.Interaction
             }
 
             interactable.PublishPointerEvent(
-                new PointerEvent(Identifier, pointerEventType, pose, Data));
+                new PointerEvent(Identifier, pointerEventType, pose, Data)); // PointerInteractable.cs
         }
 
         protected virtual void HandlePointerEventRaised(PointerEvent evt)

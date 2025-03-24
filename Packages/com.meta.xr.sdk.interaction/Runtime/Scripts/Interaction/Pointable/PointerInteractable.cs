@@ -69,11 +69,11 @@ namespace Oculus.Interaction
         /// <see cref="PointerEvent"/> propagation process, and it should not be called directly from outside that process.
         /// </summary>
         /// <param name="evt"></param>
-        public void PublishPointerEvent(PointerEvent evt)
+        public void PublishPointerEvent(PointerEvent evt) // Duoc goi tu PointerInteractor.cs
         {
             if (PointableElement != null)
             {
-                PointableElement.ProcessPointerEvent(evt);
+                PointableElement.ProcessPointerEvent(evt); // Grabbable.cs
             }
             WhenPointerEventRaised(evt);
         }

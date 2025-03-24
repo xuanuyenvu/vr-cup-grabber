@@ -157,8 +157,8 @@ namespace Oculus.Interaction
             }
 
             Transform targetTransform = _grabbable.Transform;
-            _grabDeltaInLocalSpace = new Pose(
-                targetTransform.InverseTransformVector(centroid - targetTransform.position),
+            _grabDeltaInLocalSpace = new Pose( // điểm lệch của tay tính theo trục tọa độ của cái ly (tức là ly có trục tọa độ là (0,0,0))
+                targetTransform.InverseTransformVector(centroid - targetTransform.position), // chuyen tu world space sang local space
                 targetTransform.rotation);
             _lastRotation = Quaternion.identity;
             _lastScale = targetTransform.localScale;
@@ -182,7 +182,7 @@ namespace Oculus.Interaction
             Quaternion rotation = _lastRotation * _grabDeltaInLocalSpace.rotation;
             targetTransform.rotation = TransformerUtils.GetConstrainedTransformRotation(rotation, _rotationConstraints, targetTransform.parent);
 
-            Vector3 position = localPosition - targetTransform.TransformVector(_grabDeltaInLocalSpace.position);
+            Vector3 position = localPosition - targetTransform.TransformVector(_grabDeltaInLocalSpace.position); //TransformVector: chuyen tu local space sang world space
             targetTransform.position = TransformerUtils.GetConstrainedTransformPosition(position, _relativePositionConstraints, targetTransform.parent);
         }
 

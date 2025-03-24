@@ -23,6 +23,7 @@ using Oculus.Interaction.Throw;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using Cup;
 
 namespace Oculus.Interaction
 {
@@ -35,6 +36,11 @@ namespace Oculus.Interaction
     /// </remarks>
     public class Grabbable : PointableElement, IGrabbable, ITimeConsumer
     {
+        /// <summary>
+        /// Properties supporting region "Custom Support Code for Thesis".
+        /// </summary>
+        public CupStateController cupStateController = null;
+
         /// <summary>
         /// A One Grab...Transformer component, which should be attached to the grabbable object. Defaults to One Grab Free Transformer.
         /// If you set the Two Grab Transformer property and still want to use one hand for grabs, you must set this property as well.
@@ -145,6 +151,11 @@ namespace Oculus.Interaction
 
         protected override void Start()
         {
+            if (cupStateController == null)
+            {
+                cupStateController = FindAnyObjectByType<CupStateController>();
+            }
+
             this.BeginStart(ref _started, () => base.Start());
 
             if (_targetTransform == null)
@@ -207,7 +218,7 @@ namespace Oculus.Interaction
             return transformer;
         }
 
-        public override void ProcessPointerEvent(PointerEvent evt)
+        public override void ProcessPointerEvent(PointerEvent evt) // Duoc goi tu PointerInteractable.cs
         {
             switch (evt.Type)
             {
@@ -223,7 +234,7 @@ namespace Oculus.Interaction
                     break;
             }
 
-            base.ProcessPointerEvent(evt);
+            base.ProcessPointerEvent(evt); // PointableElement.cs
 
             switch (evt.Type)
             {
@@ -241,10 +252,24 @@ namespace Oculus.Interaction
 
         protected override void PointableElementUpdated(PointerEvent evt)
         {
+            UpdateGrabbingStatus();
             UpdateKinematicLock(SelectingPointsCount > 0);
 
             base.PointableElementUpdated(evt);
         }
+
+
+        #region Custom Support Code for Thesis
+        private void UpdateGrabbingStatus()
+        {
+            cupStateController.IsGrabbing = SelectingPointsCount > 0;
+
+            if (cupStateController.IsGrabbing)
+            {
+                cupStateController.DetermineGrabbingHand();
+            }
+        }
+        #endregion
 
         private void UpdateKinematicLock(bool isGrabbing)
         {
@@ -281,7 +306,7 @@ namespace Oculus.Interaction
             // begin the new one
             EndTransform();
 
-            int useGrabPoints = _selectingPoints.Count;
+            int useGrabPoints = _selectingPoints.Count; // _selectingPoints.Count = 1 
             if (_maxGrabPoints != -1)
             {
                 useGrabPoints = Mathf.Min(useGrabPoints, _maxGrabPoints);
@@ -290,7 +315,7 @@ namespace Oculus.Interaction
             switch (useGrabPoints)
             {
                 case 1:
-                    _activeTransformer = OneGrabTransformer;
+                    _activeTransformer = OneGrabTransformer; // luôn chọn cái này vì _maxGrabPoints = -1 nên if bên trên ko xảy ra
                     break;
                 case 2:
                     _activeTransformer = TwoGrabTransformer;
@@ -315,7 +340,7 @@ namespace Oculus.Interaction
                 return;
             }
 
-            _activeTransformer.UpdateTransform();
+            _activeTransformer.UpdateTransform(); // GrabFreeTransformer.cs
         }
 
         private void EndTransform()
@@ -324,6 +349,7 @@ namespace Oculus.Interaction
             {
                 return;
             }
+
             _activeTransformer.EndTransform();
             _activeTransformer = null;
         }

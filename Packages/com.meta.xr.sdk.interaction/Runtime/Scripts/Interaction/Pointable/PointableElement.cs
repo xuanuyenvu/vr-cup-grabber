@@ -203,7 +203,7 @@ namespace Oculus.Interaction
         /// Implementation of <see cref="IPointableElement.ProcessPointerEvent(PointerEvent)"/>; for details, please refer to the
         /// related documentation provided for that interface.
         /// </summary>
-        public virtual void ProcessPointerEvent(PointerEvent evt)
+        public virtual void ProcessPointerEvent(PointerEvent evt) // Duoc goi tu Grabbable.cs
         {
             switch (evt.Type)
             {
