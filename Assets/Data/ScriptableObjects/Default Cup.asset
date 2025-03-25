@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fcabecbccb56f42af9e76adbf657c0, type: 3}
+  m_Name: Default Cup
+  m_EditorClassIdentifier: 
+  containerName: Default Cup
+  minPourAngle: 5
+  pourDelay: 0.05
+  angleLevels:
+  - angle: 0
+    levelPercent: 1
+    pourRate: 1
+  - angle: 5
+    levelPercent: 0.948
+    pourRate: 1
+  - angle: 10
+    levelPercent: 0.902
+    pourRate: 1
+  - angle: 15
+    levelPercent: 0.856
+    pourRate: 1
+  - angle: 20
+    levelPercent: 0.815
+    pourRate: 1
+  - angle: 25
+    levelPercent: 0.774
+    pourRate: 1
+  - angle: 30
+    levelPercent: 0.774
+    pourRate: 1
+  - angle: 35
+    levelPercent: 0.687
+    pourRate: 1
+  - angle: 40
+    levelPercent: 0.652
+    pourRate: 1
+  - angle: 45
+    levelPercent: 0.606
+    pourRate: 1
+  - angle: 50
+    levelPercent: 0.565
+    pourRate: 1
+  - angle: 55
+    levelPercent: 0.518
+    pourRate: 1
+  - angle: 60
+    levelPercent: 0.483
+    pourRate: 1
+  - angle: 65
+    levelPercent: 0.431
+    pourRate: 1
+  - angle: 70
+    levelPercent: 0.367
+    pourRate: 1
+  - angle: 75
+    levelPercent: 0.309
+    pourRate: 1
+  - angle: 80
+    levelPercent: 0.239
+    pourRate: 1
+  - angle: 85
+    levelPercent: 0.135
+    pourRate: 1
+  - angle: 90
+    levelPercent: 0
+    pourRate: 1
