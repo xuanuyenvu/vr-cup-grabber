@@ -25,7 +25,7 @@ namespace Cup
         private bool isNearTable = false;
         private bool isPendingRegrab = false;
         private bool isGrabbing = false;
-        private float maxTableOffset = 0.03f;
+        private float maxTableOffset = 0.035f;
         private float minTableOffset = -0.06f;
         private float floorOffset = -0.15f;
 
