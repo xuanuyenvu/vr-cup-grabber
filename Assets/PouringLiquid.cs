@@ -7,7 +7,7 @@ using UnityEngine;
 public class PouringLiquid : MonoBehaviour
 {
     [SerializeField] private LiquidVolume liquidVolume;
-    [SerializeField] private float initialLevel = 1.0f; // Mức đầy ban đầu
+    [SerializeField] private float initialLevel = 0.88f; // Mức đầy ban đầu
     
     [Tooltip("Pour data for this cup type")]
     [SerializeField] private PouringData pouringData;

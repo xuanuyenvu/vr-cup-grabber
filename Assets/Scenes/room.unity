@@ -1550,6 +1550,80 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 357890120}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &403914275
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1981434107}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.000241
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+      propertyPath: m_Name
+      value: mug
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+--- !u!4 &403914276 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 516b60b1df02c864bb8d5f98210fbda5, type: 3}
+  m_PrefabInstance: {fileID: 403914275}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &423688677
 GameObject:
   m_ObjectHideFlags: 0
@@ -2979,6 +3053,7 @@ Transform:
   - {fileID: 1891196091}
   - {fileID: 113021386092197296}
   - {fileID: 4921080726124996973}
+  - {fileID: 1981434107}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &988353957
@@ -2993,7 +3068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4477df0c6af7dbb4baffe65eb008183b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cupCube: {fileID: 6851015600288811028}
+  cupGameObject: {fileID: 1981434106}
   scaleFactor: 0.001
 --- !u!1 &989512981
 GameObject:
@@ -3101,6 +3176,106 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 989512981}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!21 &1011210515
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: LiquidVolumeDefaultNoFlask(Clone)
+  m_Shader: {fileID: 4800000, guid: 045a60f5db3314d55b5609a847d062a8, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - LIQUID_VOLUME_IRREGULAR
+  - LIQUID_VOLUME_NON_AABB
+  m_InvalidKeywords:
+  - 
+  - 
+  - 
+  - 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3001
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise2Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 11700000, guid: 406302629b5fb412fb2604bb899357d1, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex2D:
+        m_Texture: {fileID: 2800000, guid: 2e25f51e1f31e4da8bdac5d08b0f578f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Alpha: 0.373
+    - _AlphaCombined: 0.373
+    - _BasePos: -1
+    - _CullMode: 2
+    - _DeepAtten: 1.12
+    - _DoubleSidedBias: 0
+    - _FlaskBlurIntensity: 1
+    - _FlaskThickness: 0.05
+    - _FoamBottom: 1
+    - _FoamDensity: -0.299
+    - _FoamMaxPos: 0.9583698
+    - _FoamRaySteps: 7
+    - _FoamTurbulence: 1
+    - _FoamWeight: 100
+    - _Glossiness: 0.767
+    - _GlossinessInt: 0.5
+    - _Level: 1
+    - _LevelPos: 0.95547885
+    - _LiquidRaySteps: 10
+    - _LowerLimit: -0.01095833
+    - _Metallic: 0
+    - _Muddy: 0
+    - _Radius: 0.5
+    - _SmokeAtten: 4.86
+    - _SmokeHeightAtten: 0.8
+    - _SmokeRaySteps: 5
+    - _SmokeSpeed: 3.21
+    - _Sparkling: 1
+    - _SparklingIntensity: 135
+    - _SparklingThreshold: 0.932
+    - _Topology: 0
+    - _Turbulence: 1
+    - _Turbulence2: 1
+    - _TurbulenceSpeed: 1
+    - _UpperLimit: 0.01095833
+    - _ZTestMode: 4
+    m_Colors:
+    - _Bounds: {r: 1, g: 1, b: 1, a: 1}
+    - _Center: {r: 0.157, g: 0.8390556, b: -0.28599998, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color1: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.052658826}
+    - _Color2: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.09361569}
+    - _EmissionColor: {r: 0.6830188, g: 0.65379447, b: 0.2822285, a: 1}
+    - _FlaskColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FlaskThickness: {r: 1, g: 1, b: 1, a: 0}
+    - _FoamColor: {r: 0.97735846, g: 0.9275685, b: 0.9275685, a: 0.33058038}
+    - _LightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Scale: {r: 3.0879128, g: 3.871413, b: 96.78532, a: 111.764}
+    - _Size: {r: 0.18110834, g: 0.08679002, b: 0.13322477, a: 0.04335579}
+    - _SmokeColor: {r: 1, g: 1, b: 1, a: 0.11848236}
+    - _Turbulence: {r: 0.5, g: 0.09, b: 282.74335, a: 94.24778}
+    - _ViewDir: {r: 0, g: 0, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1018698098
 GameObject:
   m_ObjectHideFlags: 0
@@ -3209,106 +3384,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c67033f580359c4581dff1ccffcca91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!21 &1074526819
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: LiquidVolumeDefaultNoFlask(Clone)
-  m_Shader: {fileID: 4800000, guid: 045a60f5db3314d55b5609a847d062a8, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - LIQUID_VOLUME_IRREGULAR
-  - LIQUID_VOLUME_NON_AABB
-  m_InvalidKeywords:
-  - 
-  - 
-  - 
-  - 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3001
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Noise2Tex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NoiseTex:
-        m_Texture: {fileID: 11700000, guid: 406302629b5fb412fb2604bb899357d1, type: 2}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NoiseTex2D:
-        m_Texture: {fileID: 2800000, guid: 2e25f51e1f31e4da8bdac5d08b0f578f, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _Alpha: 0.373
-    - _AlphaCombined: 0.373
-    - _BasePos: -1
-    - _CullMode: 2
-    - _DeepAtten: 1.12
-    - _DoubleSidedBias: 0.05
-    - _FlaskBlurIntensity: 1
-    - _FlaskThickness: 0.05
-    - _FoamBottom: 1
-    - _FoamDensity: -0.299
-    - _FoamMaxPos: 0.88681865
-    - _FoamRaySteps: 7
-    - _FoamTurbulence: 1
-    - _FoamWeight: 100
-    - _Glossiness: 0.767
-    - _GlossinessInt: 0.5
-    - _Level: 1
-    - _LevelPos: 0.8839277
-    - _LiquidRaySteps: 10
-    - _LowerLimit: -0.01095833
-    - _Metallic: 0
-    - _Muddy: 0
-    - _Radius: 0.5
-    - _SmokeAtten: 4.86
-    - _SmokeHeightAtten: 0.8
-    - _SmokeRaySteps: 5
-    - _SmokeSpeed: 3.21
-    - _Sparkling: 1
-    - _SparklingIntensity: 135
-    - _SparklingThreshold: 0.932
-    - _Topology: 0
-    - _Turbulence: 1
-    - _Turbulence2: 1
-    - _TurbulenceSpeed: 1
-    - _UpperLimit: 0.01095833
-    - _ZTestMode: 4
-    m_Colors:
-    - _Bounds: {r: 1, g: 1, b: 1, a: 1}
-    - _Center: {r: 0.157, g: 0.7865556, b: -0.28599998, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.052658826}
-    - _Color2: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.09361569}
-    - _EmissionColor: {r: 0.6830188, g: 0.65379447, b: 0.2822285, a: 1}
-    - _FlaskColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FlaskThickness: {r: 1, g: 1, b: 1, a: 0}
-    - _FoamColor: {r: 0.97735846, g: 0.9275685, b: 0.9275685, a: 0.33058038}
-    - _LightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Scale: {r: 3.0879128, g: 3.871413, b: 96.78532, a: 111.764}
-    - _Size: {r: 0.18110834, g: 0.08679002, b: 0.13322477, a: 0.04335579}
-    - _SmokeColor: {r: 1, g: 1, b: 1, a: 0.11848236}
-    - _Turbulence: {r: 0.5, g: 0.09, b: 282.74335, a: 94.24778}
-    - _ViewDir: {r: 0, g: 0, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1113792770
 GameObject:
   m_ObjectHideFlags: 0
@@ -3444,7 +3519,7 @@ Transform:
   m_GameObject: {fileID: 1122430240}
   serializedVersion: 2
   m_LocalRotation: {x: -1, y: -0, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0, z: -0.01}
   m_LocalScale: {x: 99, y: 99, z: 99}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3464,7 +3539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _topology: 10
   _detail: 11
-  _level: 0.737
+  _level: 0.88
   _levelMultiplier: 1
   _liquidLayers: []
   _smoothContactSurface: 3
@@ -3534,7 +3609,7 @@ MonoBehaviour:
   _irregularDepthDebug: 0
   _depthAwareCustomPass: 0
   _depthAwareCustomPassDebug: 0
-  _doubleSidedBias: 0.05
+  _doubleSidedBias: 0
   _backDepthBias: 0
   _rotationLevelCompensation: 0
   _ignoreGravity: 0
@@ -3557,89 +3632,89 @@ MonoBehaviour:
   _pointLightsEnabled: 1
   pointLightParams:
   - name: Light 1
-    targetPos: {x: -0.0119860275, y: 0.1704464, z: -0.20886825}
+    targetPos: {x: -0.26571903, y: 0.08978562, z: -0.07886328}
     randomTarget: 1
-    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetCenter: {x: 0, y: -0.1315, z: 0}
     randomTargetRadius: 0.4
     nextTargetInterval: 1
-    moveSpeed: 0.091211736
-    lightRange: 0.027706645
-    intensityMin: 1.1250396
-    intensityMax: 1.6481215
-    intensitySpeed: 1.2988844
-    color1: {r: 0.30423465, g: 0.7443021, b: 0.30686215, a: 1}
-    color2: {r: 0.8477335, g: 0.8441614, b: 0.72563845, a: 1}
-    colorSpeed: 0.5915744
+    moveSpeed: 0.035367195
+    lightRange: 0.037236013
+    intensityMin: 1.1813045
+    intensityMax: 1.9438664
+    intensitySpeed: 1.6746716
+    color1: {r: 0.79835165, g: 0.006369711, b: 0.1728505, a: 1}
+    color2: {r: 0.93371487, g: 0.076941855, b: 0.23707524, a: 1}
+    colorSpeed: 1.9937472
   - name: Light 2
-    targetPos: {x: -0.265126, y: 0.021320246, z: -0.10640921}
+    targetPos: {x: -0.323546, y: -0.008380018, z: 0.1854599}
     randomTarget: 1
-    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetCenter: {x: 0, y: -0.1315, z: 0}
     randomTargetRadius: 0.4
     nextTargetInterval: 1
-    moveSpeed: 0.029612927
-    lightRange: 0.031351704
-    intensityMin: 0.72897124
-    intensityMax: 1.7381389
-    intensitySpeed: 1.9782984
-    color1: {r: 0.2919555, g: 0.44736975, b: 0.07297922, a: 1}
-    color2: {r: 0.69685274, g: 0.19038787, b: 0.20668414, a: 1}
-    colorSpeed: 0.77507466
+    moveSpeed: 0.07773737
+    lightRange: 0.016533487
+    intensityMin: 1.1625396
+    intensityMax: 1.2227011
+    intensitySpeed: 1.0109144
+    color1: {r: 0.40419477, g: 0.54024845, b: 0.15550865, a: 1}
+    color2: {r: 0.15293969, g: 0.3504379, b: 0.37431636, a: 1}
+    colorSpeed: 0.7335612
   - name: Light 3
-    targetPos: {x: 0.10431349, y: 0.11771028, z: 0.16426943}
+    targetPos: {x: -0.14410965, y: -0.38259262, z: 0.11934044}
     randomTarget: 1
-    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetCenter: {x: 0, y: -0.1315, z: 0}
     randomTargetRadius: 0.4
     nextTargetInterval: 1
-    moveSpeed: 0.03511341
-    lightRange: 0.042339947
-    intensityMin: 1.1176406
-    intensityMax: 1.5151675
-    intensitySpeed: 1.9648459
-    color1: {r: 0.109132186, g: 0.17878522, b: 0.7707367, a: 1}
-    color2: {r: 0.7679068, g: 0.25541726, b: 0.99003446, a: 1}
-    colorSpeed: 1.6058117
+    moveSpeed: 0.09640081
+    lightRange: 0.09605943
+    intensityMin: 0.6094222
+    intensityMax: 1.8834246
+    intensitySpeed: 1.0018933
+    color1: {r: 0.76853347, g: 0.80195606, b: 0.95336974, a: 1}
+    color2: {r: 0.7057157, g: 0.0029855971, b: 0.24514547, a: 1}
+    colorSpeed: 1.85381
   - name: Light 4
-    targetPos: {x: 0.020708045, y: -0.05995979, z: 0.21499817}
+    targetPos: {x: 0.13270795, y: -0.13384488, z: -0.23565271}
     randomTarget: 1
-    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetCenter: {x: 0, y: -0.1315, z: 0}
     randomTargetRadius: 0.4
     nextTargetInterval: 1
-    moveSpeed: 0.024570396
-    lightRange: 0.07043067
-    intensityMin: 1.3986576
-    intensityMax: 1.6415709
-    intensitySpeed: 0.83772767
-    color1: {r: 0.80953646, g: 0.029764537, b: 0.76208293, a: 1}
-    color2: {r: 0.8719964, g: 0.93060446, b: 0.24331489, a: 1}
-    colorSpeed: 0.9112936
+    moveSpeed: 0.09154003
+    lightRange: 0.09632783
+    intensityMin: 0.8015401
+    intensityMax: 1.7780974
+    intensitySpeed: 0.76266193
+    color1: {r: 0.61124736, g: 0.41581327, b: 0.7645575, a: 1}
+    color2: {r: 0.03941596, g: 0.8072418, b: 0.011609198, a: 1}
+    colorSpeed: 1.5779905
   - name: Light 5
-    targetPos: {x: -0.3092526, y: -0.2528942, z: -0.0850776}
+    targetPos: {x: 0.14691083, y: -0.21910821, z: 0.27755243}
     randomTarget: 1
-    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetCenter: {x: 0, y: -0.1315, z: 0}
     randomTargetRadius: 0.4
     nextTargetInterval: 1
-    moveSpeed: 0.045029324
-    lightRange: 0.03356555
-    intensityMin: 1.0421687
-    intensityMax: 2.521473
-    intensitySpeed: 0.56443167
-    color1: {r: 0.6865645, g: 0.49212724, b: 0.93139637, a: 1}
-    color2: {r: 0.9825232, g: 0.9036646, b: 0.47428912, a: 1}
-    colorSpeed: 1.8049672
+    moveSpeed: 0.046262402
+    lightRange: 0.08269191
+    intensityMin: 0.75355095
+    intensityMax: 1.9455285
+    intensitySpeed: 1.5339825
+    color1: {r: 0.8823136, g: 0.87806296, b: 0.82252777, a: 1}
+    color2: {r: 0.74388367, g: 0.06971622, b: 0.8877076, a: 1}
+    colorSpeed: 1.8900126
   - name: Light 6
-    targetPos: {x: -0.3603329, y: -0.21890105, z: -0.08927896}
+    targetPos: {x: 0.042476397, y: -0.0076050013, z: -0.23640035}
     randomTarget: 1
-    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetCenter: {x: 0, y: -0.1315, z: 0}
     randomTargetRadius: 0.4
     nextTargetInterval: 1
-    moveSpeed: 0.07560895
-    lightRange: 0.06924299
-    intensityMin: 1.0964082
-    intensityMax: 1.4888561
-    intensitySpeed: 1.2531295
-    color1: {r: 0.58371013, g: 0.1634344, b: 0.6070822, a: 1}
-    color2: {r: 0.29942146, g: 0.29703823, b: 0.80799174, a: 1}
-    colorSpeed: 0.86512303
+    moveSpeed: 0.0383234
+    lightRange: 0.08614165
+    intensityMin: 1.1536716
+    intensityMax: 1.9731814
+    intensitySpeed: 1.7017659
+    color1: {r: 0.9898981, g: 0.7601321, b: 0.7813846, a: 1}
+    color2: {r: 0.78682315, g: 0.51226956, b: 0.66265315, a: 1}
+    colorSpeed: 1.7916734
   pointLightsScatteringAmount: 0.8
   pointLightsIntensity: 1
   pointLightInsideAtten: 0
@@ -3665,7 +3740,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1074526819}
+  - {fileID: 1011210515}
   - {fileID: 858334719}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -5480,6 +5555,38 @@ MonoBehaviour:
     _startingScale: {x: 1, y: 1, z: 1}
     _hipsToHeadDistance: 0.5540891
     _hipsToFootDistance: 0.8964221
+--- !u!1 &1981434106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1981434107}
+  m_Layer: 0
+  m_Name: Mug
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1981434107
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981434106}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 68.12, y: 68.12, z: 68.12}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 403914276}
+  m_Father: {fileID: 988353956}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1984696587
 GameObject:
   m_ObjectHideFlags: 0
@@ -9385,7 +9492,7 @@ Transform:
   m_GameObject: {fileID: 6851015600288811028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.45, y: 0, z: 0.45}
+  m_LocalPosition: {x: 0.45, y: 0.0519, z: 0.45}
   m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 1
   m_Children:
