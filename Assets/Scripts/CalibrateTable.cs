@@ -33,7 +33,7 @@ public class CalibrateTable : MonoBehaviour
     {
         virtualController.transform.position = new Vector3(0.5933f, 0.814499974f, 0.158399999f);
         virtualController.transform.rotation = Quaternion.Euler(new(44.9479828f, 256.104828f, 164.477997f));
-
+        
         cameraRig.transform.position = virtualHeadset.transform.position;
         cameraRig.transform.rotation = virtualHeadset.transform.rotation;
     }
