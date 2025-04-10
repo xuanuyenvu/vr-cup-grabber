@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
+using System;
 
 namespace Cup
 {
@@ -19,22 +21,23 @@ namespace Cup
     public class CupStateController : MonoBehaviour
     {
         public GameObject cuppSphere;
-        public GameObject wristPoint ; // vị trí cổ tay
-        public GameObject cupAttachPoint ; 
+        public GameObject wristPoint; // vị trí cổ tay
+        public GameObject cupAttachPoint;
         private bool isOnTable = true;
         private bool isNearTable = false;
         private bool isPendingRegrab = false;
         private bool isGrabbing = false;
-        private float maxTableOffset = 0.035f;
-        private float minTableOffset = -0.06f;
-        private float floorOffset = -0.15f;
+        private float maxTableOffset = 0.05f; // chiều cao tối đa của cốc so với mặt bàn
+        private float minTableOffset = -0.08f; // chiều cao tối thiểu của cốc so với mặt bàn
+        private float floorOffset = -0.15f; // chiều cao của cốc so với mặt bàn. Nếu đạt giá trị này thì xem như cốc đã rớt xuống sàn 
 
 
         public enum GrabbedBy { LeftHand, RightHand, None };
         public GrabbedBy grabbedByHand = GrabbedBy.None;
+        public event Action<bool> onGrabbingChange;
 
-        [HideInInspector] public Vector3 cupPosition = new Vector3(0, 0, 0);
-        [HideInInspector] public Quaternion cupRotation = Quaternion.identity;
+        // [HideInInspector] public Vector3 cupPosition = new Vector3(0, 0, 0);
+        // [HideInInspector] public Quaternion cupRotation = Quaternion.identity;
         [HideInInspector] public HandInfo leftHand = new HandInfo(Vector3.zero, Quaternion.identity);
         [HideInInspector] public HandInfo rightHand = new HandInfo(Vector3.zero, Quaternion.identity);
 
@@ -58,7 +61,12 @@ namespace Cup
         public bool IsGrabbing
         {
             get { return isGrabbing; }
-            set { isGrabbing = value; }
+            set
+            {
+                isGrabbing = value;
+                Debug.Log("truoc khi goi: " + isGrabbing);
+                onGrabbingChange?.Invoke(isGrabbing);
+            }
         }
 
 
@@ -86,7 +94,7 @@ namespace Cup
             if (collision.gameObject.CompareTag("Table"))
             {
                 isOnTable = true;
-                Debug.Log("Cup has landed on the table!");
+                // Debug.Log("Cup has landed on the table!");
                 AlignCupOnLanding();
             }
         }
@@ -96,7 +104,7 @@ namespace Cup
             if (collision.gameObject.CompareTag("Table"))
             {
                 isOnTable = false;
-                Debug.Log("Cup has left the table!");
+                // Debug.Log("Cup has left the table!");
                 HandleCupLifted();
             }
         }
@@ -105,10 +113,11 @@ namespace Cup
         {
             // Since the cup does not remain stable after being released,
             // it must be rotated to align with its upright position.
+            grabbedByHand = GrabbedBy.None;
+            isPendingRegrab = false;
+
             Vector3 currentRotation = transform.rotation.eulerAngles;
             transform.rotation = Quaternion.Euler(0, currentRotation.y, 0);
-
-            grabbedByHand = GrabbedBy.None;
 
             Rigidbody rb = GetComponent<Rigidbody>();
             if (rb != null)
@@ -124,7 +133,14 @@ namespace Cup
 
         void Update()
         {
-            UpdateSpherePosition();
+            // if (IsGrabbing && grabbedByHand != GrabbedBy.None)
+            // { 
+            //     UpdateSpherePosition();
+            // }
+            // else 
+            // {
+
+            // }
 
             if (!isOnTable)
             {
@@ -134,10 +150,6 @@ namespace Cup
 
         private void UpdateSpherePosition()
         {
-            cupPosition = transform.position;
-            cupRotation = transform.rotation;
-            cuppSphere.transform.position = this.transform.position;
-
             if (grabbedByHand == GrabbedBy.RightHand)
             {
                 wristPoint.transform.position = rightHand.position;
@@ -207,22 +219,35 @@ namespace Cup
             {
                 rb.useGravity = false;
             }
-            gameObject.SetActive(false);
+            // gameObject.SetActive(false);
         }
 
         private void ShowCup()
         {
-            gameObject.SetActive(true);
+            // gameObject.SetActive(true);
+        }
+
+        public void SyncWristPointToGhostHand(Vector3 position, Quaternion rotation)
+        {
+            wristPoint.transform.position = position;
+            wristPoint.transform.rotation = rotation;
+        }
+
+        public void SyncWristPointToReal()
+        {
+            UpdateSpherePosition();
         }
 
         private void MoveToHandPosition()
         {
+            Debug.Log("MoveToHandPosition: " + grabbedByHand);
             transform.position = cupAttachPoint.transform.position;
             transform.rotation = cupAttachPoint.transform.rotation;
         }
 
         public void MakeCupInvisible()
         {
+            Debug.Log("pending regrab: " + isPendingRegrab);
             isPendingRegrab = true;
             HideCup();
         }

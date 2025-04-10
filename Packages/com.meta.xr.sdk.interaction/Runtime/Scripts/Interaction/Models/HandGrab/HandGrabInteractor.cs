@@ -464,9 +464,8 @@ namespace Oculus.Interaction.HandGrab
                 cupStateController = FindObjectOfType<CupStateController>();
             }
             
-            return cupStateController.IsNearTable &&
-                (_handGrabShouldUnselect
-                || (_selectedInteractableOverride != null && _selectedInteractableOverride != SelectedInteractable));
+            return (cupStateController.IsNearTable && _handGrabShouldUnselect)
+                || (_selectedInteractableOverride != null && _selectedInteractableOverride != SelectedInteractable);
         }
 
         /// <summary>
@@ -650,7 +649,7 @@ namespace Oculus.Interaction.HandGrab
                         out Vector3 direction, out float distance))
                 {
                     // Debug.Log($"Va chạm! Hướng: {direction}, Khoảng cách cần dịch chuyển: {distance}");
-                    if(distance >= 0.055f)
+                    if(distance >= 0.05f)
                     {
                         return true;
                     }

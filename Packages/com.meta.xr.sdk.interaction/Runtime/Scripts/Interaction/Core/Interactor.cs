@@ -568,7 +568,7 @@ namespace Oculus.Interaction
         /// logic. Runs before <see cref="Process"/> and <see cref="Postprocess"/>. This method should never be invoked directly except
         /// by either this interactor instance itself or the <see cref="InteractorGroup"/> to which it belongs.
         /// </summary>
-        public void Preprocess()
+        public void Preprocess() // goi ben InteractorGroup.cs
         {
             if (_started)
             {
