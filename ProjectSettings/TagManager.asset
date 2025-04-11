@@ -18,6 +18,7 @@ TagManager:
   - Table
   - LeftHand
   - RightHand
+  - Headset
   layers:
   - Default
   - TransparentFX

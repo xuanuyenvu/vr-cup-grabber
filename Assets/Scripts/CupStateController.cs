@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using UnityEngine.Events;
 using System;
 
 namespace Cup
@@ -64,7 +63,6 @@ namespace Cup
             set
             {
                 isGrabbing = value;
-                Debug.Log("truoc khi goi: " + isGrabbing);
                 onGrabbingChange?.Invoke(isGrabbing);
             }
         }
@@ -240,14 +238,12 @@ namespace Cup
 
         private void MoveToHandPosition()
         {
-            Debug.Log("MoveToHandPosition: " + grabbedByHand);
             transform.position = cupAttachPoint.transform.position;
             transform.rotation = cupAttachPoint.transform.rotation;
         }
 
         public void MakeCupInvisible()
         {
-            Debug.Log("pending regrab: " + isPendingRegrab);
             isPendingRegrab = true;
             HideCup();
         }

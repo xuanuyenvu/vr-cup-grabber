@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Cup;
+using System.Runtime.InteropServices;
 
 public class GhostHandController : MonoBehaviour
 {
@@ -24,8 +25,12 @@ public class GhostHandController : MonoBehaviour
         WaitingToGrab
     }
     private GhostHandState ghostHandState = GhostHandState.NotCloned;
-    public bool isLeftHand => cupStateController.grabbedByHand == CupStateController.GrabbedBy.LeftHand;
     private GameObject childOpenXRHand;
+    private GameObject grandChilHand;
+    private HandCollider _ovrRightHandCollider;
+    private HandCollider _ovrLeftHandCollider;
+
+    public bool isLeftHand => cupStateController.grabbedByHand == CupStateController.GrabbedBy.LeftHand;
 
     public void SetGhostHandState(bool _isGrabbing)
     {
@@ -46,11 +51,26 @@ public class GhostHandController : MonoBehaviour
     private void OnEnable()
     {
         cupStateController.onGrabbingChange += SetGhostHandState;
+
+        _ovrLeftHandCollider = ovrLeftHand.GetComponent<HandCollider>();
+        _ovrLeftHandCollider.onTriggerEnterAction += HandleHandNearHeadset;
+        _ovrLeftHandCollider.onTriggerExitAction += HandleHandNearHeadset;
+
+        _ovrRightHandCollider = ovrRightHand.GetComponent<HandCollider>();
+        _ovrRightHandCollider.onTriggerEnterAction += HandleHandNearHeadset;
+        _ovrRightHandCollider.onTriggerExitAction += HandleHandNearHeadset;
+
     }
 
     private void OnDisable()
     {
         cupStateController.onGrabbingChange -= SetGhostHandState;
+
+        _ovrLeftHandCollider.onTriggerEnterAction -= HandleHandNearHeadset;
+        _ovrLeftHandCollider.onTriggerExitAction -= HandleHandNearHeadset;
+
+        _ovrRightHandCollider.onTriggerEnterAction -= HandleHandNearHeadset;
+        _ovrRightHandCollider.onTriggerExitAction -= HandleHandNearHeadset;
     }
 
     void Update()
@@ -59,40 +79,61 @@ public class GhostHandController : MonoBehaviour
 
         UpdateVirtualCenterEyePosition();
 
-        GameObject targetHand;
-        string childName;
-        GameObject grabPos;
-
-        if (isLeftHand)
-        {
-            targetHand = ovrLeftHand;
-            childName = "OpenXRLeftHand";
-            grabPos = leftHandGrabPos;
-        }
-        else
-        {
-            targetHand = ovrRightHand;
-            childName = "OpenXRRightHand";
-            grabPos = rightHandGrabPos;
-        }
-
         if (ghostHandState == GhostHandState.WaitingToClone)
         {
             cupStateController.SyncWristPointToReal();
-            HandleGhostHandEntry(targetHand, childName, grabPos);
         }
-        else // GhostHandState == GhostHandState.WaitingToRecall
+        else if (ghostHandState == GhostHandState.WaitingToRecall)
         {
-            if (childOpenXRHandClone != null) 
+            if (childOpenXRHandClone != null)
             {
                 cupStateController.SyncWristPointToGhostHand(childOpenXRHandClone.transform.position, childOpenXRHandClone.transform.rotation);
             }
-            HandleGhostHandExit(targetHand);
         }
 
-        if(!cupStateController.IsGrabbing)
+        if (!cupStateController.IsGrabbing)
         {
             HandleGrabbingState();
+        }
+    }
+
+    private void HandleHandNearHeadset(HandType handType, HandCollisionStatus handCollisionStatus)
+    {
+        Debug.Log("HandleHandNearHeadset: " + handType + " - " + handCollisionStatus);
+        if (ghostHandState == GhostHandState.NotCloned) return;
+
+        GameObject targetHand;
+        string childName, grandChildName;
+        GameObject grabPos;
+
+        if (isLeftHand && handType == HandType.LeftHand)
+        {
+            targetHand = ovrLeftHand;
+            childName = "OpenXRLeftHand";
+            grandChildName = "LeftHand";
+            grabPos = leftHandGrabPos;
+        }
+        else if (!isLeftHand && handType == HandType.RightHand)
+        {
+            targetHand = ovrRightHand;
+            childName = "OpenXRRightHand";
+            grandChildName = "RightHand";
+            grabPos = rightHandGrabPos;
+        }
+        else
+        {
+            return;
+        }
+
+        if (ghostHandState == GhostHandState.WaitingToClone && handCollisionStatus == HandCollisionStatus.Enter)
+        {
+            Debug.Log("TriggerEnter");
+            HandleGhostHandEntry(targetHand, childName, grandChildName, grabPos);
+        }
+        else if (ghostHandState == GhostHandState.WaitingToRecall && handCollisionStatus == HandCollisionStatus.Exit) // ghostHandState == GhostHandState.WaitingToRecall
+        {
+            Debug.Log("TriggerExit");
+            HandleGhostHandExit(targetHand);
         }
     }
 
@@ -100,19 +141,20 @@ public class GhostHandController : MonoBehaviour
     {
         if (ghostHand == null || virtualCenterEye == null) return;
 
-        float distance = Vector3.Distance(childOpenXRHand.transform.position, offsetVirtualCenterEye.transform.position);
-        Debug.Log("Distance: " + distance);
+        // float dista nce = Vector3.Distance(childOpenXRHand.transform.position, offsetVirtualCenterEye.transform.position);
+        // Debug.Log("Distance: " + distance);
         // Debug.Log("GH: " + ghostHand.name + " - child: " + childOpenXRHand.name + " - distance: " + distance);
-        if (distance > 0.22f && ghostHandClone != null)
-        {
-            Destroy(ghostHandClone);
-            ghostHandClone = null;
-            childOpenXRHandClone = null;
+        Destroy(ghostHandClone);
+        ghostHandClone = null;
+        childOpenXRHandClone = null;
 
-            childOpenXRHand.SetActive(true);
-            cupStateController.SyncWristPointToReal();
-            ghostHandState = GhostHandState.WaitingToClone;
-        }
+        grandChilHand.SetActive(true);
+        cupStateController.SyncWristPointToReal();
+        ghostHandState = GhostHandState.WaitingToClone;
+        // if (distance > 0.22f && ghostHandClone != null)
+        // {
+
+        // }
     }
 
     private GameObject GetChildByName(GameObject parent, string childName)
@@ -121,33 +163,37 @@ public class GhostHandController : MonoBehaviour
         return childTransform != null ? childTransform.gameObject : null;
     }
 
-    private void HandleGhostHandEntry(GameObject ghostHand, string childName, GameObject handGrabPos)
+    private void HandleGhostHandEntry(GameObject ghostHand, string childName, string grandChildName, GameObject handGrabPos)
     {
         if (ghostHand == null || virtualCenterEye == null) return;
 
         childOpenXRHand = GetChildByName(ghostHand, childName);
-        float distance = Vector3.Distance(childOpenXRHand.transform.position, offsetVirtualCenterEye.transform.position);
+        grandChilHand = GetChildByName(childOpenXRHand, grandChildName);
+        // float distance = Vector3.Distance(childOpenXRHand.transform.position, offsetVirtualCenterEye.transform.position);
 
-        if (distance <= 0.2f && ghostHandClone == null)
+        ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, ghostHand.transform.rotation, handGrabPos.transform);
+        childOpenXRHandClone = GetChildByName(ghostHandClone, childName);
+
+        // dòng for nằm nhằm xóa component HandVisual, 
+        // vì lúc spawn cần script HandVisual để lấy mesh, nhưng sau đó không cần nữa
+        foreach (var comp in ghostHandClone.GetComponents<Component>())
         {
-            ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, ghostHand.transform.rotation, handGrabPos.transform);
-            childOpenXRHandClone = GetChildByName(ghostHandClone, childName);
-
-            // dòng for nằm nhằm xóa component HandVisual, 
-            // vì lúc spawn cần script HandVisual để lấy mesh, nhưng sau đó không cần nữa
-            foreach (var comp in ghostHandClone.GetComponents<Component>())
+            if (!(comp is Transform))
             {
-                if (!(comp is Transform))
-                {
-                    DestroyImmediate(comp);
-                }
+                // DestroyImmediate(comp);
+                // comp.gameObject.SetActive(false);
+                Destroy(comp);
             }
-
-            StartCoroutine(ApplyTransformToGhostHand(ghostHand, ghostHandClone, childOpenXRHand));
         }
+
+        StartCoroutine(ApplyTransformToGhostHand(ghostHand, ghostHandClone, childOpenXRHand, grandChilHand));
+        // if (distance <= 0.2f && ghostHandClone == null)
+        // {
+
+        // }
     }
 
-    private IEnumerator ApplyTransformToGhostHand(GameObject originalHand, GameObject clonedHand, GameObject child)
+    private IEnumerator ApplyTransformToGhostHand(GameObject originalHand, GameObject clonedHand, GameObject child, GameObject grandChild)
     {
         yield return StartCoroutine(UpdateGhostHandPose(originalHand, clonedHand));
 
@@ -156,9 +202,10 @@ public class GhostHandController : MonoBehaviour
         ghostHandCloneMesh.transform.localPosition = Vector3.zero;
 
         cupStateController.SyncWristPointToGhostHand(child.transform.position, child.transform.rotation);
-        child.SetActive(false);
+        grandChild.SetActive(false);
 
         AttachCupToGhostHand();
+        Debug.Log("di toi day chua");
         ghostHandState = GhostHandState.WaitingToRecall;
     }
 
@@ -206,7 +253,7 @@ public class GhostHandController : MonoBehaviour
 
     private void AttachCupToGhostHand()
     {
-        if (!cupStateController.IsOnTable  && cupStateController.grabbedByHand != CupStateController.GrabbedBy.None)
+        if (!cupStateController.IsOnTable && cupStateController.grabbedByHand != CupStateController.GrabbedBy.None)
         {
             cupStateController.MakeCupInvisible();
         }
