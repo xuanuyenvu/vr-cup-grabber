@@ -107,7 +107,7 @@ namespace Cup
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Table"))
+            if (collision.gameObject.CompareTag("Table") && !isCupGrabLocked)
             {
                 isOnTable = true;
                 // Debug.Log("Cup has landed on the table!");
@@ -149,15 +149,6 @@ namespace Cup
 
         void Update()
         {
-            // if (IsGrabbing && grabbedByHand != GrabbedBy.None)
-            // { 
-            //     UpdateSpherePosition();
-            // }
-            // else 
-            // {
-
-            // }
-
             if (!isOnTable)
             {
                 CheckCupPosition();

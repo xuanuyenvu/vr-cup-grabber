@@ -91,6 +91,8 @@ public class GhostHandController : MonoBehaviour
         {
             if (childOpenXRHandClone != null)
             {
+                Debug.Log("childOpenXRHandClone != null");
+                Debug.Log("childOpenXRHandClone.pos : " + childOpenXRHandClone.transform.position);
                 cupStateController.SyncWristPointToGhostHand(childOpenXRHandClone.transform.position, childOpenXRHandClone.transform.rotation);
             }
             HandleGhostHandExit(targetHand);
@@ -113,9 +115,9 @@ public class GhostHandController : MonoBehaviour
     {
         if (ghostHand == null || virtualCenterEye == null) return;
 
-        // float distance = Vector3.Distance(childOpenXRHand.transform.position, offsetVirtualCenterEye.transform.position);
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
         // canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
+        Debug.Log("GhostHandClone :" + ghostHandClone != null);
         
         if (distance >= 0.19f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
@@ -143,7 +145,6 @@ public class GhostHandController : MonoBehaviour
         if (ghostHand == null || virtualCenterEye == null) return;
 
         childOpenXRHand = GetChildByName(ghostHand, childName);
-        // float distance = Vector3.Distance(childOpenXRHand.transform.position, offsetVirtualCenterEye.transform.position);
         float distance = Vector3.Distance(cupRim.transform.position, mouth.transform.position);
         // canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
 
