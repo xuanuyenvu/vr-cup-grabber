@@ -26,9 +26,15 @@ namespace Cup
         private bool isNearTable = false;
         private bool isPendingRegrab = false;
         private bool isGrabbing = false;
+
         private float maxTableOffset = 0.05f; // chiều cao tối đa của cốc so với mặt bàn
         private float minTableOffset = -0.08f; // chiều cao tối thiểu của cốc so với mặt bàn
         private float floorOffset = -0.15f; // chiều cao của cốc so với mặt bàn. Nếu đạt giá trị này thì xem như cốc đã rớt xuống sàn 
+
+
+        [Header("Settings for Ghost Hand Grabbing Logic")]
+        private bool isHandSwitchAllowed  = true; // cho phép thay đổi tay cầm cốc hay không
+        private bool isCupGrabLocked  = false; // biến khóa để tay không được cầm cốc nữa
 
 
         public enum GrabbedBy { LeftHand, RightHand, None };
@@ -65,6 +71,18 @@ namespace Cup
                 isGrabbing = value;
                 onGrabbingChange?.Invoke(isGrabbing);
             }
+        }
+
+        public bool IsHandSwitchAllowed
+        {
+            get { return isHandSwitchAllowed; }
+            set { isHandSwitchAllowed = value; }
+        }
+
+        public bool IsCupGrabLocked
+        {
+            get { return isCupGrabLocked; }
+            set { isCupGrabLocked = value; }
         }
 
 
@@ -261,6 +279,8 @@ namespace Cup
 
         public void DetermineGrabbingHand()
         {
+            if (!IsHandSwitchAllowed) return;
+            
             float distanceToLeftHand = Vector3.Distance(transform.position, leftHand.position);
             float distanceToRightHand = Vector3.Distance(transform.position, rightHand.position);
 

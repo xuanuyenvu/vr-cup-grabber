@@ -220,6 +220,11 @@ namespace Oculus.Interaction
 
         public override void ProcessPointerEvent(PointerEvent evt) // Duoc goi tu PointerInteractable.cs
         {
+            if (cupStateController.IsCupGrabLocked && evt.Type == PointerEventType.Move)
+            {
+                return;
+            }
+            
             switch (evt.Type)
             {
                 case PointerEventType.Select:

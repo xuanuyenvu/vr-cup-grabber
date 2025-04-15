@@ -1,7 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using Cup;
-using System.Runtime.InteropServices;
+using TMPro;
 
 public class GhostHandController : MonoBehaviour
 {
@@ -15,22 +14,23 @@ public class GhostHandController : MonoBehaviour
     [SerializeField] private GameObject ovrLeftHand;
     [SerializeField] private GameObject ovrRightHand;
 
+    [SerializeField] private GameObject mouth;
+    [SerializeField] private GameObject cupRim;
+    [SerializeField] private GameObject spawnPoint;
+
+    public GameObject canvas;
+
     private GameObject ghostHandClone;
     private GameObject childOpenXRHandClone;
     private enum GhostHandState
     {
         NotCloned,
         WaitingToClone,
-        WaitingToRecall,
-        WaitingToGrab
+        WaitingToRecall
     }
     private GhostHandState ghostHandState = GhostHandState.NotCloned;
     private GameObject childOpenXRHand;
-    private GameObject grandChilHand;
-    private HandCollider _ovrRightHandCollider;
-    private HandCollider _ovrLeftHandCollider;
-
-    public bool isLeftHand => cupStateController.grabbedByHand == CupStateController.GrabbedBy.LeftHand;
+    private bool isLeftHand => cupStateController.grabbedByHand == CupStateController.GrabbedBy.LeftHand;
 
     public void SetGhostHandState(bool _isGrabbing)
     {
@@ -51,89 +51,61 @@ public class GhostHandController : MonoBehaviour
     private void OnEnable()
     {
         cupStateController.onGrabbingChange += SetGhostHandState;
-
-        _ovrLeftHandCollider = ovrLeftHand.GetComponent<HandCollider>();
-        _ovrLeftHandCollider.onTriggerEnterAction += HandleHandNearHeadset;
-        _ovrLeftHandCollider.onTriggerExitAction += HandleHandNearHeadset;
-
-        _ovrRightHandCollider = ovrRightHand.GetComponent<HandCollider>();
-        _ovrRightHandCollider.onTriggerEnterAction += HandleHandNearHeadset;
-        _ovrRightHandCollider.onTriggerExitAction += HandleHandNearHeadset;
-
     }
 
     private void OnDisable()
     {
         cupStateController.onGrabbingChange -= SetGhostHandState;
-
-        _ovrLeftHandCollider.onTriggerEnterAction -= HandleHandNearHeadset;
-        _ovrLeftHandCollider.onTriggerExitAction -= HandleHandNearHeadset;
-
-        _ovrRightHandCollider.onTriggerEnterAction -= HandleHandNearHeadset;
-        _ovrRightHandCollider.onTriggerExitAction -= HandleHandNearHeadset;
     }
 
     void Update()
     {
+        UpdateVirtualCenterEyePosition();
         if (ghostHandState == GhostHandState.NotCloned) return;
 
-        UpdateVirtualCenterEyePosition();
+
+        GameObject targetHand;
+        string childName;
+        GameObject grabPos;
+
+        if (isLeftHand)
+        {
+            targetHand = ovrLeftHand;
+            childName = "OpenXRLeftHand";
+            grabPos = leftHandGrabPos;
+        }
+        else
+        {
+            targetHand = ovrRightHand;
+            childName = "OpenXRRightHand";
+            grabPos = rightHandGrabPos;
+        }
+
 
         if (ghostHandState == GhostHandState.WaitingToClone)
         {
             cupStateController.SyncWristPointToReal();
+            HandleGhostHandEntry(targetHand, childName, grabPos);
         }
-        else if (ghostHandState == GhostHandState.WaitingToRecall)
+        else // ghostHandState == GhostHandState.WaitingToRecall
         {
             if (childOpenXRHandClone != null)
             {
                 cupStateController.SyncWristPointToGhostHand(childOpenXRHandClone.transform.position, childOpenXRHandClone.transform.rotation);
             }
+            HandleGhostHandExit(targetHand);
         }
 
-        if (!cupStateController.IsGrabbing)
+        if (childOpenXRHand == null) 
+        {
+            childOpenXRHand = GetChildByName(targetHand, childName);
+        }
+        float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
+        canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
+
+        if(!cupStateController.IsGrabbing)
         {
             HandleGrabbingState();
-        }
-    }
-
-    private void HandleHandNearHeadset(HandType handType, HandCollisionStatus handCollisionStatus)
-    {
-        Debug.Log("HandleHandNearHeadset: " + handType + " - " + handCollisionStatus);
-        if (ghostHandState == GhostHandState.NotCloned) return;
-
-        GameObject targetHand;
-        string childName, grandChildName;
-        GameObject grabPos;
-
-        if (isLeftHand && handType == HandType.LeftHand)
-        {
-            targetHand = ovrLeftHand;
-            childName = "OpenXRLeftHand";
-            grandChildName = "LeftHand";
-            grabPos = leftHandGrabPos;
-        }
-        else if (!isLeftHand && handType == HandType.RightHand)
-        {
-            targetHand = ovrRightHand;
-            childName = "OpenXRRightHand";
-            grandChildName = "RightHand";
-            grabPos = rightHandGrabPos;
-        }
-        else
-        {
-            return;
-        }
-
-        if (ghostHandState == GhostHandState.WaitingToClone && handCollisionStatus == HandCollisionStatus.Enter)
-        {
-            Debug.Log("TriggerEnter");
-            HandleGhostHandEntry(targetHand, childName, grandChildName, grabPos);
-        }
-        else if (ghostHandState == GhostHandState.WaitingToRecall && handCollisionStatus == HandCollisionStatus.Exit) // ghostHandState == GhostHandState.WaitingToRecall
-        {
-            Debug.Log("TriggerExit");
-            HandleGhostHandExit(targetHand);
         }
     }
 
@@ -141,20 +113,23 @@ public class GhostHandController : MonoBehaviour
     {
         if (ghostHand == null || virtualCenterEye == null) return;
 
-        // float dista nce = Vector3.Distance(childOpenXRHand.transform.position, offsetVirtualCenterEye.transform.position);
-        // Debug.Log("Distance: " + distance);
-        // Debug.Log("GH: " + ghostHand.name + " - child: " + childOpenXRHand.name + " - distance: " + distance);
-        Destroy(ghostHandClone);
-        ghostHandClone = null;
-        childOpenXRHandClone = null;
+        // float distance = Vector3.Distance(childOpenXRHand.transform.position, offsetVirtualCenterEye.transform.position);
+        float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
+        // canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
+        
+        if (distance >= 0.19f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
+        {
+            Destroy(ghostHandClone);
+            ghostHandClone = null;
+            childOpenXRHandClone = null;
+            cupStateController.IsCupGrabLocked = false;
 
-        grandChilHand.SetActive(true);
-        cupStateController.SyncWristPointToReal();
-        ghostHandState = GhostHandState.WaitingToClone;
-        // if (distance > 0.22f && ghostHandClone != null)
-        // {
+            childOpenXRHand.SetActive(true);
+            cupStateController.SyncWristPointToReal();
 
-        // }
+            cupStateController.IsHandSwitchAllowed = true;
+            ghostHandState = GhostHandState.WaitingToClone;
+        }
     }
 
     private GameObject GetChildByName(GameObject parent, string childName)
@@ -163,56 +138,56 @@ public class GhostHandController : MonoBehaviour
         return childTransform != null ? childTransform.gameObject : null;
     }
 
-    private void HandleGhostHandEntry(GameObject ghostHand, string childName, string grandChildName, GameObject handGrabPos)
+    private void HandleGhostHandEntry(GameObject ghostHand, string childName, GameObject handGrabPos)
     {
         if (ghostHand == null || virtualCenterEye == null) return;
 
         childOpenXRHand = GetChildByName(ghostHand, childName);
-        grandChilHand = GetChildByName(childOpenXRHand, grandChildName);
         // float distance = Vector3.Distance(childOpenXRHand.transform.position, offsetVirtualCenterEye.transform.position);
+        float distance = Vector3.Distance(cupRim.transform.position, mouth.transform.position);
+        // canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
 
-        ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, ghostHand.transform.rotation, handGrabPos.transform);
-        childOpenXRHandClone = GetChildByName(ghostHandClone, childName);
-
-        // dòng for nằm nhằm xóa component HandVisual, 
-        // vì lúc spawn cần script HandVisual để lấy mesh, nhưng sau đó không cần nữa
-        foreach (var comp in ghostHandClone.GetComponents<Component>())
+        if (distance <= 0.05f && ghostHandClone == null)
         {
-            if (!(comp is Transform))
+            cupStateController.IsHandSwitchAllowed = false;
+
+            ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, ghostHand.transform.rotation, handGrabPos.transform);
+            childOpenXRHandClone = GetChildByName(ghostHandClone, childName);
+
+            // dòng for nằm nhằm xóa component HandVisual, 
+            // vì lúc spawn cần script HandVisual để lấy mesh, nhưng sau đó không cần nữa
+            foreach (var comp in ghostHandClone.GetComponents<Component>())
             {
-                // DestroyImmediate(comp);
-                // comp.gameObject.SetActive(false);
-                Destroy(comp);
+                if (!(comp is Transform))
+                {
+                    // DestroyImmediate(comp);
+                    // comp.gameObject.SetActive(false);
+                    Destroy(comp);
+                }
             }
+
+            cupStateController.IsCupGrabLocked = true;
+            ApplyTransformToGhostHand(ghostHand, ghostHandClone, childOpenXRHand);
         }
-
-        StartCoroutine(ApplyTransformToGhostHand(ghostHand, ghostHandClone, childOpenXRHand, grandChilHand));
-        // if (distance <= 0.2f && ghostHandClone == null)
-        // {
-
-        // }
     }
 
-    private IEnumerator ApplyTransformToGhostHand(GameObject originalHand, GameObject clonedHand, GameObject child, GameObject grandChild)
+    private void ApplyTransformToGhostHand(GameObject originalHand, GameObject clonedHand, GameObject child)
     {
-        yield return StartCoroutine(UpdateGhostHandPose(originalHand, clonedHand));
+        UpdateGhostHandPose(originalHand, clonedHand);
 
         ghostHandClone.transform.localPosition = Vector3.zero;
         GameObject ghostHandCloneMesh = GetChildByName(ghostHandClone, isLeftHand ? "OpenXRLeftHand" : "OpenXRRightHand");
         ghostHandCloneMesh.transform.localPosition = Vector3.zero;
 
         cupStateController.SyncWristPointToGhostHand(child.transform.position, child.transform.rotation);
-        grandChild.SetActive(false);
+        child.SetActive(false);
 
         AttachCupToGhostHand();
-        Debug.Log("di toi day chua");
         ghostHandState = GhostHandState.WaitingToRecall;
     }
 
-    private IEnumerator UpdateGhostHandPose(GameObject originalHand, GameObject clonedHand)
+    private void UpdateGhostHandPose(GameObject originalHand, GameObject clonedHand)
     {
-        yield return new WaitForEndOfFrame(); // Chờ 1 frame để đảm bảo transform ổn định
-
         SkinnedMeshRenderer originalRenderer = originalHand.GetComponentInChildren<SkinnedMeshRenderer>();
         SkinnedMeshRenderer clonedRenderer = clonedHand.GetComponentInChildren<SkinnedMeshRenderer>();
 
