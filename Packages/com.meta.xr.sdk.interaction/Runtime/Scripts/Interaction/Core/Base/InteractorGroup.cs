@@ -373,7 +373,7 @@ namespace Oculus.Interaction
         /// Implementation of <see cref="IInteractor.Preprocess"/>; for details, please refer to the related documentation
         /// provided for that interface.
         /// </summary>
-        public virtual void Preprocess()
+        public virtual void Preprocess() // duoc goi trong script nay
         {
             if (!UpdateActiveState())
             {
@@ -383,7 +383,7 @@ namespace Oculus.Interaction
             {
                 for (int i = 0; i < Interactors.Count; i++)
                 {
-                    Interactors[i].Preprocess();
+                    Interactors[i].Preprocess(); // Interactor.cs
                 }
             }
             WhenPreprocessed();
@@ -523,7 +523,7 @@ namespace Oculus.Interaction
         /// </summary>
         public virtual void Drive()
         {
-            Preprocess();
+            Preprocess(); // goi trong chinh script nay
 
             if (!UpdateActiveState())
             {

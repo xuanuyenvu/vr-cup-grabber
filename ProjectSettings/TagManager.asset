@@ -16,6 +16,9 @@ TagManager:
   - QDSUITooltip
   - QDSUIToggleBorderlessButton
   - Table
+  - LeftHand
+  - RightHand
+  - Headset
   layers:
   - Default
   - TransparentFX
