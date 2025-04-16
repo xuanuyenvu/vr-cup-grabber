@@ -91,21 +91,19 @@ public class GhostHandController : MonoBehaviour
         {
             if (childOpenXRHandClone != null)
             {
-                Debug.Log("childOpenXRHandClone != null");
-                Debug.Log("childOpenXRHandClone.pos : " + childOpenXRHandClone.transform.position);
                 cupStateController.SyncWristPointToGhostHand(childOpenXRHandClone.transform.position, childOpenXRHandClone.transform.rotation);
             }
             HandleGhostHandExit(targetHand);
         }
 
-        if (childOpenXRHand == null) 
+        if (childOpenXRHand == null)
         {
             childOpenXRHand = GetChildByName(targetHand, childName);
         }
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
         canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
 
-        if(!cupStateController.IsGrabbing)
+        if (!cupStateController.IsGrabbing)
         {
             HandleGrabbingState();
         }
@@ -117,8 +115,7 @@ public class GhostHandController : MonoBehaviour
 
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
         // canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
-        Debug.Log("GhostHandClone :" + ghostHandClone != null);
-        
+
         if (distance >= 0.19f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
             Destroy(ghostHandClone);
@@ -151,8 +148,10 @@ public class GhostHandController : MonoBehaviour
         if (distance <= 0.05f && ghostHandClone == null)
         {
             cupStateController.IsHandSwitchAllowed = false;
+            (handGrabPos.transform.position, handGrabPos.transform.rotation) = cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
 
-            ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, ghostHand.transform.rotation, handGrabPos.transform);
+            // ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, ghostHand.transform.rotation, handGrabPos.transform);
+            ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, handGrabPos.transform.rotation, handGrabPos.transform);
             childOpenXRHandClone = GetChildByName(ghostHandClone, childName);
 
             // dòng for nằm nhằm xóa component HandVisual, 
@@ -161,8 +160,6 @@ public class GhostHandController : MonoBehaviour
             {
                 if (!(comp is Transform))
                 {
-                    // DestroyImmediate(comp);
-                    // comp.gameObject.SetActive(false);
                     Destroy(comp);
                 }
             }
@@ -179,6 +176,7 @@ public class GhostHandController : MonoBehaviour
         ghostHandClone.transform.localPosition = Vector3.zero;
         GameObject ghostHandCloneMesh = GetChildByName(ghostHandClone, isLeftHand ? "OpenXRLeftHand" : "OpenXRRightHand");
         ghostHandCloneMesh.transform.localPosition = Vector3.zero;
+        ghostHandCloneMesh.transform.localRotation = Quaternion.identity;
 
         cupStateController.SyncWristPointToGhostHand(child.transform.position, child.transform.rotation);
         child.SetActive(false);

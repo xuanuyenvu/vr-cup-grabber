@@ -33,8 +33,8 @@ namespace Cup
 
 
         [Header("Settings for Ghost Hand Grabbing Logic")]
-        private bool isHandSwitchAllowed  = true; // cho phép thay đổi tay cầm cốc hay không
-        private bool isCupGrabLocked  = false; // biến khóa để tay không được cầm cốc nữa
+        private bool isHandSwitchAllowed = true; // cho phép thay đổi tay cầm cốc hay không
+        private bool isCupGrabLocked = false; // biến khóa để tay không được cầm cốc nữa
 
 
         public enum GrabbedBy { LeftHand, RightHand, None };
@@ -271,7 +271,7 @@ namespace Cup
         public void DetermineGrabbingHand()
         {
             if (!IsHandSwitchAllowed) return;
-            
+
             float distanceToLeftHand = Vector3.Distance(transform.position, leftHand.position);
             float distanceToRightHand = Vector3.Distance(transform.position, rightHand.position);
 
@@ -284,5 +284,22 @@ namespace Cup
             cupAttachPoint.transform.position = this.transform.position;
             cupAttachPoint.transform.rotation = this.transform.rotation;
         }
+
+        public (Vector3 position, Quaternion rotation) CalculateGhostHandSpawnTransform(Transform cupTargetTransform)
+        {
+            return MoveParentToAlignChild(wristPoint.transform, cupAttachPoint.transform, cupTargetTransform);
+        }
+
+        private (Vector3 position, Quaternion rotation) MoveParentToAlignChild(Transform parent, Transform child, Transform childTargetTransform)
+        {
+            Vector3 localPositionParent = child.InverseTransformPoint(parent.position);
+            Vector3 targetPositionParent = childTargetTransform.TransformPoint(localPositionParent);
+
+            Quaternion localRotationParent = Quaternion.Inverse(child.rotation) * parent.rotation;
+            Quaternion targetRotationParent = childTargetTransform.rotation * localRotationParent;
+
+            return (targetPositionParent, targetRotationParent);
+        }
+
     }
 }
