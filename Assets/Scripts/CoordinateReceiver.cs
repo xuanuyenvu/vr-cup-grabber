@@ -1,52 +1,53 @@
 using System;
-using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
-public class CupData
+public struct CupData
 {
     public string type; // "cup"
     public float x;
     public float y;
     public float z;
+    public int rotation;
+    public string handleDirection;
 }
 
 public class CoordinateReceiver : MonoBehaviour
 {
-    private UdpClient udpServer; // Thay TcpListener bằng UdpClient
-    private bool isRunning = true;
-
     [Header("References")]
-    public GameObject cupCube;
+    [SerializeField] private GameObject cupGameObject;
 
     [Header("Transform Settings")]
-    public float scaleFactor;
+    [SerializeField] private float scaleFactor;
 
-    private CupData latestCupData;
+    private CupData _latestCupData;
+    private UdpClient _udpServer;
+    private bool _isRunning = true;
+    private bool _hasNewCupData = false;
 
     async void Start()
     {
-        await Task.Run(() => StartServer());
+        await Task.Run(StartServer);
     }
 
     async Task StartServer()
     {
         try
         {
-            udpServer = new UdpClient(65432); // Tạo UDP server trên port 65432
-            Debug.Log("UDP Server started on port 65432...");
+            _udpServer = new UdpClient(65432);
+            // Debug.Log("UDP Server started on port 65432...");
 
-            while (isRunning)
+            while (_isRunning)
             {
-                // Nhận dữ liệu bất đồng bộ từ bất kỳ client nào
-                UdpReceiveResult result = await udpServer.ReceiveAsync();
+                UdpReceiveResult result = await _udpServer.ReceiveAsync();
                 byte[] buffer = result.Buffer;
                 string data = Encoding.UTF8.GetString(buffer);
 
-                Debug.Log("Received data: " + data);
+                // Debug.Log("Received data: " + data);
                 ProcessData(data);
             }
         }
@@ -58,45 +59,40 @@ public class CoordinateReceiver : MonoBehaviour
 
     void ProcessData(string data)
     {
-        if (data.Contains("\"type\": \"cup\""))
+        if (!data.Contains("\"type\": \"cup\"")) return;
+        try
         {
-            try
-            {
-                CupData cd = JsonUtility.FromJson<CupData>(data);
-                if (cd != null)
-                {
-                    latestCupData = cd;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError("Error parsing cup data: " + e.Message);
-            }
+            CupData cd = JsonUtility.FromJson<CupData>(data);
+            _latestCupData = cd;
+            _hasNewCupData = true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error parsing cup data: " + e.Message);
         }
     }
 
     void Update()
     {
-        if (latestCupData != null)
-        {
-            UpdateCupPosition(latestCupData);
-            latestCupData = null;
-        }
+        if (!_hasNewCupData) return;
+        UpdateCupTransform(_latestCupData);
+        _hasNewCupData = false;
     }
 
-    void UpdateCupPosition(CupData cd)
+    void UpdateCupTransform(CupData cd)
     {
         Vector3 cupPos = new Vector3(cd.x * scaleFactor, cd.z * scaleFactor, cd.y * scaleFactor);
 
-        if (cupCube != null)
-        {
-            cupCube.transform.localPosition = cupPos;
-        }
+        if (!cupGameObject) return;
+        cupGameObject.transform.localPosition = cupPos;
+        
+        if (cd.handleDirection == null) return;
+        cupGameObject.transform.localEulerAngles = new Vector3(0, cd.rotation, 0);   
     }
 
     void OnApplicationQuit()
     {
-        isRunning = false;
-        udpServer?.Close(); // Đóng UDP server
+        _isRunning = false;
+        _udpServer?.Close();
     }
 }
