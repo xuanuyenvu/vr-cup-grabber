@@ -10,8 +10,19 @@ public class IPInputManager : MonoBehaviour
     [SerializeField] private GameObject statusLight;
     [SerializeField] private GameObject statusText;
 
-    private bool isConnected = false;
+    [SerializeField] private Sprite connectedSprite;
+    [SerializeField] private Sprite disconnectedSprite;
+    [SerializeField] private Image btn;
 
+    public enum ConnectionStatus
+    {
+        Disconnected,
+        Waiting,
+        Connected
+    }
+
+    private ConnectionStatus currentStatus = ConnectionStatus.Disconnected;
+    private bool isConnected = false;
     private string currentInput = "";
 
     void Start()
@@ -36,8 +47,6 @@ public class IPInputManager : MonoBehaviour
         else
         {
             ui.SetActive(true);
-            currentInput = ""; 
-            UpdateInputField();
         }
     }
 
@@ -82,7 +91,25 @@ public class IPInputManager : MonoBehaviour
     {
         if (currentInput.Length > 0)
         {
-            isConnected = true; 
+            if (isConnected)
+            {
+                isConnected = false; 
+                currentStatus = ConnectionStatus.Disconnected;
+                btn.GetComponent<Image>().sprite = connectedSprite;
+                OnDisconnectToServer();
+                
+                currentInput = ""; 
+                UpdateInputField();
+                placeholder.SetActive(true);
+            }
+            else
+            {
+                isConnected = true; 
+                currentStatus = ConnectionStatus.Waiting;
+                btn.GetComponent<Image>().sprite = disconnectedSprite;
+                OnConnectToServer(currentInput);
+            }
+
             ChangeStatus();
             Debug.Log("Final IP: " + currentInput);
         }
@@ -128,18 +155,36 @@ public class IPInputManager : MonoBehaviour
 
     private void ChangeStatus()
     {
-        Debug.Log("Change Status: " + isConnected);
-        if(isConnected)
+        if (currentStatus == ConnectionStatus.Connected)
         {
-            Debug.Log("green");
             statusLight.GetComponent<Image>().color = Color.green;
             statusText.GetComponent<TextMeshProUGUI>().text = "Connected";
         }
-        else
+        else if (currentStatus == ConnectionStatus.Waiting)
         {
-            Debug.Log("red");
+            statusLight.GetComponent<Image>().color = Color.yellow;
+            statusText.GetComponent<TextMeshProUGUI>().text = "Waiting...";
+        }
+        else if (currentStatus == ConnectionStatus.Disconnected)
+        {
             statusLight.GetComponent<Image>().color = Color.red;
             statusText.GetComponent<TextMeshProUGUI>().text = "Disconnected";
         }
+    }
+
+    private void OnConnectToServer(string ipNumber)
+    {
+        
+    }
+
+    private void OnDisconnectToServer()
+    {
+        
+    }
+
+    private void SetSuccess()
+    {
+        currentStatus = ConnectionStatus.Connected;
+        ChangeStatus();
     }
 }
