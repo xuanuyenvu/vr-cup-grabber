@@ -63,7 +63,6 @@ public class GhostHandController : MonoBehaviour
         UpdateVirtualCenterEyePosition();
         if (ghostHandState == GhostHandState.NotCloned) return;
 
-
         GameObject targetHand;
         string childName;
         GameObject grabPos;

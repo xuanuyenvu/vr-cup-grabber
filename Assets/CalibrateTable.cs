@@ -11,12 +11,17 @@ public class CalibrateTable : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q)) // Nhấn Q để lưu vị trí headset
+        // if (Input.GetKeyDown(KeyCode.Q)) // Nhấn Q để lưu vị trí headset
+        // {
+        //     GetHeadsetPositionRelativeToController();
+        // }
+        // if (Input.GetKeyDown(KeyCode.E)) // Nhấn E để di chuyển controller và điều chỉnh headset
+        // {
+        //     AdjustHeadsetRelativeToTableAxis();
+        // }
+        if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.LTouch))
         {
             GetHeadsetPositionRelativeToController();
-        }
-        if (Input.GetKeyDown(KeyCode.E)) // Nhấn E để di chuyển controller và điều chỉnh headset
-        {
             AdjustHeadsetRelativeToTableAxis();
         }
     }
