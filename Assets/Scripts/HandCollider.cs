@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Codice.Client.BaseCommands;
+// using Codice.Client.BaseCommands;
 
 public enum HandType
 {
