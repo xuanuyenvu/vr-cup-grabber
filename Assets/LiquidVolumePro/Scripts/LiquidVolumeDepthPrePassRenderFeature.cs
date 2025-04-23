@@ -82,7 +82,7 @@ namespace LiquidVolumeFX {
                 cameraTextureDescriptor.depthBufferBits = 16;
                 cmd.GetTemporaryRT(targetId, cameraTextureDescriptor);
                 if (!interleavedRendering) {
-                    ConfigureTarget(targetId);
+                    ConfigureTarget(UnityEngine.Rendering.RTHandles.Alloc(targetId));
                 }
             }
 
@@ -110,7 +110,7 @@ namespace LiquidVolumeFX {
                             cmd.SetGlobalFloat(ShaderParams.FlaskThickness, 1.0f - lv.flaskThickness);
                             cmd.DrawRenderer(lv.mr, mat, lv.subMeshIndex >= 0 ? lv.subMeshIndex : 0, passId);
                             // draw back face
-                            cmd.SetRenderTarget(renderer.cameraColorTarget, renderer.cameraDepthTarget);
+                            cmd.SetRenderTarget(renderer.cameraColorTargetHandle, renderer.cameraDepthTargetHandle);
                             // draw liquid
                             cmd.DrawRenderer(lv.mr, lv.liqMat, lv.subMeshIndex >= 0 ? lv.subMeshIndex : 0, shaderPass: 1);
                         }

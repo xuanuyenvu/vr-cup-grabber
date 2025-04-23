@@ -36,7 +36,7 @@ public class IPInputManager : MonoBehaviour
         TCPClientManager.Instance.OnDisconnected += OnServerDisconnected;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         if (TCPClientManager.Instance == null) return;
         
