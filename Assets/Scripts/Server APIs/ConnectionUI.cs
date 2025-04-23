@@ -77,13 +77,7 @@ public class ConnectionUI : MonoBehaviour
         _isConnecting = false;
         UpdateUI();
     }
-    
-    private void Update()
-    {
-        // Cập nhật UI liên tục để hiển thị trạng thái kết nối
-        UpdateUI();
-    }
-    
+        
     private void UpdateUI()
     {
         bool isConnected = TCPClientManager.Instance.IsConnected;

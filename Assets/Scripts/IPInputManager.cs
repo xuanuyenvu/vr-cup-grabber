@@ -1,10 +1,10 @@
-using UnityEngine;
+ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
 public class IPInputManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI inputFieldText; 
+    [SerializeField] private TextMeshProUGUI ipInputFieldText; 
     [SerializeField] private GameObject placeholder;  
     [SerializeField] private GameObject ui; 
     [SerializeField] private GameObject statusLight;
@@ -13,7 +13,7 @@ public class IPInputManager : MonoBehaviour
     [SerializeField] private Sprite connectedSprite;
     [SerializeField] private Sprite disconnectedSprite;
     [SerializeField] private Image btn;
-
+    
     public enum ConnectionStatus
     {
         Disconnected,
@@ -21,13 +21,27 @@ public class IPInputManager : MonoBehaviour
         Connected
     }
 
-    private ConnectionStatus currentStatus = ConnectionStatus.Disconnected;
-    private bool isConnected = false;
-    private string currentInput = "";
+    private bool _isConnecting = false;
+    private string _currentInput = "";
 
     void Start()
     {
+        ipInputFieldText.text = TCPClientManager.Instance.ServerIP;
         UpdateInputField();
+    }
+
+    private void OnEnable()
+    {
+        TCPClientManager.Instance.OnConnected += OnServerConnected;
+        TCPClientManager.Instance.OnDisconnected += OnServerDisconnected;
+    }
+
+    private void OnDestroy()
+    {
+        if (TCPClientManager.Instance == null) return;
+        
+        TCPClientManager.Instance.OnConnected -= OnServerConnected;
+        TCPClientManager.Instance.OnDisconnected -= OnServerDisconnected;
     }
 
     void Update()
@@ -59,8 +73,8 @@ public class IPInputManager : MonoBehaviour
                 placeholder.SetActive(false);
             }
 
-            currentInput += number;
-            Debug.Log("Current Input: " + currentInput);
+            _currentInput += number;
+            Debug.Log("Current Input: " + _currentInput);
             UpdateInputField();
         }
     }
@@ -69,19 +83,19 @@ public class IPInputManager : MonoBehaviour
     {
         if (CanAddDot())
         {
-            currentInput += ".";
+            _currentInput += ".";
             UpdateInputField();
         }
     }
 
     public void OnDeletePressed()
     {
-        if (currentInput.Length > 0)
+        if (_currentInput.Length > 0)
         {
-            currentInput = currentInput.Substring(0, currentInput.Length - 1);
+            _currentInput = _currentInput.Substring(0, _currentInput.Length - 1);
             UpdateInputField();
         }
-        if (currentInput.Length == 0)
+        if (_currentInput.Length == 0)
         {
             placeholder.SetActive(true);
         }
@@ -89,44 +103,38 @@ public class IPInputManager : MonoBehaviour
 
     public void OnEnterPressed()
     {
-        if (currentInput.Length > 0)
+        if (_currentInput.Length > 0)
         {
+            // Bấm vào nút disconnect
+            bool isConnected = TCPClientManager.Instance.IsConnected;
             if (isConnected)
             {
-                isConnected = false; 
-                currentStatus = ConnectionStatus.Disconnected;
                 btn.GetComponent<Image>().sprite = connectedSprite;
-                OnDisconnectToServer();
-                
-                currentInput = ""; 
-                UpdateInputField();
-                placeholder.SetActive(true);
+                OnDisconnectToServer();                
             }
             else
             {
-                isConnected = true; 
-                currentStatus = ConnectionStatus.Waiting;
                 btn.GetComponent<Image>().sprite = disconnectedSprite;
-                OnConnectToServer(currentInput);
+                OnConnectToServer(_currentInput);
             }
 
             ChangeStatus();
-            Debug.Log("Final IP: " + currentInput);
+            Debug.Log("Final IP: " + _currentInput);
         }
     }
 
 
     private void UpdateInputField()
     {
-        inputFieldText.text = currentInput;
+        ipInputFieldText.text = _currentInput;
     }
 
     private bool CanAddDot()
     {
-        if (currentInput.Length == 0) return false;
-        if (currentInput.EndsWith(".")) return false;
+        if (_currentInput.Length == 0) return false;
+        if (_currentInput.EndsWith(".")) return false;
 
-        string[] parts = currentInput.Split('.');
+        string[] parts = _currentInput.Split('.');
         if (parts.Length >= 4) return false;
 
         return true;
@@ -134,7 +142,7 @@ public class IPInputManager : MonoBehaviour
 
     private bool CanAddCharacter(string character)
     {
-        string[] parts = currentInput.Split('.');
+        string[] parts = _currentInput.Split('.');
         string currentPart = parts[parts.Length - 1];
 
         if (currentPart.Length >= 3) return false;
@@ -150,22 +158,24 @@ public class IPInputManager : MonoBehaviour
 
     public string GetFinalIP()
     {
-        return currentInput;
+        return _currentInput;
     }
 
     private void ChangeStatus()
     {
-        if (currentStatus == ConnectionStatus.Connected)
-        {
-            statusLight.GetComponent<Image>().color = Color.green;
-            statusText.GetComponent<TextMeshProUGUI>().text = "Connected";
-        }
-        else if (currentStatus == ConnectionStatus.Waiting)
+        bool isConnected = TCPClientManager.Instance.IsConnected;
+
+        if (_isConnecting)
         {
             statusLight.GetComponent<Image>().color = Color.yellow;
             statusText.GetComponent<TextMeshProUGUI>().text = "Waiting...";
         }
-        else if (currentStatus == ConnectionStatus.Disconnected)
+        else if (isConnected)
+        {
+            statusLight.GetComponent<Image>().color = Color.green;
+            statusText.GetComponent<TextMeshProUGUI>().text = "Connected";
+        }
+        else
         {
             statusLight.GetComponent<Image>().color = Color.red;
             statusText.GetComponent<TextMeshProUGUI>().text = "Disconnected";
@@ -174,17 +184,25 @@ public class IPInputManager : MonoBehaviour
 
     private void OnConnectToServer(string ipNumber)
     {
-        
+        TCPClientManager.Instance.ServerIP = ipNumber;
+        _ = TCPClientManager.Instance.ConnectToServer();
+
     }
 
     private void OnDisconnectToServer()
     {
-        
+        TCPClientManager.Instance.Disconnect();
     }
 
-    private void SetSuccess()
+    private void OnServerDisconnected()
     {
-        currentStatus = ConnectionStatus.Connected;
+        _isConnecting = false;
+        ChangeStatus();
+    }
+
+    private void OnServerConnected()
+    {
+        _isConnecting = false;
         ChangeStatus();
     }
 }
