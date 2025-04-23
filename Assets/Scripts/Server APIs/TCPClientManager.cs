@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Threading;
+using System.IO;
 
 public class TCPClientManager : MonoBehaviour
 {
@@ -25,7 +27,7 @@ public class TCPClientManager : MonoBehaviour
     }
 
     [Header("Server Connection")]
-    [SerializeField] private string serverIP = "127.0.0.1";
+    [SerializeField] private string serverIP = "";
     private int _serverPort = 12345;
 
     private TcpClient _tcpClient;
@@ -33,7 +35,8 @@ public class TCPClientManager : MonoBehaviour
     private byte[] _receiveBuffer = new byte[4096]; // 4KB buffer
     private bool _isConnected = false;
     private bool _isRunning = true;
-    private bool _userDisconnected = false;
+    private bool _userDisconnected = true;
+    private CancellationTokenSource _cts;
 
     // Events
     public delegate void MessageReceivedHandler(JObject jsonData);
@@ -74,6 +77,7 @@ public class TCPClientManager : MonoBehaviour
 
         try
         {
+            _cts = new CancellationTokenSource();
             Debug.Log($"Connecting to server at {serverIP}:{_serverPort}...");
             _userDisconnected = false; // Reset biến khi người dùng chủ động kết nối
             _tcpClient = new TcpClient();
@@ -83,7 +87,7 @@ public class TCPClientManager : MonoBehaviour
             Debug.Log("Connected to server!");
 
             // Start receiving data
-            _ = ReceiveDataLoop();
+            _ = ReceiveDataLoop(_cts.Token);
 
             // Subscribe to real-time updates
             SubscribeToRealTimeUpdates();
@@ -104,18 +108,38 @@ public class TCPClientManager : MonoBehaviour
 
         try
         {
-            _userDisconnected = true; // Đánh dấu là người dùng chủ động ngắt kết nối
-            _isConnected = false;
-            _tcpClient?.Close();
+            Debug.Log("Disconnecting from server...");
+            _userDisconnected = true;
+            _isConnected = false; // Đặt cờ này trước để loop dừng lại
+
+            // Tạo bản sao của các đối tượng để tránh race condition
+            var cts = _cts;
+            var client = _tcpClient;
+            var stream = _stream;
+
+            // Reset các biến để ngăn các thao tác khác sử dụng chúng
+            _cts = null;
             _tcpClient = null;
             _stream = null;
+
+            // Hủy CancellationToken 
+            try { cts?.Cancel(); } catch { }
+
+            // Chờ một chút để đảm bảo lệnh cancel được xử lý
+            Task.Delay(50).Wait();
+
+            // Đóng stream trước
+            try { stream?.Close(); } catch { }
+
+            // Sau đó đóng client
+            try { client?.Close(); } catch { }
 
             OnDisconnected?.Invoke();
             Debug.Log("Disconnected from server");
         }
         catch (Exception e)
         {
-            Debug.LogError($"Error disconnecting: {e.Message}");
+            Debug.LogError($"Error during disconnect: {e.Message}");
         }
     }
 
@@ -148,7 +172,13 @@ public class TCPClientManager : MonoBehaviour
 
     public void SendRequest(object requestData)
     {
-        if (!_isConnected) return;
+        if (!_isConnected || _stream == null || _tcpClient == null || !_tcpClient.Connected)
+        {
+            Debug.LogWarning("Cannot send request - not connected");
+            _isConnected = false;
+            OnDisconnected?.Invoke();
+            return;
+        }
 
         try
         {
@@ -165,36 +195,78 @@ public class TCPClientManager : MonoBehaviour
         }
     }
 
-    private async Task ReceiveDataLoop()
+    private async Task ReceiveDataLoop(CancellationToken cancellationToken)
     {
         while (_isRunning && _isConnected)
         {
             try
             {
-                int bytesRead = await _stream.ReadAsync(_receiveBuffer, 0, _receiveBuffer.Length);
-                if (bytesRead > 0)
+                // Kiểm tra đầy đủ trước khi đọc
+                if (_stream == null || _tcpClient == null || !_tcpClient.Connected)
                 {
-                    string response = Encoding.UTF8.GetString(_receiveBuffer, 0, bytesRead);
-                    Debug.Log($"Received data: {response}");
-                    ProcessData(response);
-                }
-                else
-                {
-                    // Connection closed by server
-                    Debug.Log("Connection closed by server");
+                    Debug.Log("Connection is closed or invalid, exiting receive loop");
                     _isConnected = false;
                     OnDisconnected?.Invoke();
                     break;
                 }
+
+                // Sử dụng timeout để tránh treo vô hạn
+                using (var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
+                {
+                    timeoutCts.CancelAfter(TimeSpan.FromSeconds(5)); // 5 giây timeout
+
+                    int bytesRead = await _stream.ReadAsync(
+                        _receiveBuffer,
+                        0,
+                        _receiveBuffer.Length,
+                        timeoutCts.Token
+                    );
+
+                    if (bytesRead > 0)
+                    {
+                        string response = Encoding.UTF8.GetString(_receiveBuffer, 0, bytesRead);
+                        Debug.Log($"Received data: {response}");
+                        ProcessData(response);
+                    }
+                    else
+                    {
+                        Debug.Log("Connection closed by server (zero bytes)");
+                        _isConnected = false;
+                        OnDisconnected?.Invoke();
+                        break;
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.Log("Data receiving operation was cancelled");
+                break;
+            }
+            catch (IOException ioEx)
+            {
+                // Xử lý riêng lỗi IO - thường xảy ra khi socket bị đóng
+                Debug.LogWarning($"IO Exception: {ioEx.Message}");
+                break;
+            }
+            catch (ObjectDisposedException dispEx)
+            {
+                // Stream đã bị dispose
+                Debug.LogWarning($"Object disposed: {dispEx.Message}");
+                break;
             }
             catch (Exception e)
             {
                 Debug.LogError($"Error receiving data: {e.Message}");
-                _isConnected = false;
-                OnDisconnected?.Invoke();
+                if (_isConnected) // Chỉ cập nhật trạng thái nếu chưa disconnect
+                {
+                    _isConnected = false;
+                    OnDisconnected?.Invoke();
+                }
                 break;
             }
         }
+
+        Debug.Log("Receive loop ended");
     }
 
     private void ProcessData(string data)
@@ -293,5 +365,12 @@ public class TCPClientManager : MonoBehaviour
     {
         _isRunning = false;
         _tcpClient?.Close();
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("TCPClientManager is being destroyed");
+        _isRunning = false;
+        Disconnect();
     }
 }
