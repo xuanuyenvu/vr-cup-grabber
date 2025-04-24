@@ -147,9 +147,29 @@ public class GhostHandController : MonoBehaviour
         if (distance <= 0.05f && ghostHandClone == null)
         {
             cupStateController.IsHandSwitchAllowed = false;
+            float angleStep = 6f; 
+            int maxTries = 60;    
+
+            Quaternion originalRotation = spawnPoint.transform.rotation;
+
+            for (int i = 0; i < maxTries; i++)
+            {
+                (handGrabPos.transform.position, handGrabPos.transform.rotation) = 
+                    cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
+
+                Vector3 localPos = mouth.transform.InverseTransformPoint(handGrabPos.transform.position);
+                // Debug.Log($"localPos: {localPos}");
+
+                if (isLeftHand && localPos.x < -1.75f && localPos.y < 0.6f)
+                    break;
+                if (!isLeftHand && localPos.x > 1.75f && localPos.y < 0.6f)
+                    break;
+
+                spawnPoint.transform.Rotate(Vector3.up, angleStep, Space.Self);
+            }
+            // Debug.Log($"SpawnPoint: {mouth.transform.InverseTransformPoint(handGrabPos.transform.position)}");
             (handGrabPos.transform.position, handGrabPos.transform.rotation) = cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
 
-            // ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, ghostHand.transform.rotation, handGrabPos.transform);
             ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, handGrabPos.transform.rotation, handGrabPos.transform);
             childOpenXRHandClone = GetChildByName(ghostHandClone, childName);
 
