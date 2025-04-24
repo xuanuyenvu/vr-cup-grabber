@@ -5763,6 +5763,107 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _handType: 0
+--- !u!21 &1353323045
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: LiquidVolumeDefaultNoFlask(Clone)
+  m_Shader: {fileID: 4800000, guid: 045a60f5db3314d55b5609a847d062a8, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - LIQUID_VOLUME_DEPTH_AWARE
+  - LIQUID_VOLUME_IRREGULAR
+  - LIQUID_VOLUME_NON_AABB
+  m_InvalidKeywords:
+  - 
+  - 
+  - 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3001
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise2Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 11700000, guid: 406302629b5fb412fb2604bb899357d1, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex2D:
+        m_Texture: {fileID: 2800000, guid: 2e25f51e1f31e4da8bdac5d08b0f578f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Alpha: 0.373
+    - _AlphaCombined: 0.373
+    - _BasePos: -1
+    - _CullMode: 2
+    - _DeepAtten: 1.12
+    - _DoubleSidedBias: 0
+    - _FlaskBlurIntensity: 1
+    - _FlaskThickness: 0.05
+    - _FoamBottom: 1
+    - _FoamDensity: -0.299
+    - _FoamMaxPos: 0.90526456
+    - _FoamRaySteps: 7
+    - _FoamTurbulence: 1
+    - _FoamWeight: 100
+    - _Glossiness: 0.767
+    - _GlossinessInt: 0.5
+    - _Level: 1
+    - _LevelPos: 0.90240276
+    - _LiquidRaySteps: 10
+    - _LowerLimit: -0.01095833
+    - _Metallic: 0
+    - _Muddy: 0
+    - _Radius: 0.5
+    - _SmokeAtten: 4.86
+    - _SmokeHeightAtten: 0.8
+    - _SmokeRaySteps: 5
+    - _SmokeSpeed: 3.21
+    - _Sparkling: 1
+    - _SparklingIntensity: 135
+    - _SparklingThreshold: 0.932
+    - _Topology: 0
+    - _Turbulence: 1
+    - _Turbulence2: 1
+    - _TurbulenceSpeed: 1
+    - _UpperLimit: 0.01095833
+    - _ZTestMode: 4
+    m_Colors:
+    - _Bounds: {r: 1, g: 1, b: 1, a: 1}
+    - _Center: {r: 0.21976405, g: 0.78715557, b: -0.2866, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color1: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.052658826}
+    - _Color2: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.09361569}
+    - _EmissionColor: {r: 0.6830188, g: 0.65379447, b: 0.2822285, a: 1}
+    - _FlaskColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FlaskThickness: {r: 1, g: 1, b: 1, a: 0}
+    - _FoamColor: {r: 0.97735846, g: 0.9275685, b: 0.9275685, a: 0.33058038}
+    - _GlossinessInt: {r: 68.2, g: 32, b: 0.3, a: 0.3}
+    - _LightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Scale: {r: 3.1194224, g: 3.9109173, b: 97.772934, a: 112.90446}
+    - _Size: {r: 0.17927901, g: 0.085913345, b: 0.13187906, a: 0.04291785}
+    - _SmokeColor: {r: 1, g: 1, b: 1, a: 0.11848236}
+    - _Turbulence: {r: 0.5, g: 0.09, b: 282.74335, a: 94.24778}
+    - _ViewDir: {r: 0, g: 0, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1356152198 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2648232684967430331, guid: 635f2a8e2d0ba3e43bc59ed972af20a2, type: 3}
@@ -7946,107 +8047,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 832299377}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &2106255548
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: LiquidVolumeDefaultNoFlask(Clone)
-  m_Shader: {fileID: 4800000, guid: 045a60f5db3314d55b5609a847d062a8, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - LIQUID_VOLUME_IRREGULAR
-  - LIQUID_VOLUME_NON_AABB
-  m_InvalidKeywords:
-  - 
-  - 
-  - 
-  - 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3001
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Noise2Tex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NoiseTex:
-        m_Texture: {fileID: 11700000, guid: 406302629b5fb412fb2604bb899357d1, type: 2}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NoiseTex2D:
-        m_Texture: {fileID: 2800000, guid: 2e25f51e1f31e4da8bdac5d08b0f578f, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _Alpha: 0.373
-    - _AlphaCombined: 0.373
-    - _BasePos: -1
-    - _CullMode: 2
-    - _DeepAtten: 1.12
-    - _DoubleSidedBias: 0
-    - _FlaskBlurIntensity: 1
-    - _FlaskThickness: 0.05
-    - _FoamBottom: 1
-    - _FoamDensity: -0.299
-    - _FoamMaxPos: 0.9075078
-    - _FoamRaySteps: 7
-    - _FoamTurbulence: 1
-    - _FoamWeight: 100
-    - _Glossiness: 0.767
-    - _GlossinessInt: 0.5
-    - _Level: 1
-    - _LevelPos: 0.904646
-    - _LiquidRaySteps: 10
-    - _LowerLimit: -0.01095833
-    - _Metallic: 0
-    - _Muddy: 0
-    - _Radius: 0.5
-    - _SmokeAtten: 4.86
-    - _SmokeHeightAtten: 0.8
-    - _SmokeRaySteps: 5
-    - _SmokeSpeed: 3.21
-    - _Sparkling: 1
-    - _SparklingIntensity: 135
-    - _SparklingThreshold: 0.932
-    - _Topology: 0
-    - _Turbulence: 1
-    - _Turbulence2: 1
-    - _TurbulenceSpeed: 1
-    - _UpperLimit: 0.01095833
-    - _ZTestMode: 4
-    m_Colors:
-    - _Bounds: {r: 1, g: 1, b: 1, a: 1}
-    - _Center: {r: 0.21976405, g: 0.8405556, b: -0.286, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.052658826}
-    - _Color2: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.09361569}
-    - _EmissionColor: {r: 0.6830188, g: 0.65379447, b: 0.2822285, a: 1}
-    - _FlaskColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FlaskThickness: {r: 1, g: 1, b: 1, a: 0}
-    - _FoamColor: {r: 0.97735846, g: 0.9275685, b: 0.9275685, a: 0.33058038}
-    - _GlossinessInt: {r: 68.2, g: 32, b: 0.3, a: 0.3}
-    - _LightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Scale: {r: 3.1194224, g: 3.9109173, b: 97.772934, a: 112.90446}
-    - _Size: {r: 0.17927901, g: 0.085913345, b: 0.13187906, a: 0.04291785}
-    - _SmokeColor: {r: 1, g: 1, b: 1, a: 0.11848236}
-    - _Turbulence: {r: 0.5, g: 0.09, b: 282.74335, a: 94.24778}
-    - _ViewDir: {r: 0, g: 0, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &2135923365
 GameObject:
   m_ObjectHideFlags: 0
@@ -12496,9 +12496,101 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: _detail
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: _depthAware
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: _flaskMaterial
       value: 
       objectReference: {fileID: 1619832526}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: _depthAwareOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: _depthAwareCustomPass
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[0].targetPos.x
+      value: 0.27823457
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[0].targetPos.y
+      value: 0.14981867
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[0].targetPos.z
+      value: 0.14856002
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[1].targetPos.x
+      value: 0.39108613
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[1].targetPos.y
+      value: -0.025725733
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[1].targetPos.z
+      value: -0.026003776
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[2].targetPos.x
+      value: 0.08661425
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[2].targetPos.y
+      value: 0.1696531
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[2].targetPos.z
+      value: -0.023887664
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[3].targetPos.x
+      value: 0.18653019
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[3].targetPos.y
+      value: -0.350815
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[3].targetPos.z
+      value: 0.13855691
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[4].targetPos.x
+      value: 0.022398045
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[4].targetPos.y
+      value: 0.015256755
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[4].targetPos.z
+      value: -0.047728475
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[5].targetPos.x
+      value: -0.34327155
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[5].targetPos.y
+      value: 0.060764834
+      objectReference: {fileID: 0}
+    - target: {fileID: 405886835636035280, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: pointLightParams.Array.data[5].targetPos.z
+      value: -0.016760347
+      objectReference: {fileID: 0}
     - target: {fileID: 549214406276462111, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: _targetHandPose._fingersFreedom.Array.data[0]
       value: 2
@@ -12513,6 +12605,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1410164500646114357, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1410164500646114357, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1558367892811252630, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1720149266063697892, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
@@ -12533,7 +12633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1964133988418278914, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.45000002
+      value: 0.4506
       objectReference: {fileID: 0}
     - target: {fileID: 1964133988418278914, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12575,6 +12675,18 @@ PrefabInstance:
       propertyPath: _targetHandPose._fingersFreedom.Array.data[0]
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2990241377688534134, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990241377688534134, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990241377688534134, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 3822125640669034613, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: _handGhostProvider
       value: 
@@ -12587,10 +12699,26 @@ PrefabInstance:
       propertyPath: cupStateController
       value: 
       objectReference: {fileID: 2036656769}
+    - target: {fileID: 4109738219600081706, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5156620058824272736, guid: b519b89e85af83245b2eadf9927cfd05, type: 3}
+    - target: {fileID: 4139841606966347861, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4139841606966347861, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4139841606966347861, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2106255548}
+      objectReference: {fileID: 1353323045}
+    - target: {fileID: 4139841606966347861, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 1619832526}
     - target: {fileID: 4327825363885025150, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: _handGhostProvider
       value: 
