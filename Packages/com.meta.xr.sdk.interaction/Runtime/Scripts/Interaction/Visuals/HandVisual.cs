@@ -196,7 +196,7 @@ namespace Oculus.Interaction
             }
 #endif
 
-            if(cupStateController == null)
+            if (cupStateController == null)
             {
                 cupStateController = FindObjectOfType<CupStateController>();
             }
@@ -277,11 +277,11 @@ namespace Oculus.Interaction
 
         private void TryMakeCupInvisible()
         {
-            if (!cupStateController.IsOnTable  
+            if (!cupStateController.IsOnTable
                 && (((Hand.Handedness == Handedness.Left) && cupStateController.IsLeftHandGrabbing())
                     || ((Hand.Handedness == Handedness.Right) && cupStateController.IsRightHandGrabbing())))
             {
-                cupStateController.MakeCupInvisible();
+                cupStateController.MarkCupForRegrab();
             }
         }
 

@@ -150,8 +150,6 @@ public class GhostHandController : MonoBehaviour
             float angleStep = 6f; 
             int maxTries = 60;    
 
-            Quaternion originalRotation = spawnPoint.transform.rotation;
-
             for (int i = 0; i < maxTries; i++)
             {
                 (handGrabPos.transform.position, handGrabPos.transform.rotation) = 
@@ -201,6 +199,7 @@ public class GhostHandController : MonoBehaviour
         child.SetActive(false);
 
         AttachCupToGhostHand();
+        cupStateController.IsGrabbing = false;
         ghostHandState = GhostHandState.WaitingToRecall;
     }
 
@@ -248,7 +247,7 @@ public class GhostHandController : MonoBehaviour
     {
         if (!cupStateController.IsOnTable && cupStateController.grabbedByHand != CupStateController.GrabbedBy.None)
         {
-            cupStateController.MakeCupInvisible();
+            cupStateController.MarkCupForRegrab();
         }
     }
 
