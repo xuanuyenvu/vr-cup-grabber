@@ -251,16 +251,14 @@ namespace Cup
             transform.rotation = cupAttachPoint.transform.rotation;
         }
 
-        public void MakeCupInvisible()
+        public void MarkCupForRegrab()
         {
             isPendingRegrab = true;
-            HideCup();
         }
 
         public void PlaceCupInHand()
         {
             MoveToHandPosition();
-            ShowCup();
 
             if (isGrabbing)
             {
