@@ -175,9 +175,13 @@ public class GhostHandController : MonoBehaviour
             // vì lúc spawn cần script HandVisual để lấy mesh, nhưng sau đó không cần nữa
             foreach (var comp in ghostHandClone.GetComponents<Component>())
             {
-                if (!(comp is Transform))
+                // if (!(comp is Transform))
+                // {
+                //     Destroy(comp);
+                // }
+                if (comp is Behaviour behaviour && !(comp is Transform))
                 {
-                    Destroy(comp);
+                    behaviour.enabled = false;
                 }
             }
 
