@@ -71,6 +71,13 @@ public class TCPClientManager : MonoBehaviour
         }
     }
 
+    // DEBUG
+    private async void Start()
+    {
+        // Initialize the TCP client
+        await ConnectToServer();
+    }
+
     public async Task ConnectToServer()
     {
         if (_isConnected) return;
