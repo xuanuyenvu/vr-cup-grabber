@@ -27,7 +27,7 @@ public class TCPClientManager : MonoBehaviour
     }
 
     [Header("Server Connection")]
-    [SerializeField] private string serverIP = "";
+    [SerializeField] private string serverIP;
     private int _serverPort = 12345;
 
     private TcpClient _tcpClient;
