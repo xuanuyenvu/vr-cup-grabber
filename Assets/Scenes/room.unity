@@ -2207,107 +2207,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 455929495}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &512805026
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: LiquidVolumeDefaultNoFlask(Clone)
-  m_Shader: {fileID: 4800000, guid: 045a60f5db3314d55b5609a847d062a8, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - LIQUID_VOLUME_IRREGULAR
-  - LIQUID_VOLUME_NON_AABB
-  m_InvalidKeywords:
-  - 
-  - 
-  - 
-  - 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3001
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Noise2Tex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NoiseTex:
-        m_Texture: {fileID: 11700000, guid: 406302629b5fb412fb2604bb899357d1, type: 2}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NoiseTex2D:
-        m_Texture: {fileID: 2800000, guid: 2e25f51e1f31e4da8bdac5d08b0f578f, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _Alpha: 0.373
-    - _AlphaCombined: 0.373
-    - _BasePos: -1
-    - _CullMode: 2
-    - _DeepAtten: 1.12
-    - _DoubleSidedBias: 0
-    - _FlaskBlurIntensity: 1
-    - _FlaskThickness: 0.05
-    - _FoamBottom: 1
-    - _FoamDensity: -0.299
-    - _FoamMaxPos: 0.9044245
-    - _FoamRaySteps: 7
-    - _FoamTurbulence: 1
-    - _FoamWeight: 100
-    - _Glossiness: 0.767
-    - _GlossinessInt: 0.5
-    - _Level: 1
-    - _LevelPos: 0.90159196
-    - _LiquidRaySteps: 10
-    - _LowerLimit: -0.01095833
-    - _Metallic: 0
-    - _Muddy: 0
-    - _Radius: 0.5
-    - _SmokeAtten: 4.86
-    - _SmokeHeightAtten: 0.8
-    - _SmokeRaySteps: 5
-    - _SmokeSpeed: 3.21
-    - _Sparkling: 1
-    - _SparklingIntensity: 135
-    - _SparklingThreshold: 0.932
-    - _Topology: 0
-    - _Turbulence: 1
-    - _Turbulence2: 1
-    - _TurbulenceSpeed: 1
-    - _UpperLimit: 0.01095833
-    - _ZTestMode: 4
-    m_Colors:
-    - _Bounds: {r: 1, g: 1, b: 1, a: 1}
-    - _Center: {r: 0.21976405, g: 0.83815557, b: -0.2866, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.052658826}
-    - _Color2: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.09361569}
-    - _EmissionColor: {r: 0.6830188, g: 0.65379447, b: 0.2822285, a: 1}
-    - _FlaskColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FlaskThickness: {r: 1, g: 1, b: 1, a: 0}
-    - _FoamColor: {r: 0.97735846, g: 0.9275685, b: 0.9275685, a: 0.33058038}
-    - _GlossinessInt: {r: 68.2, g: 32, b: 0.3, a: 0.3}
-    - _LightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Scale: {r: 3.1515813, g: 3.951236, b: 98.7809, a: 114.06842}
-    - _Size: {r: 0.1774496, g: 0.08503668, b: 0.13053337, a: 0.042479917}
-    - _SmokeColor: {r: 1, g: 1, b: 1, a: 0.11848236}
-    - _Turbulence: {r: 0.5, g: 0.09, b: 282.74335, a: 94.24778}
-    - _ViewDir: {r: 0, g: 0, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1001 &618169814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3065,6 +2964,11 @@ Transform:
   - {fileID: 986682333}
   m_Father: {fileID: 223143803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &794252013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1410164500646114357, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+  m_PrefabInstance: {fileID: 5834588954675733552}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832299376
 GameObject:
   m_ObjectHideFlags: 0
@@ -6406,6 +6310,11 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
+--- !u!23 &1629810839 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7766955335426169168, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+  m_PrefabInstance: {fileID: 5834588954675733552}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1646787410 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8030197382645210610, guid: d27ac1ffd4cdd7c40a39dcfa6012355c, type: 3}
@@ -7910,6 +7819,107 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4733c5f009d26ad49b3685117b8d3eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!21 &2018777914
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: LiquidVolumeDefaultNoFlask(Clone)
+  m_Shader: {fileID: 4800000, guid: 045a60f5db3314d55b5609a847d062a8, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - LIQUID_VOLUME_IRREGULAR
+  - LIQUID_VOLUME_NON_AABB
+  m_InvalidKeywords:
+  - 
+  - 
+  - 
+  - 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3001
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise2Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 11700000, guid: 406302629b5fb412fb2604bb899357d1, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex2D:
+        m_Texture: {fileID: 2800000, guid: 2e25f51e1f31e4da8bdac5d08b0f578f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Alpha: 0.373
+    - _AlphaCombined: 0.373
+    - _BasePos: -1
+    - _CullMode: 2
+    - _DeepAtten: 1.12
+    - _DoubleSidedBias: 0
+    - _FlaskBlurIntensity: 1
+    - _FlaskThickness: 0.05
+    - _FoamBottom: 1
+    - _FoamDensity: -0.299
+    - _FoamMaxPos: 0.9044245
+    - _FoamRaySteps: 7
+    - _FoamTurbulence: 1
+    - _FoamWeight: 100
+    - _Glossiness: 0.767
+    - _GlossinessInt: 0.5
+    - _Level: 1
+    - _LevelPos: 0.90159196
+    - _LiquidRaySteps: 10
+    - _LowerLimit: -0.01095833
+    - _Metallic: 0
+    - _Muddy: 0
+    - _Radius: 0.5
+    - _SmokeAtten: 4.86
+    - _SmokeHeightAtten: 0.8
+    - _SmokeRaySteps: 5
+    - _SmokeSpeed: 3.21
+    - _Sparkling: 1
+    - _SparklingIntensity: 135
+    - _SparklingThreshold: 0.932
+    - _Topology: 0
+    - _Turbulence: 1
+    - _Turbulence2: 1
+    - _TurbulenceSpeed: 1
+    - _UpperLimit: 0.01095833
+    - _ZTestMode: 4
+    m_Colors:
+    - _Bounds: {r: 1, g: 1, b: 1, a: 1}
+    - _Center: {r: 0.21976405, g: 0.83815557, b: -0.2866, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color1: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.052658826}
+    - _Color2: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.09361569}
+    - _EmissionColor: {r: 0.6830188, g: 0.65379447, b: 0.2822285, a: 1}
+    - _FlaskColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FlaskThickness: {r: 1, g: 1, b: 1, a: 0}
+    - _FoamColor: {r: 0.97735846, g: 0.9275685, b: 0.9275685, a: 0.33058038}
+    - _GlossinessInt: {r: 68.2, g: 32, b: 0.3, a: 0.3}
+    - _LightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Scale: {r: 3.1515813, g: 3.951236, b: 98.7809, a: 114.06842}
+    - _Size: {r: 0.1774496, g: 0.08503668, b: 0.13053337, a: 0.042479917}
+    - _SmokeColor: {r: 1, g: 1, b: 1, a: 0.11848236}
+    - _Turbulence: {r: 0.5, g: 0.09, b: 282.74335, a: 94.24778}
+    - _ViewDir: {r: 0, g: 0, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!4 &2036656765 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1964133988418278914, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
@@ -12433,6 +12443,8 @@ MonoBehaviour:
   cuppSphere: {fileID: 315649178}
   wristPoint: {fileID: 177171223}
   cupAttachPoint: {fileID: 0}
+  cupMeshRenderer: {fileID: 0}
+  liquid: {fileID: 0}
   grabbedByHand: 2
   IsTrackedDataValid: 0
   debugText: {fileID: 850775485}
@@ -12671,6 +12683,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2147377065029869307, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2310040113372821118, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: _handGhostProvider
       value: 
@@ -12707,6 +12723,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.86
       objectReference: {fileID: 0}
+    - target: {fileID: 3368760728769778353, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3822125640669034613, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: _handGhostProvider
       value: 
@@ -12714,6 +12734,10 @@ PrefabInstance:
     - target: {fileID: 3822125640669034613, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: _targetHandPose._fingersFreedom.Array.data[0]
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860720545203038214, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3926740589899125832, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: cupStateController
@@ -12734,11 +12758,15 @@ PrefabInstance:
     - target: {fileID: 4139841606966347861, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 512805026}
+      objectReference: {fileID: 2018777914}
     - target: {fileID: 4139841606966347861, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 1619832526}
+    - target: {fileID: 4273491788220055636, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4327825363885025150, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: _handGhostProvider
       value: 
@@ -12758,6 +12786,10 @@ PrefabInstance:
     - target: {fileID: 4750636719543948463, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: _targetHandPose._fingersFreedom.Array.data[0]
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784840499766523826, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5095541043976164205, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: m_Name
@@ -12783,6 +12815,18 @@ PrefabInstance:
       propertyPath: _targetHandPose._fingersFreedom.Array.data[0]
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7766955335426169168, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849886592657971538, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: _supportedGrabTypes
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7888980237073330617, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: liquid
+      value: 
+      objectReference: {fileID: 794252013}
     - target: {fileID: 7888980237073330617, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: debugCube
       value: 
@@ -12803,6 +12847,10 @@ PrefabInstance:
       propertyPath: cupAttachPoint
       value: 
       objectReference: {fileID: 1512107153}
+    - target: {fileID: 7888980237073330617, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
+      propertyPath: cupMeshRenderer
+      value: 
+      objectReference: {fileID: 1629810839}
     - target: {fileID: 7984526194302956334, guid: 6f7df8db733eae94cbd0b9f9379afac2, type: 3}
       propertyPath: _targetHandPose._fingersFreedom.Array.data[0]
       value: 2

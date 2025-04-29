@@ -19,9 +19,11 @@ namespace Cup
 
     public class CupStateController : MonoBehaviour
     {
-        public GameObject cuppSphere;
-        public GameObject wristPoint; // vị trí cổ tay
-        public GameObject cupAttachPoint;
+        [SerializeField] private GameObject cuppSphere;
+        [SerializeField] private GameObject wristPoint; // vị trí cổ tay
+        [SerializeField] private GameObject cupAttachPoint;
+        [SerializeField] private MeshRenderer cupMeshRenderer; 
+        [SerializeField] private GameObject liquid;
         private bool isOnTable = true;
         private bool isNearTable = false;
         private bool isPendingRegrab = false;
@@ -45,8 +47,6 @@ namespace Cup
         // [HideInInspector] public Quaternion cupRotation = Quaternion.identity;
         [HideInInspector] public HandInfo leftHand = new HandInfo(Vector3.zero, Quaternion.identity);
         [HideInInspector] public HandInfo rightHand = new HandInfo(Vector3.zero, Quaternion.identity);
-
-
         [HideInInspector] public bool IsTrackedDataValid = false;
         public bool IsOnTable
         {
@@ -226,12 +226,15 @@ namespace Cup
             {
                 rb.useGravity = false;
             }
-            // gameObject.SetActive(false);
+
+            cupMeshRenderer.enabled = false;
+            liquid.SetActive(false);
         }
 
         private void ShowCup()
         {
-            // gameObject.SetActive(true);
+            cupMeshRenderer.enabled = true;
+            liquid.SetActive(true);
         }
 
         public void SyncWristPointToGhostHand(Vector3 position, Quaternion rotation)
@@ -256,9 +259,23 @@ namespace Cup
             isPendingRegrab = true;
         }
 
+        public void MakeCupInvisible()
+        {
+            if (IsHandSwitchAllowed)
+            {
+                MarkCupForRegrab();
+                HideCup();
+            }
+        }
+
         public void PlaceCupInHand()
         {
             MoveToHandPosition();
+
+            if (IsTrackedDataValid && !cupMeshRenderer.enabled)
+            {
+                ShowCup();
+            }
 
             if (isGrabbing)
             {
