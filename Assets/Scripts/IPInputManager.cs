@@ -26,7 +26,8 @@ public class IPInputManager : MonoBehaviour
 
     void Start()
     {
-        ipInputFieldText.text = TCPClientManager.Instance.ServerIP;
+        _currentInput = "192.168.2.243";
+        placeholder.SetActive(false);
         UpdateInputField();
     }
 

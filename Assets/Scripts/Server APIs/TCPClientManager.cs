@@ -27,7 +27,7 @@ public class TCPClientManager : MonoBehaviour
     }
 
     [Header("Server Connection")]
-    [SerializeField] private string serverIP = "";
+    [SerializeField] private string serverIP;
     private int _serverPort = 12345;
 
     private TcpClient _tcpClient;
@@ -69,6 +69,13 @@ public class TCPClientManager : MonoBehaviour
             // Attempt to reconnect every 3 seconds
             _ = ReconnectAsync();
         }
+    }
+
+    // DEBUG
+    private async void Start()
+    {
+        // Initialize the TCP client
+        await ConnectToServer();
     }
 
     public async Task ConnectToServer()
