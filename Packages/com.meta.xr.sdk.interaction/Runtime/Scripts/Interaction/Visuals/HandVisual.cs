@@ -243,7 +243,7 @@ namespace Oculus.Interaction
                 UpdateTrackedDataValidity(false);
                 if (IsVisible || ForceOffVisibility)
                 {
-                    // TryMakeCupInvisible();
+                    TryMakeCupInvisible();
                     SkinnedMeshRenderer.enabled = false;
                 }
             }
@@ -251,7 +251,7 @@ namespace Oculus.Interaction
             {
                 UpdateTrackedDataValidity(true);
                 UpdateHandPosition();
-                // HandleGrabbingState();
+                HandleGrabbingState();
 
                 if (!IsVisible && !ForceOffVisibility)
                 {
@@ -281,7 +281,7 @@ namespace Oculus.Interaction
                 && (((Hand.Handedness == Handedness.Left) && cupStateController.IsLeftHandGrabbing())
                     || ((Hand.Handedness == Handedness.Right) && cupStateController.IsRightHandGrabbing())))
             {
-                cupStateController.MarkCupForRegrab();
+                cupStateController.MakeCupInvisible();
             }
         }
 
