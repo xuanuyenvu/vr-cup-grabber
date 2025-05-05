@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9c733de1bbad9f348a59847217abab7b
+guid: 2960ee1bd65880a46a4af3c8156d3929
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -8,22 +8,12 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Diffuse_Bake
-    second: {fileID: 2800000, guid: 4e3d05a51f13de44fa110c92d7217dcd, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Metallic
-    second: {fileID: 2800000, guid: 692a39f0f68e6c84ab4dce3e50a69885, type: 3}
+    second: {fileID: 2800000, guid: 215f50f5994c70c4fadb4ecef6192f43, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Normal_Bake
-    second: {fileID: 2800000, guid: f563e759153138347ba41ba1d37eef3f, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Roughness
-    second: {fileID: 2800000, guid: 7b9bd202a1428d34b9bd5dce8d03d7be, type: 3}
+    second: {fileID: 2800000, guid: 1bbc062c963016a45bb1005dd8b96e37, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -55,7 +45,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 100
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
