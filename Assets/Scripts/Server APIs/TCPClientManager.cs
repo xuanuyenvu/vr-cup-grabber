@@ -276,16 +276,93 @@ public class TCPClientManager : MonoBehaviour
         Debug.Log("Receive loop ended");
     }
 
+    // private void ProcessData(string data)
+    // {
+    //     try
+    //     {
+    //         // Parse the JSON data
+    //         JObject jsonObject = JObject.Parse(data);
+
+    //         // Check if this is a real-time update message
+    //         if (jsonObject["type"]?.ToString() == "real_time_update")
+    //         {
+    //             Debug.Log($"Processing data: {data}");
+    //             // Extract the cup data from the message
+    //             JObject cupDataObject = jsonObject["data"] as JObject;
+    //             if (cupDataObject != null && cupDataObject["type"]?.ToString() == "cup")
+    //             {
+    //                 // Trigger the event with the cup data
+    //                 OnCupDataReceived?.Invoke(cupDataObject);
+    //             }
+    //         }
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         Debug.LogError($"Error parsing data: {e.Message}");
+    //     }
+    // }
     private void ProcessData(string data)
+    {
+        int braceCount = 0;
+        int startIndex = 0;
+        for (int i = 0; i < data.Length; i++)
+        {
+            if (data[i] == '{')
+            {
+                if (braceCount == 0)
+                {
+                    startIndex = i; // Đánh dấu bắt đầu của một JSON object mới
+                }
+                braceCount++;
+            }
+            else if (data[i] == '}')
+            {
+                braceCount--;
+                if (braceCount == 0 && startIndex >= 0) // Đã tìm thấy một JSON object hoàn chỉnh
+                {
+                    string jsonString = data.Substring(startIndex, i - startIndex + 1);
+                    try
+                    {
+                        JObject jsonObject = JObject.Parse(jsonString);
+                        // Xử lý từng JSON object riêng lẻ
+                        ProcessSingleJsonObject(jsonObject);
+                    }
+                    catch (JsonReaderException jsonEx)
+                    {
+                        Debug.LogError($"Error parsing JSON segment: {jsonEx.Message}\nSegment: {jsonString}");
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError($"Error processing JSON segment: {e.Message}\nSegment: {jsonString}");
+                    }
+                    startIndex = -1; // Reset startIndex để tìm object tiếp theo
+                }
+                else if (braceCount < 0)
+                {
+                    // Lỗi cú pháp JSON (dấu } thừa)
+                    Debug.LogError($"Invalid JSON structure detected near index {i}. Resetting brace count.");
+                    braceCount = 0; // Cố gắng phục hồi bằng cách reset
+                    startIndex = -1;
+                }
+            }
+        }
+
+        if (braceCount != 0)
+        {
+            Debug.LogWarning($"Incomplete JSON data received or parsing error. Remaining brace count: {braceCount}");
+            // Có thể bạn muốn lưu trữ phần dữ liệu chưa hoàn chỉnh này để ghép với lần nhận tiếp theo
+        }
+    }
+
+    // Hàm mới để xử lý một JSON object đã được parse
+    private void ProcessSingleJsonObject(JObject jsonObject)
     {
         try
         {
-            // Parse the JSON data
-            JObject jsonObject = JObject.Parse(data);
-
             // Check if this is a real-time update message
             if (jsonObject["type"]?.ToString() == "real_time_update")
             {
+                Debug.Log($"Processing real-time update: {jsonObject.ToString(Formatting.None)}");
                 // Extract the cup data from the message
                 JObject cupDataObject = jsonObject["data"] as JObject;
                 if (cupDataObject != null && cupDataObject["type"]?.ToString() == "cup")
@@ -294,10 +371,23 @@ public class TCPClientManager : MonoBehaviour
                     OnCupDataReceived?.Invoke(cupDataObject);
                 }
             }
+            // Thêm các kiểu message khác nếu cần
+            else if (jsonObject["result"]?["status"] != null)
+            {
+                Debug.Log($"Processing result message: {jsonObject.ToString(Formatting.None)}");
+                // Xử lý các message kết quả (ví dụ: xác nhận subscribe)
+                string status = jsonObject["result"]["status"].ToString();
+                string message = jsonObject["result"]["message"]?.ToString();
+                Debug.Log($"Server Result: Status='{status}', Message='{message}'");
+            }
+            else
+            {
+                Debug.LogWarning($"Received unknown JSON object type: {jsonObject.ToString(Formatting.None)}");
+            }
         }
         catch (Exception e)
         {
-            Debug.LogError($"Error parsing data: {e.Message}");
+            Debug.LogError($"Error processing parsed JSON object: {e.Message}\nObject: {jsonObject.ToString(Formatting.None)}");
         }
     }
 
