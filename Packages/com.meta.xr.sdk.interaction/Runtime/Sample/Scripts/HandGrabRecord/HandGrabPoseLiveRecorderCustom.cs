@@ -58,8 +58,8 @@ namespace Oculus.Interaction.HandGrab.Recorder
 
         // [SerializeField, Optional]
         // private TimerUIControl _timerControl;
-        [SerializeField] 
-        private int _delaySeconds = 3;
+        [HideInInspector]
+        public int delaySeconds = 0;
 
         [SerializeField, Optional]
         private TMPro.TextMeshProUGUI _delayLabel;
@@ -151,9 +151,9 @@ namespace Oculus.Interaction.HandGrab.Recorder
         {
             ClearSnapshot();
             HideAllRecordedPoses();
-            if (_delaySeconds != 0)
+            if (delaySeconds != 0)
             {
-                _delayedSnapRoutine = StartCoroutine(DelayedSnapshot(_delaySeconds));
+                _delayedSnapRoutine = StartCoroutine(DelayedSnapshot(delaySeconds));
             }
             else
             {
@@ -197,18 +197,18 @@ namespace Oculus.Interaction.HandGrab.Recorder
         {
             for (int i = seconds; i > 0; i--)
             {
-                _delayLabel.text = i.ToString();
+                _delayLabel.text = "<size=0.3>" + i.ToString();
                 WhenTimeStep?.Invoke();
                 yield return _waitOneSeconds;
             }
             if (TakeSnapshot())
             {
-                _delayLabel.text = "<size=10>Snap!";
+                _delayLabel.text = "<size=0.2>Snap!";
                 WhenSnapshot?.Invoke();
             }
             else
             {
-                _delayLabel.text = "<size=10>Error";
+                _delayLabel.text = "<size=0.2>Error";
                 WhenError?.Invoke();
             }
             yield return _waitOneSeconds;

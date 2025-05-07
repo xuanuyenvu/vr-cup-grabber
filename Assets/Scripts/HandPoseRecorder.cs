@@ -11,12 +11,14 @@ public class HandPoseRecorder : MonoBehaviour
     [SerializeField] private GameObject cup;
     public bool recording = false;
     public bool createPrefab = false;
+    public int delayTime = 5;
     public string userId = null;
     
     void Update()
     {
         if (recording)
         {
+            handGrabPoseLiveRecorderCustom.delaySeconds = delayTime;
             handGrabPoseLiveRecorderCustom.Record();
             recording = false;
         }
