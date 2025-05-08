@@ -151,6 +151,7 @@ namespace Cup
         {
             if (!isOnTable)
             {
+                UpdateSpherePosition();
                 CheckCupPosition();
             }
         }
