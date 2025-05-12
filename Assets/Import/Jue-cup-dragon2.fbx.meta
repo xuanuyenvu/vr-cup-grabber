@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ea8b1bd62597bfb46b9448e0d545256e
+guid: a9f51d50ff082b745a3c8ae81c2251d4
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -8,32 +8,32 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Diffuse_Bake
-    second: {fileID: 2800000, guid: 4f19b97526f91224ba57621920196f05, type: 3}
+    second: {fileID: 2800000, guid: d1bf2a56715d8eb4c9d4386f78467044, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Diffuse_Bake 1
-    second: {fileID: 2800000, guid: 89af0784e227eb44b8ff4ca8dff4ad70, type: 3}
+    second: {fileID: 2800000, guid: 59343dcf740031e4bbe07ee9e8dfb5f4, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Metallic
-    second: {fileID: 2800000, guid: ba75fdee423ec404a878e7d2f28b7a5f, type: 3}
+    second: {fileID: 2800000, guid: fa2cab74f256567438e1cf388889caf6, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Normal_Bake
-    second: {fileID: 2800000, guid: 81e472b764b8b5546a4dee1c5c1e348c, type: 3}
+    second: {fileID: 2800000, guid: d69740fbc7b63fe4ab0d8d880a2b4448, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Normal_Bake 1
-    second: {fileID: 2800000, guid: 541ec076d95936a4b8daaf522a17eaed, type: 3}
+    second: {fileID: 2800000, guid: e88923f0ca156434f9556cc1e54cbac5, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Roughness
-    second: {fileID: 2800000, guid: dbaed0d85f184b642ae94d6fa3e71b88, type: 3}
+    second: {fileID: 2800000, guid: eeb06cb9f766f2b4d9e380201cd0628c, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
