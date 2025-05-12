@@ -63,7 +63,7 @@ namespace Oculus.Interaction.HandGrab
         public IGrabSurface SnapSurface
         {
             get => _snapSurface ?? _surface as IGrabSurface;
-            private set
+            set
             {
                 _snapSurface = value;
             }

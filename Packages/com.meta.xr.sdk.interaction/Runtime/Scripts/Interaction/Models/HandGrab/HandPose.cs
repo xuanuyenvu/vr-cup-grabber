@@ -95,6 +95,10 @@ namespace Oculus.Interaction.HandGrab
                 }
                 return _fingersFreedom;
             }
+            set
+            {
+                _fingersFreedom = value;
+            }
         }
 
         /// <summary>

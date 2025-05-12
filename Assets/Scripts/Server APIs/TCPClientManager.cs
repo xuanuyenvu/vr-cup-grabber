@@ -361,7 +361,6 @@ public class TCPClientManager : MonoBehaviour
             // Check if this is a real-time update message
             if (jsonObject["type"]?.ToString() == "real_time_update")
             {
-                Debug.Log($"Processing real-time update: {jsonObject.ToString(Formatting.None)}");
                 // Extract the cup data from the message
                 JObject cupDataObject = jsonObject["data"] as JObject;
                 if (cupDataObject != null && cupDataObject["type"]?.ToString() == "cup")
