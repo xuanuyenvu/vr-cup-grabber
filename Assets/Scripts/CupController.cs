@@ -11,7 +11,7 @@ public class CupData
     public float x;
     public float y;
     public float z;
-    public int rotation;
+    public float rotation;
     public string handleDirection;
     public bool is_stationary;
 }
@@ -68,13 +68,13 @@ public class CupController : MonoBehaviour
     private void UpdateCupTransform(CupData cd)
     {
         if (cupGameObject == null) return;
-        
+
         // Convert millimeters to Unity units and adjust axis mapping
-        Vector3 cupPos = new Vector3(cd.x * scaleFactor, cd.z * scaleFactor, cd.y * scaleFactor);
+        Vector3 cupPos = new Vector3(cd.x * scaleFactor, cd.y * scaleFactor, cd.z * scaleFactor);
         cupGameObject.transform.localPosition = cupPos;
-        
+
         // Apply rotation if handle direction data is available
-        if (!string.IsNullOrEmpty(cd.handleDirection))
+        if (!string.IsNullOrEmpty(cd.rotation.ToString()))
         {
             cupGameObject.transform.localEulerAngles = new Vector3(0, cd.rotation, 0);
         }

@@ -49,34 +49,34 @@ public class TCPClientManager : MonoBehaviour
     public string ServerIP { get => serverIP; set => serverIP = value; }
     public int ServerPort { get => _serverPort; set => _serverPort = value; }
 
-    // private void Awake()
-    // {
-    //     if (_instance != null && _instance != this)
-    //     {
-    //         Destroy(gameObject);
-    //         return;
-    //     }
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-    //     _instance = this;
-    //     DontDestroyOnLoad(gameObject);
-    // }
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
-    // private void Update()
-    // {
-    //     // Auto reconnect if disconnected
-    //     if (!_isConnected && _isRunning && !_userDisconnected)
-    //     {
-    //         // Attempt to reconnect every 3 seconds
-    //         _ = ReconnectAsync();
-    //     }
-    // }
+    private void Update()
+    {
+        // Auto reconnect if disconnected
+        if (!_isConnected && _isRunning && !_userDisconnected)
+        {
+            // Attempt to reconnect every 3 seconds
+            _ = ReconnectAsync();
+        }
+    }
 
-    // // DEBUG
-    // private async void Start()
-    // {
-    //     // Initialize the TCP client
-    //     await ConnectToServer();
-    // }
+    // DEBUG
+    private async void Start()
+    {
+        // Initialize the TCP client
+        await ConnectToServer();
+    }
 
     public async Task ConnectToServer()
     {
@@ -232,7 +232,6 @@ public class TCPClientManager : MonoBehaviour
                     if (bytesRead > 0)
                     {
                         string response = Encoding.UTF8.GetString(_receiveBuffer, 0, bytesRead);
-                        Debug.Log($"Received data: {response}");
                         ProcessData(response);
                     }
                     else
@@ -362,7 +361,6 @@ public class TCPClientManager : MonoBehaviour
             // Check if this is a real-time update message
             if (jsonObject["type"]?.ToString() == "real_time_update")
             {
-                Debug.Log($"Processing real-time update: {jsonObject.ToString(Formatting.None)}");
                 // Extract the cup data from the message
                 JObject cupDataObject = jsonObject["data"] as JObject;
                 if (cupDataObject != null && cupDataObject["type"]?.ToString() == "cup")
