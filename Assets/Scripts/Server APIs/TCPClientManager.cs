@@ -232,7 +232,6 @@ public class TCPClientManager : MonoBehaviour
                     if (bytesRead > 0)
                     {
                         string response = Encoding.UTF8.GetString(_receiveBuffer, 0, bytesRead);
-                        Debug.Log($"Received data: {response}");
                         ProcessData(response);
                     }
                     else
