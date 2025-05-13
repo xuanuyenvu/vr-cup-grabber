@@ -51,24 +51,24 @@ public class TCPClientManager : MonoBehaviour
 
     private void Awake()
     {
-        // if (_instance != null && _instance != this)
-        // {
-        //     Destroy(gameObject);
-        //     return;
-        // }
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-        // _instance = this;
-        // DontDestroyOnLoad(gameObject);
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
     {
         // Auto reconnect if disconnected
-        // if (!_isConnected && _isRunning && !_userDisconnected)
-        // {
-        //     // Attempt to reconnect every 3 seconds
-        //     _ = ReconnectAsync();
-        // }
+        if (!_isConnected && _isRunning && !_userDisconnected)
+        {
+            // Attempt to reconnect every 3 seconds
+            _ = ReconnectAsync();
+        }
     }
 
     // DEBUG
