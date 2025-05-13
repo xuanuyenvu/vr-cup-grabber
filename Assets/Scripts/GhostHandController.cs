@@ -100,7 +100,7 @@ public class GhostHandController : MonoBehaviour
             childOpenXRHand = GetChildByName(targetHand, childName);
         }
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
-        canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
+        canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2");
 
         if (!cupStateController.IsGrabbing)
         {
@@ -113,16 +113,17 @@ public class GhostHandController : MonoBehaviour
         if (ghostHand == null || virtualCenterEye == null) return;
 
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
-        canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
+        // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2");
+        canvas.GetComponentInChildren<TextMeshProUGUI>().text = canvas.GetComponentInChildren<TextMeshProUGUI>().text + "\ntrack: " + cupStateController.IsTrackedDataValid;
 
-        if (distance >= 0.15f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
+        if (distance >= 0.14f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
             Destroy(ghostHandClone);
             ghostHandClone = null;
             childOpenXRHandClone = null;
             cupStateController.IsCupGrabLocked = false;
 
-            childOpenXRHand.SetActive(true);
+            // childOpenXRHand.SetActive(true);
             cupStateController.SyncWristPointToReal();
 
             cupStateController.IsHandSwitchAllowed = true;
@@ -142,9 +143,9 @@ public class GhostHandController : MonoBehaviour
 
         childOpenXRHand = GetChildByName(ghostHand, childName);
         float distance = Vector3.Distance(cupRim.transform.position, mouth.transform.position);
-        canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
+        // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Entry : " + distance.ToString("F2");
 
-        if (distance <= 0.11f && ghostHandClone == null)
+        if (distance <= 0.03f && ghostHandClone == null)
         {
             cupStateController.IsHandSwitchAllowed = false;
             // float angleStep = 6f; 
@@ -196,7 +197,7 @@ public class GhostHandController : MonoBehaviour
         ghostHandCloneMesh.transform.localRotation = Quaternion.identity;
 
         cupStateController.SyncWristPointToGhostHand(child.transform.position, child.transform.rotation);
-        child.SetActive(false);
+        // child.SetActive(false);
 
         AttachCupToGhostHand();
         cupStateController.IsGrabbing = false;
