@@ -75,7 +75,7 @@ public class TCPClientManager : MonoBehaviour
     private async void Start()
     {
         // Initialize the TCP client
-        // await ConnectToServer();
+        await ConnectToServer();
     }
 
     public async Task ConnectToServer()
