@@ -113,9 +113,9 @@ public class GhostHandController : MonoBehaviour
         if (ghostHand == null || virtualCenterEye == null) return;
 
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
-        // canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
+        canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
 
-        if (distance >= 0.19f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
+        if (distance >= 0.15f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
             Destroy(ghostHandClone);
             ghostHandClone = null;
@@ -142,29 +142,29 @@ public class GhostHandController : MonoBehaviour
 
         childOpenXRHand = GetChildByName(ghostHand, childName);
         float distance = Vector3.Distance(cupRim.transform.position, mouth.transform.position);
-        // canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
+        canvas.GetComponentInChildren<TextMeshProUGUI>().text = distance.ToString("F2");
 
-        if (distance <= 0.05f && ghostHandClone == null)
+        if (distance <= 0.11f && ghostHandClone == null)
         {
             cupStateController.IsHandSwitchAllowed = false;
-            float angleStep = 6f; 
-            int maxTries = 60;    
+            // float angleStep = 6f; 
+            // int maxTries = 60;    
 
-            for (int i = 0; i < maxTries; i++)
-            {
-                (handGrabPos.transform.position, handGrabPos.transform.rotation) = 
-                    cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
+            // for (int i = 0; i < maxTries; i++)
+            // {
+            //     (handGrabPos.transform.position, handGrabPos.transform.rotation) = 
+            //         cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
 
-                Vector3 localPos = mouth.transform.InverseTransformPoint(handGrabPos.transform.position);
-                // Debug.Log($"localPos: {localPos}");
+            //     Vector3 localPos = mouth.transform.InverseTransformPoint(handGrabPos.transform.position);
+            //     // Debug.Log($"localPos: {localPos}");
 
-                if (isLeftHand && localPos.x < -1.75f && localPos.y < 0.6f)
-                    break;
-                if (!isLeftHand && localPos.x > 1.75f && localPos.y < 0.6f)
-                    break;
+            //     if (isLeftHand && localPos.x < -1.75f && localPos.y < 0.6f)
+            //         break;
+            //     if (!isLeftHand && localPos.x > 1.75f && localPos.y < 0.6f)
+            //         break;
 
-                spawnPoint.transform.Rotate(Vector3.up, angleStep, Space.Self);
-            }
+            //     spawnPoint.transform.Rotate(Vector3.up, angleStep, Space.Self);
+            // }
             // Debug.Log($"SpawnPoint: {mouth.transform.InverseTransformPoint(handGrabPos.transform.position)}");
             (handGrabPos.transform.position, handGrabPos.transform.rotation) = cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
 
