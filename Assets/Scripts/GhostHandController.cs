@@ -65,18 +65,21 @@ public class GhostHandController : MonoBehaviour
 
         GameObject targetHand;
         string childName;
+        string grandChildName;
         GameObject grabPos;
 
         if (isLeftHand)
         {
             targetHand = ovrLeftHand;
             childName = "OpenXRLeftHand";
+            grandChildName = "LeftHand";
             grabPos = leftHandGrabPos;
         }
         else
         {
             targetHand = ovrRightHand;
             childName = "OpenXRRightHand";
+            grandChildName = "RightHand";
             grabPos = rightHandGrabPos;
         }
 
@@ -84,7 +87,7 @@ public class GhostHandController : MonoBehaviour
         if (ghostHandState == GhostHandState.WaitingToClone)
         {
             cupStateController.SyncWristPointToReal();
-            HandleGhostHandEntry(targetHand, childName, grabPos);
+            HandleGhostHandEntry(targetHand, childName, grandChildName, grabPos);
         }
         else // ghostHandState == GhostHandState.WaitingToRecall
         {
@@ -116,6 +119,10 @@ public class GhostHandController : MonoBehaviour
         // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2");
         canvas.GetComponentInChildren<TextMeshProUGUI>().text = canvas.GetComponentInChildren<TextMeshProUGUI>().text + "\ntrack: " + cupStateController.IsTrackedDataValid;
 
+        if (cupStateController.IsTrackedDataValid)
+        {
+            Debug.Log("Tracked data is valid");
+        }
         if (distance >= 0.14f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
             Destroy(ghostHandClone);
@@ -137,11 +144,12 @@ public class GhostHandController : MonoBehaviour
         return childTransform != null ? childTransform.gameObject : null;
     }
 
-    private void HandleGhostHandEntry(GameObject ghostHand, string childName, GameObject handGrabPos)
+    private void HandleGhostHandEntry(GameObject ghostHand, string childName, string grandChildName, GameObject handGrabPos)
     {
         if (ghostHand == null || virtualCenterEye == null) return;
 
         childOpenXRHand = GetChildByName(ghostHand, childName);
+        childOpenXRHand = GetChildByName(childOpenXRHand, grandChildName);
         float distance = Vector3.Distance(cupRim.transform.position, mouth.transform.position);
         // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Entry : " + distance.ToString("F2");
 

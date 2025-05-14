@@ -19,35 +19,35 @@ public class SmellTasteManager : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        
-        _instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+    // private void Awake()
+    // {
+    //     if (_instance != null && _instance != this)
+    //     {
+    //         Destroy(gameObject);
+    //         return;
+    //     }
+
+    //     _instance = this;
+    //     DontDestroyOnLoad(gameObject);
+    // }
 
     // Smell methods
     public void DiffuseSmell(List<string> smells, int duration)
     {
         TCPClientManager.Instance.DiffuseSmell(smells, duration);
     }
-    
+
     public void StopSmell(List<string> smells)
     {
         TCPClientManager.Instance.StopSmell(smells);
     }
-    
+
     // Taste methods
     public void DiffuseTaste(List<string> tastes, int duration, int speed)
     {
         TCPClientManager.Instance.DiffuseTaste(tastes, duration, speed);
     }
-    
+
     public void StopTaste(List<string> tastes)
     {
         TCPClientManager.Instance.StopTaste(tastes);
