@@ -58,6 +58,7 @@
 		#pragma fragment frag
         #pragma multi_compile_shadowcaster
         #pragma fragmentoption ARB_precision_hint_fastest
+		#pragma multi_compile_instancing
 		#include "LVShadowPass.cginc"
 		ENDHLSL
 	} 
@@ -85,6 +86,7 @@
 		#pragma multi_compile_local __ LIQUID_VOLUME_USE_REFRACTION
 		#pragma multi_compile_local __ LIQUID_VOLUME_DEPTH_AWARE
 		#pragma multi_compile_local __ LIQUID_VOLUME_DEPTH_AWARE_PASS
+		#pragma multi_compile_instancing
 		#include "LVLiquidPass3D.cginc"
 		ENDHLSL
 	}
