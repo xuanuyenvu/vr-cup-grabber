@@ -19,17 +19,17 @@ public class SmellTasteManager : MonoBehaviour
         }
     }
 
-    // private void Awake()
-    // {
-    //     if (_instance != null && _instance != this)
-    //     {
-    //         Destroy(gameObject);
-    //         return;
-    //     }
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-    //     _instance = this;
-    //     DontDestroyOnLoad(gameObject);
-    // }
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     // Smell methods
     public void DiffuseSmell(List<string> smells, int duration)
