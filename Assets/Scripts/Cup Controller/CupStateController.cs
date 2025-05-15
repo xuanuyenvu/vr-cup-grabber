@@ -204,7 +204,7 @@ namespace Cup
             if (rb != null)
             {
                 rb.useGravity = false;
-                rb.velocity = Vector3.zero;
+                // rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
 
                 transform.localPosition = new Vector3(0.4f, 0.02f, 0.4f);

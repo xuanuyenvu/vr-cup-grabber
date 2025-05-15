@@ -128,7 +128,7 @@ public class GhostHandController : MonoBehaviour
             childOpenXRHandClone = null;
             cupStateController.IsCupGrabLocked = false;
 
-            // childOpenXRHand.SetActive(true);
+            childOpenXRHand.SetActive(true);
             cupStateController.SyncWristPointToReal();
 
             cupStateController.IsHandSwitchAllowed = true;
