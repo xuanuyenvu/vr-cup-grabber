@@ -2,6 +2,7 @@ using UnityEngine;
 using Cup;
 using TMPro;
 using System;
+using System.Collections.Generic;
 
 public class GhostHandController : MonoBehaviour
 {
@@ -20,8 +21,6 @@ public class GhostHandController : MonoBehaviour
     [SerializeField] private GameObject spawnPoint;
 
     public GameObject canvas;
-    public event Action OnEnterDistance;
-    public event Action OnExitDistance;
 
     private GameObject ghostHandClone;
     private GameObject childOpenXRHandClone;
@@ -116,11 +115,11 @@ public class GhostHandController : MonoBehaviour
         if (ghostHand == null || virtualCenterEye == null) return;
 
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
-        canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2")  + "\ntrack: " + cupStateController.IsTrackedDataValid;
+        canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2") + "\ntrack: " + cupStateController.IsTrackedDataValid;
 
         if (distance >= 0.16f)
         {
-            OnExitDistance?.Invoke();
+            SmellTasteManager.Instance.StopSmell(new List<string> { "odor4" });
         }
         if (distance >= 0.12f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
@@ -154,7 +153,7 @@ public class GhostHandController : MonoBehaviour
 
         if (distance <= 0.1f)
         {
-            OnEnterDistance?.Invoke();
+            SmellTasteManager.Instance.DiffuseSmell(new List<string> { "odor4" }, 900000);
         }
         if (distance <= 0.04f && ghostHandClone == null)
         {
