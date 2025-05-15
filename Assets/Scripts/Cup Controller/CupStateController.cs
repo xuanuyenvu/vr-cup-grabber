@@ -151,7 +151,7 @@ namespace Cup
         {
             if (!isOnTable)
             {
-                UpdateSpherePosition();
+                // UpdateSpherePosition();
                 CheckCupPosition();
             }
         }
@@ -207,7 +207,7 @@ namespace Cup
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
 
-                transform.localPosition = new Vector3(0.45f, 0.02f, 0.45f);
+                transform.localPosition = new Vector3(0.4f, 0.02f, 0.4f);
                 transform.rotation = Quaternion.identity;
 
                 StartCoroutine(ReenableGravity(rb));
