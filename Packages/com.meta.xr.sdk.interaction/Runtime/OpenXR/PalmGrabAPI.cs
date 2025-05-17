@@ -20,7 +20,6 @@
 
 using Oculus.Interaction.Input;
 using Oculus.Interaction.PoseDetection;
-using TMPro;
 using UnityEngine;
 
 namespace Oculus.Interaction.GrabAPI
@@ -50,7 +49,6 @@ namespace Oculus.Interaction.GrabAPI
 
         private class FingerGrabData
         {
-            private TextMeshProUGUI _debugText;
             private readonly HandFinger _fingerID;
             private readonly Vector2 _curlNormalizationParams;
             public float GrabStrength;
@@ -79,14 +77,6 @@ namespace Oculus.Interaction.GrabAPI
 
             public void UpdateIsGrabbing(float startThreshold, float releaseThreshold)
             {
-                if (_debugText == null)
-                {
-                    _debugText = GameObject.Find("DebugText").GetComponent<TextMeshProUGUI>();
-                }
-                if (_fingerID == HandFinger.Index)
-                {
-                    _debugText.text = $"GrabStrength: {GrabStrength}\n";
-                }
                 if (GrabStrength > startThreshold)
                 {
                     if (!IsGrabbing)
