@@ -20,6 +20,7 @@
 
 using Oculus.Interaction.Input;
 using Oculus.Interaction.PoseDetection;
+using TMPro;
 using UnityEngine;
 
 namespace Oculus.Interaction.GrabAPI
@@ -33,8 +34,8 @@ namespace Oculus.Interaction.GrabAPI
 
         private static readonly Vector3 POSE_VOLUME_OFFSET = new Vector3(0.07f, -0.03f, 0.0f);
 
-        private static readonly float START_THRESHOLD = 0.2f;
-        private static readonly float RELEASE_THRESHOLD = 0.8f;
+        private static readonly float START_THRESHOLD = 0.15f;
+        private static readonly float RELEASE_THRESHOLD = 0.88f;
 
         private static readonly Vector2[] CURL_RANGE = new Vector2[5]
         {
@@ -49,6 +50,7 @@ namespace Oculus.Interaction.GrabAPI
 
         private class FingerGrabData
         {
+            private TextMeshProUGUI _debugText;
             private readonly HandFinger _fingerID;
             private readonly Vector2 _curlNormalizationParams;
             public float GrabStrength;
@@ -77,6 +79,14 @@ namespace Oculus.Interaction.GrabAPI
 
             public void UpdateIsGrabbing(float startThreshold, float releaseThreshold)
             {
+                if (_debugText == null)
+                {
+                    _debugText = GameObject.Find("DebugText").GetComponent<TextMeshProUGUI>();
+                }
+                if (_fingerID == HandFinger.Index)
+                {
+                    _debugText.text = $"GrabStrength: {GrabStrength}\n";
+                }
                 if (GrabStrength > startThreshold)
                 {
                     if (!IsGrabbing)

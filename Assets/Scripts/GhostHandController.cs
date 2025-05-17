@@ -115,7 +115,7 @@ public class GhostHandController : MonoBehaviour
         if (ghostHand == null || virtualCenterEye == null) return;
 
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
-        canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2") + "\ntrack: " + cupStateController.IsTrackedDataValid;
+        // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2") + "\ntrack: " + cupStateController.IsTrackedDataValid;
 
         if (distance >= 0.16f)
         {
@@ -149,7 +149,7 @@ public class GhostHandController : MonoBehaviour
         childOpenXRHand = GetChildByName(ghostHand, childName);
         // childOpenXRHand = GetChildByName(childOpenXRHand, grandChildName);
         float distance = Vector3.Distance(cupRim.transform.position, mouth.transform.position);
-        canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Entry : " + distance.ToString("F2");
+        // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Entry : " + distance.ToString("F2");
 
         if (distance <= 0.1f)
         {

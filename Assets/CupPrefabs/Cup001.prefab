@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data:
-    startPoint: {x: 0, y: 0.09, z: 0}
+    startPoint: {x: 0, y: 0.1, z: 0}
     endPoint: {x: 0, y: 0.045, z: 0}
     arcOffset: 0
     arcLength: 360
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data:
-    startPoint: {x: 0, y: 0.09, z: 0}
+    startPoint: {x: 0, y: 0.1, z: 0}
     endPoint: {x: 0, y: 0.045, z: 0}
     arcOffset: 0
     arcLength: 360
@@ -245,8 +245,6 @@ GameObject:
   - component: {fileID: 8321953864853817973}
   - component: {fileID: 278330504641171392}
   - component: {fileID: 1481561474420092425}
-  - component: {fileID: 4899775825918316275}
-  - component: {fileID: 7179834366567373259}
   m_Layer: 0
   m_Name: Cup001
   m_TagString: Untagged
@@ -428,30 +426,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26cb0a0cb13965347b765a3a9356dd69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4899775825918316275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5419574870245439766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26cb0a0cb13965347b765a3a9356dd69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7179834366567373259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5419574870245439766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 358cbd2353c662a42bb45a99d6772cc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5590828063335521917
@@ -728,7 +702,7 @@ MonoBehaviour:
   _pointLightsEnabled: 1
   pointLightParams:
   - name: Light 1
-    targetPos: {x: 0.010249372, y: -0.39539692, z: -0.23827887}
+    targetPos: {x: 0.077057324, y: -0.33537453, z: -0.09552913}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -742,7 +716,7 @@ MonoBehaviour:
     color2: {r: 0.8477335, g: 0.8441614, b: 0.72563845, a: 1}
     colorSpeed: 0.5915744
   - name: Light 2
-    targetPos: {x: 0.037594546, y: -0.2601436, z: 0.2137004}
+    targetPos: {x: 0.1341338, y: -0.13994364, z: -0.18611258}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -756,7 +730,7 @@ MonoBehaviour:
     color2: {r: 0.69685274, g: 0.19038787, b: 0.20668414, a: 1}
     colorSpeed: 0.77507466
   - name: Light 3
-    targetPos: {x: -0.09525188, y: 0.15651001, z: 0.06728524}
+    targetPos: {x: -0.12715168, y: -0.10697177, z: -0.30394933}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -770,7 +744,7 @@ MonoBehaviour:
     color2: {r: 0.7679068, g: 0.25541726, b: 0.99003446, a: 1}
     colorSpeed: 1.6058117
   - name: Light 4
-    targetPos: {x: 0.040799648, y: -0.08252604, z: 0.06323357}
+    targetPos: {x: 0.17103955, y: -0.13090385, z: -0.049915582}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -784,7 +758,7 @@ MonoBehaviour:
     color2: {r: 0.8719964, g: 0.93060446, b: 0.24331489, a: 1}
     colorSpeed: 0.9112936
   - name: Light 5
-    targetPos: {x: 0.37737718, y: 0.030768164, z: 0.03197863}
+    targetPos: {x: 0.21297811, y: -0.17720157, z: -0.058477074}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -798,7 +772,7 @@ MonoBehaviour:
     color2: {r: 0.9825232, g: 0.9036646, b: 0.47428912, a: 1}
     colorSpeed: 1.8049672
   - name: Light 6
-    targetPos: {x: 0.15834974, y: -0.12574491, z: -0.011720101}
+    targetPos: {x: 0.084737666, y: -0.33430305, z: -0.1622278}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -926,7 +900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data:
-    startPoint: {x: 0, y: 0.09, z: 0}
+    startPoint: {x: 0, y: 0.1, z: 0}
     endPoint: {x: 0, y: 0.045, z: 0}
     arcOffset: 0
     arcLength: 360
@@ -1130,7 +1104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622db80eec0bd344f920b1aa056ae8d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _surface: {fileID: 1279188219368229159}
+  _surface: {fileID: 515786773228773561}
   _relativeTo: {fileID: 7087581903062050949}
   _usesHandPose: 1
   _handPose:
@@ -1195,7 +1169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data:
-    startPoint: {x: 0, y: 0.09, z: 0}
+    startPoint: {x: 0, y: 0.1, z: 0}
     endPoint: {x: 0, y: 0.045, z: 0}
     arcOffset: 0
     arcLength: 360
@@ -1261,7 +1235,7 @@ MonoBehaviour:
   _scoringModifier:
     _positionRotationWeight: 0.8
   _slippiness: 0
-  _supportedGrabTypes: 3
+  _supportedGrabTypes: -1
   _pinchGrabRules:
     _thumbRequirement: 1
     _indexRequirement: 1
@@ -1433,7 +1407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data:
-    startPoint: {x: 0, y: 0.09, z: 0}
+    startPoint: {x: 0, y: 0.1, z: 0}
     endPoint: {x: 0, y: 0.045, z: 0}
     arcOffset: 0
     arcLength: 360
