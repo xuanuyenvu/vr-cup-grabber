@@ -33,8 +33,8 @@ namespace Oculus.Interaction.GrabAPI
 
         private static readonly Vector3 POSE_VOLUME_OFFSET = new Vector3(0.07f, -0.03f, 0.0f);
 
-        private static readonly float START_THRESHOLD = 0.2f;
-        private static readonly float RELEASE_THRESHOLD = 0.8f;
+        private static readonly float START_THRESHOLD = 0.15f;
+        private static readonly float RELEASE_THRESHOLD = 0.88f;
 
         private static readonly Vector2[] CURL_RANGE = new Vector2[5]
         {

@@ -33,6 +33,7 @@ public class GhostHandController : MonoBehaviour
     private GhostHandState ghostHandState = GhostHandState.NotCloned;
     private GameObject childOpenXRHand;
     private bool isLeftHand => cupStateController.grabbedByHand == CupStateController.GrabbedBy.LeftHand;
+    private bool isDiffuseSmell = false;
 
     public void SetGhostHandState(bool _isGrabbing)
     {
@@ -117,11 +118,12 @@ public class GhostHandController : MonoBehaviour
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
         canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2") + "\ntrack: " + cupStateController.IsTrackedDataValid;
 
-        if (distance >= 0.16f)
+        if (distance >= 0.16f && isDiffuseSmell)
         {
             SmellTasteManager.Instance.StopSmell(new List<string> { "odor4" });
+            isDiffuseSmell = false;
         }
-        if (distance >= 0.12f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
+        if (distance >= 0.15f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
             Destroy(ghostHandClone);
             ghostHandClone = null;
@@ -151,11 +153,12 @@ public class GhostHandController : MonoBehaviour
         float distance = Vector3.Distance(cupRim.transform.position, mouth.transform.position);
         canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Entry : " + distance.ToString("F2");
 
-        if (distance <= 0.1f)
+        if (distance <= 0.1f && !isDiffuseSmell)
         {
             SmellTasteManager.Instance.DiffuseSmell(new List<string> { "odor4" }, 900000);
+            isDiffuseSmell = true;
         }
-        if (distance <= 0.04f && ghostHandClone == null)
+        if (distance <= 0.05f && ghostHandClone == null)
         {
             cupStateController.IsHandSwitchAllowed = false;
             // float angleStep = 6f; 

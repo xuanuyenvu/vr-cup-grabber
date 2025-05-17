@@ -29,8 +29,8 @@ namespace Cup
         private bool isPendingRegrab = false;
         private bool isGrabbing = false;
 
-        private float maxTableOffset = 0.05f; // chiều cao tối đa của cốc so với mặt bàn
-        private float minTableOffset = -0.08f; // chiều cao tối thiểu của cốc so với mặt bàn
+        private float maxTableOffset = 0.06f; // chiều cao tối đa của cốc so với mặt bàn
+        private float minTableOffset = -0.09f; // chiều cao tối thiểu của cốc so với mặt bàn
         private float floorOffset = -0.15f; // chiều cao của cốc so với mặt bàn. Nếu đạt giá trị này thì xem như cốc đã rớt xuống sàn 
 
 
@@ -208,7 +208,7 @@ namespace Cup
                 rb.angularVelocity = Vector3.zero;
 
                 transform.localPosition = new Vector3(0.4f, 0.02f, 0.4f);
-                transform.rotation = Quaternion.identity;
+                transform.rotation = Quaternion.Euler(0f, 180f, 0f);
 
                 StartCoroutine(ReenableGravity(rb));
             }
