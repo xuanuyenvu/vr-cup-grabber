@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   shader: {fileID: 4800000, guid: c3dd22b145db8426c8431df2f8e416b1, type: 3}
-  interleavedRendering: 1
+  interleavedRendering: 0
   renderPassEvent: 450
 --- !u!114 &11400000
 MonoBehaviour:

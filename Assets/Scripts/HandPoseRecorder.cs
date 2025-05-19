@@ -22,12 +22,12 @@ public class HandPoseRecorder : MonoBehaviour
             handGrabPoseLiveRecorderCustom.Record();
             recording = false;
         }
-        if (createPrefab)
-        {
-            string localPath = "Assets/CupPrefabs/Cup" + userId + ".prefab";
-            CreateNewPrefab(cup, localPath);
-            createPrefab = false;
-        }
+        // if (createPrefab)
+        // {
+        //     string localPath = "Assets/CupPrefabs/Cup" + userId + ".prefab";
+        //     CreateNewPrefab(cup, localPath);
+        //     createPrefab = false;
+        // }
     }
 
 #if UNITY_EDITOR
