@@ -933,7 +933,7 @@ MonoBehaviour:
   _pointLightsEnabled: 1
   pointLightParams:
   - name: Light 1
-    targetPos: {x: -0.06965627, y: -0.4, z: -0.07696101}
+    targetPos: {x: 0.092473, y: -0.058404356, z: 0.25749245}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -947,7 +947,7 @@ MonoBehaviour:
     color2: {r: 0.8477335, g: 0.8441614, b: 0.72563845, a: 1}
     colorSpeed: 0.5915744
   - name: Light 2
-    targetPos: {x: 0.080449454, y: 0.17504746, z: 0.047535367}
+    targetPos: {x: 0.32328123, y: -0.0054731593, z: 0.026068449}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -961,7 +961,7 @@ MonoBehaviour:
     color2: {r: 0.69685274, g: 0.19038787, b: 0.20668414, a: 1}
     colorSpeed: 0.77507466
   - name: Light 3
-    targetPos: {x: -0.101946235, y: 0.19059843, z: -0.19496448}
+    targetPos: {x: -0.04924517, y: 0.0867122, z: -0.022775134}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -975,7 +975,7 @@ MonoBehaviour:
     color2: {r: 0.7679068, g: 0.25541726, b: 0.99003446, a: 1}
     colorSpeed: 1.6058117
   - name: Light 4
-    targetPos: {x: 0.19376175, y: 0.17125592, z: 0.18856472}
+    targetPos: {x: -0.17188275, y: -0.34638017, z: -0.16679725}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -989,7 +989,7 @@ MonoBehaviour:
     color2: {r: 0.8719964, g: 0.93060446, b: 0.24331489, a: 1}
     colorSpeed: 0.9112936
   - name: Light 5
-    targetPos: {x: 0.24473467, y: -0.27386215, z: 0.13950221}
+    targetPos: {x: -0.30719262, y: 0.036851235, z: 0.101076834}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -1003,7 +1003,7 @@ MonoBehaviour:
     color2: {r: 0.9825232, g: 0.9036646, b: 0.47428912, a: 1}
     colorSpeed: 1.8049672
   - name: Light 6
-    targetPos: {x: 0.04166809, y: -0.18846428, z: -0.19579598}
+    targetPos: {x: 0.026866471, y: -0.3944955, z: 0.09080162}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
