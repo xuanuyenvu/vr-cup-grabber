@@ -1,7 +1,7 @@
 using UnityEngine;
 using Cup;
 using TMPro;
-using System;
+using System.Collections;
 using System.Collections.Generic;
 
 public class GhostHandController : MonoBehaviour
@@ -196,11 +196,18 @@ public class GhostHandController : MonoBehaviour
             }
 
             cupStateController.IsCupGrabLocked = true;
-            ApplyTransformToGhostHand(ghostHand, ghostHandClone, childOpenXRHand);
+            ApplyTransformToGhostHand(ghostHand, ghostHandClone);
+
+            cupStateController.SyncWristPointToGhostHand(childOpenXRHandClone.transform.position, childOpenXRHandClone.transform.rotation);
+            childOpenXRHand.SetActive(false);
+
+            AttachCupToGhostHand();
+            cupStateController.IsGrabbing = false;
+            ghostHandState = GhostHandState.WaitingToRecall;
         }
     }
 
-    private void ApplyTransformToGhostHand(GameObject originalHand, GameObject clonedHand, GameObject child)
+    private void ApplyTransformToGhostHand(GameObject originalHand, GameObject clonedHand)
     {
         UpdateGhostHandPose(originalHand, clonedHand);
 
@@ -208,13 +215,6 @@ public class GhostHandController : MonoBehaviour
         GameObject ghostHandCloneMesh = GetChildByName(ghostHandClone, isLeftHand ? "OpenXRLeftHand" : "OpenXRRightHand");
         ghostHandCloneMesh.transform.localPosition = Vector3.zero;
         ghostHandCloneMesh.transform.localRotation = Quaternion.identity;
-
-        cupStateController.SyncWristPointToGhostHand(child.transform.position, child.transform.rotation);
-        child.SetActive(false);
-
-        AttachCupToGhostHand();
-        cupStateController.IsGrabbing = false;
-        ghostHandState = GhostHandState.WaitingToRecall;
     }
 
     private void UpdateGhostHandPose(GameObject originalHand, GameObject clonedHand)
@@ -271,5 +271,29 @@ public class GhostHandController : MonoBehaviour
         {
             cupStateController.PlaceCupInHand();
         }
+    }
+
+    private IEnumerator FlyToDestination(Transform cup, Transform ghostHand, Transform ghostHandDestination, float duration)
+    {
+        Vector3 startPosition = ghostHand.position;
+        Quaternion startRotation = ghostHand.rotation;
+        Vector3 endPosition = ghostHandDestination.position;
+        Quaternion endRotation = ghostHandDestination.rotation;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+
+            ghostHand.position = Vector3.Lerp(startPosition, endPosition, t);
+            ghostHand.rotation = Quaternion.Slerp(startRotation, endRotation, t);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        ghostHand.position = endPosition;
+        ghostHand.rotation = endRotation;
     }
 }

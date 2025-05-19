@@ -135,6 +135,9 @@ namespace Cup
             Vector3 currentRotation = transform.rotation.eulerAngles;
             transform.rotation = Quaternion.Euler(0, currentRotation.y, 0);
 
+            Vector3 currentPosition = transform.localPosition;
+            transform.localPosition = new Vector3(currentPosition.x, 0.02f, currentPosition.z);
+
             Rigidbody rb = GetComponent<Rigidbody>();
             if (rb != null)
             {
@@ -208,7 +211,8 @@ namespace Cup
                 rb.angularVelocity = Vector3.zero;
 
                 transform.localPosition = new Vector3(0.4f, 0.02f, 0.4f);
-                transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                // transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                transform.rotation = Quaternion.identity;
 
                 StartCoroutine(ReenableGravity(rb));
             }
