@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     startPoint: {x: 0, y: 0.1, z: 0}
-    endPoint: {x: 0, y: 0.035, z: 0}
+    endPoint: {x: 0, y: 0.025, z: 0}
     arcOffset: 0
     arcLength: 360
   _relativeTo: {fileID: 7087581903062050949}
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     startPoint: {x: 0, y: 0.1, z: 0}
-    endPoint: {x: 0, y: 0.035, z: 0}
+    endPoint: {x: 0, y: 0.025, z: 0}
     arcOffset: 0
     arcLength: 360
   _relativeTo: {fileID: 7087581903062050949}
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     startPoint: {x: 0, y: 0.1, z: 0}
-    endPoint: {x: 0, y: 0.035, z: 0}
+    endPoint: {x: 0, y: 0.025, z: 0}
     arcOffset: 0
     arcLength: 360
   _relativeTo: {fileID: 7087581903062050949}
@@ -456,7 +456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     startPoint: {x: 0, y: 0.1, z: 0}
-    endPoint: {x: 0, y: 0.035, z: 0}
+    endPoint: {x: 0, y: 0.025, z: 0}
     arcOffset: 0
     arcLength: 360
   _relativeTo: {fileID: 7087581903062050949}
@@ -933,7 +933,7 @@ MonoBehaviour:
   _pointLightsEnabled: 1
   pointLightParams:
   - name: Light 1
-    targetPos: {x: 0.092473, y: -0.058404356, z: 0.25749245}
+    targetPos: {x: -0.05663349, y: -0.4, z: -0.027933732}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -947,7 +947,7 @@ MonoBehaviour:
     color2: {r: 0.8477335, g: 0.8441614, b: 0.72563845, a: 1}
     colorSpeed: 0.5915744
   - name: Light 2
-    targetPos: {x: 0.32328123, y: -0.0054731593, z: 0.026068449}
+    targetPos: {x: -0.0021752166, y: -0.154288, z: 0.33342794}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -961,7 +961,7 @@ MonoBehaviour:
     color2: {r: 0.69685274, g: 0.19038787, b: 0.20668414, a: 1}
     colorSpeed: 0.77507466
   - name: Light 3
-    targetPos: {x: -0.04924517, y: 0.0867122, z: -0.022775134}
+    targetPos: {x: -0.09433407, y: -0.4, z: 0.01575076}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -975,7 +975,7 @@ MonoBehaviour:
     color2: {r: 0.7679068, g: 0.25541726, b: 0.99003446, a: 1}
     colorSpeed: 1.6058117
   - name: Light 4
-    targetPos: {x: -0.17188275, y: -0.34638017, z: -0.16679725}
+    targetPos: {x: -0.034943298, y: -0.3190258, z: -0.20599818}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -989,7 +989,7 @@ MonoBehaviour:
     color2: {r: 0.8719964, g: 0.93060446, b: 0.24331489, a: 1}
     colorSpeed: 0.9112936
   - name: Light 5
-    targetPos: {x: -0.30719262, y: 0.036851235, z: 0.101076834}
+    targetPos: {x: 0.12159258, y: -0.4, z: 0.08207803}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -1003,7 +1003,7 @@ MonoBehaviour:
     color2: {r: 0.9825232, g: 0.9036646, b: 0.47428912, a: 1}
     colorSpeed: 1.8049672
   - name: Light 6
-    targetPos: {x: 0.026866471, y: -0.3944955, z: 0.09080162}
+    targetPos: {x: -0.34333742, y: 0.043736957, z: 0.031128293}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -1132,7 +1132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     startPoint: {x: 0, y: 0.1, z: 0}
-    endPoint: {x: 0, y: 0.035, z: 0}
+    endPoint: {x: 0, y: 0.025, z: 0}
     arcOffset: 0
     arcLength: 360
   _relativeTo: {fileID: 7087581903062050949}
@@ -1247,7 +1247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     startPoint: {x: 0, y: 0.1, z: 0}
-    endPoint: {x: 0, y: 0.035, z: 0}
+    endPoint: {x: 0, y: 0.025, z: 0}
     arcOffset: 0
     arcLength: 360
   _relativeTo: {fileID: 7087581903062050949}
@@ -1516,7 +1516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     startPoint: {x: 0, y: 0.1, z: 0}
-    endPoint: {x: 0, y: 0.035, z: 0}
+    endPoint: {x: 0, y: 0.025, z: 0}
     arcOffset: 0
     arcLength: 360
   _relativeTo: {fileID: 7087581903062050949}
@@ -1631,7 +1631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     startPoint: {x: 0, y: 0.1, z: 0}
-    endPoint: {x: 0, y: 0.035, z: 0}
+    endPoint: {x: 0, y: 0.025, z: 0}
     arcOffset: 0
     arcLength: 360
   _relativeTo: {fileID: 7087581903062050949}
@@ -1746,7 +1746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     startPoint: {x: 0, y: 0.1, z: 0}
-    endPoint: {x: 0, y: 0.035, z: 0}
+    endPoint: {x: 0, y: 0.025, z: 0}
     arcOffset: 0
     arcLength: 360
   _relativeTo: {fileID: 7087581903062050949}
@@ -2067,7 +2067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     startPoint: {x: 0, y: 0.1, z: 0}
-    endPoint: {x: 0, y: 0.035, z: 0}
+    endPoint: {x: 0, y: 0.025, z: 0}
     arcOffset: 0
     arcLength: 360
   _relativeTo: {fileID: 7087581903062050949}
