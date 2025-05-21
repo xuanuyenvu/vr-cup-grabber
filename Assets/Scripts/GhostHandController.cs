@@ -55,11 +55,13 @@ public class GhostHandController : MonoBehaviour
     private void OnEnable()
     {
         cupStateController.onGrabbingChange += SetGhostHandState;
+        cupStateController.onCupThrown += ResetAllPropertiesWhenCupThrown;
     }
 
     private void OnDisable()
     {
         cupStateController.onGrabbingChange -= SetGhostHandState;
+        cupStateController.onCupThrown -= ResetAllPropertiesWhenCupThrown;
     }
 
     void Update()
@@ -111,7 +113,7 @@ public class GhostHandController : MonoBehaviour
 
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
         // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2") + "\ntrack: " + cupStateController.IsTrackedDataValid;
-    
+
         if (distance >= 0.13f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
             // StartCoroutine(FlyToDestination(ghostHandClone.transform, childOpenXRHand.transform, 0.5f));
@@ -149,7 +151,7 @@ public class GhostHandController : MonoBehaviour
             Debug.Log("Start smell");
             SmellTasteManager.Instance.DiffuseSmell(new List<string> { "odor4" }, 900000);
             isDiffuseSmell = true;
-        } 
+        }
         else if (distance >= 0.13f && isDiffuseSmell)
         {
             Debug.Log("Stop smell");
@@ -293,5 +295,33 @@ public class GhostHandController : MonoBehaviour
 
         ghostHand.position = endPosition;
         ghostHand.rotation = endRotation;
+    }
+    
+    private void ResetAllPropertiesWhenCupThrown()
+    {
+        if (ghostHandState == GhostHandState.WaitingToClone)
+        {
+            if (ghostHandClone != null)
+            {
+                Destroy(ghostHandClone);
+                ghostHandClone = null;
+            }
+
+            if (childOpenXRHandClone != null)
+            {
+                Destroy(childOpenXRHandClone);
+                childOpenXRHandClone = null;
+            }
+
+            cupStateController.gameObject.GetComponent<MeshRenderer>().enabled = true;
+            childOpenXRHand.SetActive(true);
+
+            if (isDiffuseSmell)
+            {
+                SmellTasteManager.Instance.StopSmell(new List<string> { "odor4" });
+                isDiffuseSmell = false;
+            }
+            ghostHandState = GhostHandState.NotCloned;
+        }
     }
 }

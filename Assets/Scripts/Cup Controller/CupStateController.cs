@@ -42,6 +42,7 @@ namespace Cup
         public enum GrabbedBy { LeftHand, RightHand, None };
         public GrabbedBy grabbedByHand = GrabbedBy.None;
         public event Action<bool> onGrabbingChange;
+        public event Action onCupThrown;
 
         // [HideInInspector] public Vector3 cupPosition = new Vector3(0, 0, 0);
         // [HideInInspector] public Quaternion cupRotation = Quaternion.identity;
@@ -129,6 +130,7 @@ namespace Cup
         {
             // Since the cup does not remain stable after being released,
             // it must be rotated to align with its upright position.
+            onCupThrown?.Invoke();
             grabbedByHand = GrabbedBy.None;
             isPendingRegrab = false;
 
