@@ -18,16 +18,21 @@ public class TCPClientManager : MonoBehaviour
         {
             if (_instance == null)
             {
-                GameObject go = new GameObject("TCPClientManager");
-                _instance = go.AddComponent<TCPClientManager>();
-                DontDestroyOnLoad(go);
+                _instance = FindObjectOfType<TCPClientManager>();
+
+                if (_instance == null)
+                {
+                    GameObject go = new GameObject("TCPClientManager");
+                    _instance = go.AddComponent<TCPClientManager>();
+                    DontDestroyOnLoad(go);
+                }
             }
             return _instance;
         }
     }
 
     [Header("Server Connection")]
-    [SerializeField] private string serverIP = "192.168.2.55";
+    [SerializeField] private string serverIP;
     private int _serverPort = 12345;
 
     private TcpClient _tcpClient;
@@ -48,11 +53,15 @@ public class TCPClientManager : MonoBehaviour
     public bool IsConnected => _isConnected;
     public string ServerIP { get => serverIP; set => serverIP = value; }
     public int ServerPort { get => _serverPort; set => _serverPort = value; }
+    private bool _isReconnecting = false;
 
     private void Awake()
     {
         if (_instance != null && _instance != this)
         {
+            _instance.ServerIP = this.serverIP;
+            _instance.ServerPort = this._serverPort;
+
             Destroy(gameObject);
             return;
         }
@@ -64,9 +73,10 @@ public class TCPClientManager : MonoBehaviour
     private void Update()
     {
         // Auto reconnect if disconnected
-        if (!_isConnected && _isRunning && !_userDisconnected)
+        if (!_isConnected && _isRunning && !_userDisconnected && !_isReconnecting)
         {
             // Attempt to reconnect every 3 seconds
+            _isReconnecting = true;
             _ = ReconnectAsync();
         }
     }
@@ -156,6 +166,7 @@ public class TCPClientManager : MonoBehaviour
         Debug.Log("Attempting to reconnect...");
         await Task.Delay(3000); // Wait 3 seconds before retrying
         await ConnectToServer();
+        _isReconnecting = false;
     }
 
     private void SubscribeToRealTimeUpdates()
@@ -275,31 +286,6 @@ public class TCPClientManager : MonoBehaviour
         Debug.Log("Receive loop ended");
     }
 
-    // private void ProcessData(string data)
-    // {
-    //     try
-    //     {
-    //         // Parse the JSON data
-    //         JObject jsonObject = JObject.Parse(data);
-
-    //         // Check if this is a real-time update message
-    //         if (jsonObject["type"]?.ToString() == "real_time_update")
-    //         {
-    //             Debug.Log($"Processing data: {data}");
-    //             // Extract the cup data from the message
-    //             JObject cupDataObject = jsonObject["data"] as JObject;
-    //             if (cupDataObject != null && cupDataObject["type"]?.ToString() == "cup")
-    //             {
-    //                 // Trigger the event with the cup data
-    //                 OnCupDataReceived?.Invoke(cupDataObject);
-    //             }
-    //         }
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         Debug.LogError($"Error parsing data: {e.Message}");
-    //     }
-    // }
     private void ProcessData(string data)
     {
         int braceCount = 0;

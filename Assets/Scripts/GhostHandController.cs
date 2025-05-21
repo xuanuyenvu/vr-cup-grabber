@@ -125,15 +125,15 @@ public class GhostHandController : MonoBehaviour
         }
         if (distance >= 0.15f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
-            Destroy(ghostHandClone);
-            ghostHandClone = null;
-            childOpenXRHandClone = null;
-            cupStateController.IsCupGrabLocked = false;
+            // Destroy(ghostHandClone);
+            // ghostHandClone = null;
+            // childOpenXRHandClone = null;
+            // cupStateController.IsCupGrabLocked = false;
 
-            childOpenXRHand.SetActive(true);
-            cupStateController.SyncWristPointToReal();
+            // childOpenXRHand.SetActive(true);
+            // cupStateController.SyncWristPointToReal();
 
-            cupStateController.IsHandSwitchAllowed = true;
+            // cupStateController.IsHandSwitchAllowed = true;
             ghostHandState = GhostHandState.WaitingToClone;
         }
     }
@@ -160,7 +160,7 @@ public class GhostHandController : MonoBehaviour
         }
         if (distance <= 0.05f && ghostHandClone == null)
         {
-            cupStateController.IsHandSwitchAllowed = false;
+            // cupStateController.IsHandSwitchAllowed = false;
             // float angleStep = 6f; 
             // int maxTries = 60;    
 
@@ -180,29 +180,29 @@ public class GhostHandController : MonoBehaviour
             //     spawnPoint.transform.Rotate(Vector3.up, angleStep, Space.Self);
             // }
             // Debug.Log($"SpawnPoint: {mouth.transform.InverseTransformPoint(handGrabPos.transform.position)}");
-            (handGrabPos.transform.position, handGrabPos.transform.rotation) = cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
+            // (handGrabPos.transform.position, handGrabPos.transform.rotation) = cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
 
-            ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, handGrabPos.transform.rotation, handGrabPos.transform);
-            childOpenXRHandClone = GetChildByName(ghostHandClone, childName);
+            // ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, handGrabPos.transform.rotation, handGrabPos.transform);
+            // childOpenXRHandClone = GetChildByName(ghostHandClone, childName);
 
-            // dòng for nằm nhằm xóa component HandVisual, 
-            // vì lúc spawn cần script HandVisual để lấy mesh, nhưng sau đó không cần nữa
-            foreach (var comp in ghostHandClone.GetComponents<Component>())
-            {
-                if (!(comp is Transform))
-                {
-                    Destroy(comp);
-                }
-            }
+            // // dòng for nằm nhằm xóa component HandVisual, 
+            // // vì lúc spawn cần script HandVisual để lấy mesh, nhưng sau đó không cần nữa
+            // foreach (var comp in ghostHandClone.GetComponents<Component>())
+            // {
+            //     if (!(comp is Transform))
+            //     {
+            //         Destroy(comp);
+            //     }
+            // }
 
-            cupStateController.IsCupGrabLocked = true;
-            ApplyTransformToGhostHand(ghostHand, ghostHandClone);
+            // cupStateController.IsCupGrabLocked = true;
+            // ApplyTransformToGhostHand(ghostHand, ghostHandClone);
 
-            cupStateController.SyncWristPointToGhostHand(childOpenXRHandClone.transform.position, childOpenXRHandClone.transform.rotation);
-            childOpenXRHand.SetActive(false);
+            // cupStateController.SyncWristPointToGhostHand(childOpenXRHandClone.transform.position, childOpenXRHandClone.transform.rotation);
+            // childOpenXRHand.SetActive(false);
 
-            AttachCupToGhostHand();
-            cupStateController.IsGrabbing = false;
+            // AttachCupToGhostHand();
+            // cupStateController.IsGrabbing = false;
             ghostHandState = GhostHandState.WaitingToRecall;
         }
     }
