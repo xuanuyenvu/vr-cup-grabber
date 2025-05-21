@@ -105,21 +105,13 @@ public class GhostHandController : MonoBehaviour
         }
     }
 
-    private float distanceToSmell;
-
     private void HandleGhostHandExit(GameObject ghostHand)
     {
         if (ghostHand == null || virtualCenterEye == null) return;
 
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
         // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2") + "\ntrack: " + cupStateController.IsTrackedDataValid;
-        distanceToSmell = distance;
-        if (distance >= 0.15f && isDiffuseSmell)
-        {
-            Debug.Log("Stop smell");
-            SmellTasteManager.Instance.StopSmell(new List<string> { "odor4" });
-            isDiffuseSmell = false;
-        }
+    
         if (distance >= 0.13f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
             // StartCoroutine(FlyToDestination(ghostHandClone.transform, childOpenXRHand.transform, 0.5f));
@@ -151,13 +143,20 @@ public class GhostHandController : MonoBehaviour
         childOpenXRHand = GetChildByName(ghostHand, childName);
         float distance = Vector3.Distance(cupRim.transform.position, mouth.transform.position);
         // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Entry : " + distance.ToString("F2");
-        distanceToSmell = distance;
+
         if (distance <= 0.1f && !isDiffuseSmell)
         {
             Debug.Log("Start smell");
             SmellTasteManager.Instance.DiffuseSmell(new List<string> { "odor4" }, 900000);
             isDiffuseSmell = true;
+        } 
+        else if (distance >= 0.13f && isDiffuseSmell)
+        {
+            Debug.Log("Stop smell");
+            SmellTasteManager.Instance.StopSmell(new List<string> { "odor4" });
+            isDiffuseSmell = false;
         }
+
         if (distance <= 0.06f && ghostHandClone == null)
         {
             HideHandGrabPoseObject();
