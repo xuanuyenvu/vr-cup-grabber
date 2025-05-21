@@ -2,6 +2,7 @@ using UnityEngine;
 using Cup;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 public class GhostHandController : MonoBehaviour
 {
     [SerializeField] private CupStateController cupStateController;
@@ -104,21 +105,24 @@ public class GhostHandController : MonoBehaviour
         }
     }
 
+    private float distanceToSmell;
+
     private void HandleGhostHandExit(GameObject ghostHand)
     {
         if (ghostHand == null || virtualCenterEye == null) return;
 
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
         // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2") + "\ntrack: " + cupStateController.IsTrackedDataValid;
-
-        // if (distance >= 0.16f && isDiffuseSmell)
-        // {
-        //     SmellTasteManager.Instance.StopSmell(new List<string> { "odor4" });
-        //     isDiffuseSmell = false;
-        // }
+        distanceToSmell = distance;
+        if (distance >= 0.15f && isDiffuseSmell)
+        {
+            Debug.Log("Stop smell");
+            SmellTasteManager.Instance.StopSmell(new List<string> { "odor4" });
+            isDiffuseSmell = false;
+        }
         if (distance >= 0.13f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
-            StartCoroutine(FlyToDestination(ghostHandClone.transform, childOpenXRHand.transform, 0.5f));
+            // StartCoroutine(FlyToDestination(ghostHandClone.transform, childOpenXRHand.transform, 0.5f));
             Destroy(ghostHandClone);
             ghostHandClone = null;
             childOpenXRHandClone = null;
@@ -147,12 +151,13 @@ public class GhostHandController : MonoBehaviour
         childOpenXRHand = GetChildByName(ghostHand, childName);
         float distance = Vector3.Distance(cupRim.transform.position, mouth.transform.position);
         // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Entry : " + distance.ToString("F2");
-
-        // if (distance <= 0.1f && !isDiffuseSmell)
-        // {
-        //     SmellTasteManager.Instance.DiffuseSmell(new List<string> { "odor4" }, 900000);
-        //     isDiffuseSmell = true;
-        // }
+        distanceToSmell = distance;
+        if (distance <= 0.1f && !isDiffuseSmell)
+        {
+            Debug.Log("Start smell");
+            SmellTasteManager.Instance.DiffuseSmell(new List<string> { "odor4" }, 900000);
+            isDiffuseSmell = true;
+        }
         if (distance <= 0.06f && ghostHandClone == null)
         {
             HideHandGrabPoseObject();
@@ -163,8 +168,8 @@ public class GhostHandController : MonoBehaviour
             ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, handGrabPos.transform.rotation, handGrabPos.transform);
             childOpenXRHandClone = GetChildByName(ghostHandClone, childName);
 
-            // dòng for nằm nhằm xóa component HandVisual, 
-            // vì lúc spawn cần script HandVisual để lấy mesh, nhưng sau đó không cần nữa
+            // // dòng for nằm nhằm xóa component HandVisual, 
+            // // vì lúc spawn cần script HandVisual để lấy mesh, nhưng sau đó không cần nữa
             foreach (var comp in ghostHandClone.GetComponents<Component>())
             {
                 if (!(comp is Transform))
