@@ -54,14 +54,14 @@ public class GhostHandController : MonoBehaviour
 
     private void OnEnable()
     {
-        cupStateController.onGrabbingChange += SetGhostHandState;
-        cupStateController.onCupThrown += ResetAllPropertiesWhenCupThrown;
+        cupStateController.OnGrabbingChange += SetGhostHandState;
+        cupStateController.OnCupThrown += ResetAllPropertiesWhenCupThrown;
     }
 
     private void OnDisable()
     {
-        cupStateController.onGrabbingChange -= SetGhostHandState;
-        cupStateController.onCupThrown -= ResetAllPropertiesWhenCupThrown;
+        cupStateController.OnGrabbingChange -= SetGhostHandState;
+        cupStateController.OnCupThrown -= ResetAllPropertiesWhenCupThrown;
     }
 
     void Update()
@@ -152,7 +152,7 @@ public class GhostHandController : MonoBehaviour
             SmellTasteManager.Instance.DiffuseSmell(new List<string> { "odor4" }, 900000);
             isDiffuseSmell = true;
         }
-        else if (distance >= 0.13f && isDiffuseSmell)
+        else if (distance >= 0.35f && isDiffuseSmell)
         {
             Debug.Log("Stop smell");
             SmellTasteManager.Instance.StopSmell(new List<string> { "odor4" });
@@ -296,10 +296,10 @@ public class GhostHandController : MonoBehaviour
         ghostHand.position = endPosition;
         ghostHand.rotation = endRotation;
     }
-    
+
     private void ResetAllPropertiesWhenCupThrown()
     {
-        if (ghostHandState == GhostHandState.WaitingToClone)
+        if (ghostHandState != GhostHandState.NotCloned)
         {
             if (ghostHandClone != null)
             {
@@ -313,7 +313,7 @@ public class GhostHandController : MonoBehaviour
                 childOpenXRHandClone = null;
             }
 
-            cupStateController.gameObject.GetComponent<MeshRenderer>().enabled = true;
+            cupStateController.cupMeshRenderer.enabled = true;
             childOpenXRHand.SetActive(true);
 
             if (isDiffuseSmell)
