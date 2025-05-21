@@ -2,8 +2,6 @@ using UnityEngine;
 using Cup;
 using TMPro;
 using System.Collections;
-using System.Collections.Generic;
-
 public class GhostHandController : MonoBehaviour
 {
     [SerializeField] private CupStateController cupStateController;
@@ -19,6 +17,8 @@ public class GhostHandController : MonoBehaviour
     [SerializeField] private GameObject mouth;
     [SerializeField] private GameObject cupRim;
     [SerializeField] private GameObject spawnPoint;
+
+    [SerializeField] private GameObject[] handGrabPoses;
 
     public GameObject canvas;
 
@@ -98,13 +98,6 @@ public class GhostHandController : MonoBehaviour
             HandleGhostHandExit(targetHand);
         }
 
-        // if (childOpenXRHand == null)
-        // {
-        //     childOpenXRHand = GetChildByName(targetHand, childName);
-        // }
-        // float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
-        // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2");
-
         if (!cupStateController.IsGrabbing)
         {
             HandleGrabbingState();
@@ -116,24 +109,27 @@ public class GhostHandController : MonoBehaviour
         if (ghostHand == null || virtualCenterEye == null) return;
 
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
-        canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2") + "\ntrack: " + cupStateController.IsTrackedDataValid;
+        // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2") + "\ntrack: " + cupStateController.IsTrackedDataValid;
 
-        if (distance >= 0.16f && isDiffuseSmell)
+        // if (distance >= 0.16f && isDiffuseSmell)
+        // {
+        //     SmellTasteManager.Instance.StopSmell(new List<string> { "odor4" });
+        //     isDiffuseSmell = false;
+        // }
+        if (distance >= 0.13f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
-            SmellTasteManager.Instance.StopSmell(new List<string> { "odor4" });
-            isDiffuseSmell = false;
-        }
-        if (distance >= 0.15f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
-        {
-            // Destroy(ghostHandClone);
-            // ghostHandClone = null;
-            // childOpenXRHandClone = null;
-            // cupStateController.IsCupGrabLocked = false;
+            StartCoroutine(FlyToDestination(ghostHandClone.transform, childOpenXRHand.transform, 0.5f));
+            Destroy(ghostHandClone);
+            ghostHandClone = null;
+            childOpenXRHandClone = null;
+            // cupStateController.gameObject.SetActive(true);
+            // cupPrefabWithoutHandGrabPose.SetActive(false);
 
             // childOpenXRHand.SetActive(true);
             // cupStateController.SyncWristPointToReal();
 
-            // cupStateController.IsHandSwitchAllowed = true;
+            cupStateController.IsHandSwitchAllowed = true;
+            ShowHandGrabPoseObject();
             ghostHandState = GhostHandState.WaitingToClone;
         }
     }
@@ -149,38 +145,20 @@ public class GhostHandController : MonoBehaviour
         if (ghostHand == null || virtualCenterEye == null) return;
 
         childOpenXRHand = GetChildByName(ghostHand, childName);
-        // childOpenXRHand = GetChildByName(childOpenXRHand, grandChildName);
         float distance = Vector3.Distance(cupRim.transform.position, mouth.transform.position);
-        canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Entry : " + distance.ToString("F2");
+        // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Entry : " + distance.ToString("F2");
 
-        if (distance <= 0.1f && !isDiffuseSmell)
+        // if (distance <= 0.1f && !isDiffuseSmell)
+        // {
+        //     SmellTasteManager.Instance.DiffuseSmell(new List<string> { "odor4" }, 900000);
+        //     isDiffuseSmell = true;
+        // }
+        if (distance <= 0.06f && ghostHandClone == null)
         {
-            SmellTasteManager.Instance.DiffuseSmell(new List<string> { "odor4" }, 900000);
-            isDiffuseSmell = true;
-        }
-        if (distance <= 0.05f && ghostHandClone == null)
-        {
-            // cupStateController.IsHandSwitchAllowed = false;
-            // float angleStep = 6f; 
-            // int maxTries = 60;    
+            HideHandGrabPoseObject();
+            cupStateController.IsHandSwitchAllowed = false;
 
-            // for (int i = 0; i < maxTries; i++)
-            // {
-            //     (handGrabPos.transform.position, handGrabPos.transform.rotation) = 
-            //         cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
-
-            //     Vector3 localPos = mouth.transform.InverseTransformPoint(handGrabPos.transform.position);
-            //     // Debug.Log($"localPos: {localPos}");
-
-            //     if (isLeftHand && localPos.x < -1.75f && localPos.y < 0.6f)
-            //         break;
-            //     if (!isLeftHand && localPos.x > 1.75f && localPos.y < 0.6f)
-            //         break;
-
-            //     spawnPoint.transform.Rotate(Vector3.up, angleStep, Space.Self);
-            // }
-            // Debug.Log($"SpawnPoint: {mouth.transform.InverseTransformPoint(handGrabPos.transform.position)}");
-            // (handGrabPos.transform.position, handGrabPos.transform.rotation) = cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
+            (handGrabPos.transform.position, handGrabPos.transform.rotation) = cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
 
             // ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, handGrabPos.transform.rotation, handGrabPos.transform);
             // childOpenXRHandClone = GetChildByName(ghostHandClone, childName);
@@ -195,15 +173,31 @@ public class GhostHandController : MonoBehaviour
             //     }
             // }
 
-            // cupStateController.IsCupGrabLocked = true;
-            // ApplyTransformToGhostHand(ghostHand, ghostHandClone);
+            ApplyTransformToGhostHand(ghostHand, ghostHandClone);
 
-            // cupStateController.SyncWristPointToGhostHand(childOpenXRHandClone.transform.position, childOpenXRHandClone.transform.rotation);
-            // childOpenXRHand.SetActive(false);
+            // StartCoroutine(FlyToDestination(ghostHandClone.transform, handGrabPos.transform, 0.5f));
+            cupStateController.SyncWristPointToGhostHand(childOpenXRHandClone.transform.position, childOpenXRHandClone.transform.rotation);
+            childOpenXRHand.SetActive(false);
 
             // AttachCupToGhostHand();
             // cupStateController.IsGrabbing = false;
             ghostHandState = GhostHandState.WaitingToRecall;
+        }
+    }
+
+    private void ShowHandGrabPoseObject()
+    {
+        foreach (GameObject handGrabPose in handGrabPoses)
+        {
+            handGrabPose.SetActive(true);
+        }
+    }
+
+    private void HideHandGrabPoseObject()
+    {
+        foreach (GameObject handGrabPose in handGrabPoses)
+        {
+            handGrabPose.SetActive(false);
         }
     }
 
@@ -273,7 +267,7 @@ public class GhostHandController : MonoBehaviour
         }
     }
 
-    private IEnumerator FlyToDestination(Transform cup, Transform ghostHand, Transform ghostHandDestination, float duration)
+    private IEnumerator FlyToDestination(Transform ghostHand, Transform ghostHandDestination, float duration)
     {
         Vector3 startPosition = ghostHand.position;
         Quaternion startRotation = ghostHand.rotation;
@@ -287,7 +281,7 @@ public class GhostHandController : MonoBehaviour
             float t = elapsedTime / duration;
 
             ghostHand.position = Vector3.Lerp(startPosition, endPosition, t);
-            ghostHand.rotation = Quaternion.Slerp(startRotation, endRotation, t);
+            // ghostHand.rotation = Quaternion.Slerp(startRotation, endRotation, t);
 
             elapsedTime += Time.deltaTime;
             yield return null;
