@@ -23,7 +23,7 @@ namespace Cup
         [SerializeField] private GameObject wristPoint; // vị trí cổ tay
         [SerializeField] private GameObject cupAttachPoint;
         public MeshRenderer cupMeshRenderer;
-        [SerializeField] private GameObject liquid;
+        public GameObject liquid;
         private bool isOnTable = true;
         private bool isNearTable = false;
         private bool isPendingRegrab = false;

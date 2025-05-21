@@ -314,7 +314,11 @@ public class GhostHandController : MonoBehaviour
             }
 
             cupStateController.cupMeshRenderer.enabled = true;
+            cupStateController.liquid.SetActive(true);
             childOpenXRHand.SetActive(true);
+
+            ShowHandGrabPoseObject();
+            cupStateController.IsHandSwitchAllowed = true;
 
             if (isDiffuseSmell)
             {
