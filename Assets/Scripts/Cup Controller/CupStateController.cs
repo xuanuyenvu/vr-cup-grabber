@@ -22,8 +22,8 @@ namespace Cup
         [SerializeField] private GameObject cuppSphere;
         [SerializeField] private GameObject wristPoint; // vị trí cổ tay
         [SerializeField] private GameObject cupAttachPoint;
-        [SerializeField] private MeshRenderer cupMeshRenderer; 
-        [SerializeField] private GameObject liquid;
+        public MeshRenderer cupMeshRenderer;
+        public GameObject liquid;
         private bool isOnTable = true;
         private bool isNearTable = false;
         private bool isPendingRegrab = false;
@@ -41,7 +41,8 @@ namespace Cup
 
         public enum GrabbedBy { LeftHand, RightHand, None };
         public GrabbedBy grabbedByHand = GrabbedBy.None;
-        public event Action<bool> onGrabbingChange;
+        public event Action<bool> OnGrabbingChange;
+        public event Action OnCupThrown;
 
         // [HideInInspector] public Vector3 cupPosition = new Vector3(0, 0, 0);
         // [HideInInspector] public Quaternion cupRotation = Quaternion.identity;
@@ -69,7 +70,7 @@ namespace Cup
             set
             {
                 isGrabbing = value;
-                onGrabbingChange?.Invoke(isGrabbing);
+                OnGrabbingChange?.Invoke(isGrabbing);
             }
         }
 
@@ -111,6 +112,7 @@ namespace Cup
             {
                 isOnTable = true;
                 // Debug.Log("Cup has landed on the table!");
+                OnCupThrown.Invoke();
                 AlignCupOnLanding();
             }
         }
