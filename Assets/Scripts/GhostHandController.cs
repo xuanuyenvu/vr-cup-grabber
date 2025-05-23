@@ -146,16 +146,16 @@ public class GhostHandController : MonoBehaviour
         float distance = Vector3.Distance(cupRim.transform.position, mouth.transform.position);
         // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Entry : " + distance.ToString("F2");
 
-        if (distance <= 0.1f && !isDiffuseSmell)
+        if (distance <= 0.15f && !isDiffuseSmell)
         {
             Debug.Log("Start smell");
-            SmellTasteManager.Instance.DiffuseSmell(new List<string> { "odor4" }, 900000);
+            SmellTasteManager.Instance.DiffuseSmell(new List<string> { "odor5" }, 900000);
             isDiffuseSmell = true;
         }
-        else if (distance >= 0.35f && isDiffuseSmell)
+        else if (distance >= 0.4f && isDiffuseSmell)
         {
             Debug.Log("Stop smell");
-            SmellTasteManager.Instance.StopSmell(new List<string> { "odor4" });
+            SmellTasteManager.Instance.StopSmell(new List<string> { "odor5" });
             isDiffuseSmell = false;
         }
 
