@@ -442,6 +442,16 @@ public class TCPClientManager : MonoBehaviour
         SendRequest(request);
     }
 
+    public void GetCupData()
+    {
+        var request = new Dictionary<string, object>
+        {
+            { "action", "get_cup_position" }
+        };
+
+        SendRequest(request);
+    }
+
     private void OnApplicationQuit()
     {
         _isRunning = false;
