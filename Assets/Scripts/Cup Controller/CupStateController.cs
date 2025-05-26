@@ -111,7 +111,8 @@ namespace Cup
             if (collision.gameObject.CompareTag("Table") && !isCupGrabLocked)
             {
                 isOnTable = true;
-                Debug.Log("Cup has landed on the table!");
+                // Debug.Log("Cup has landed on the table!");
+                TCPClientManager.Instance.GetCupData();
                 OnCupThrown.Invoke();
                 AlignCupOnLanding();
             }

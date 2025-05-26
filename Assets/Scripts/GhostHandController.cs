@@ -1,6 +1,5 @@
 using UnityEngine;
 using Cup;
-using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 public class GhostHandController : MonoBehaviour
@@ -114,9 +113,9 @@ public class GhostHandController : MonoBehaviour
         float distance = Vector3.Distance(childOpenXRHand.transform.position, mouth.transform.position);
         // canvas.GetComponentInChildren<TextMeshProUGUI>().text = "Exit : " + distance.ToString("F2") + "\ntrack: " + cupStateController.IsTrackedDataValid;
 
-        if (distance >= 0.13f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
+        if (distance >= 0.16f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
-            // StartCoroutine(FlyToDestination(ghostHandClone.transform, childOpenXRHand.transform, 0.5f));
+            StartCoroutine(FlyToDestination(ghostHandClone.transform, childOpenXRHand.transform, 0.5f));
             Destroy(ghostHandClone);
             ghostHandClone = null;
             childOpenXRHandClone = null;
@@ -127,6 +126,8 @@ public class GhostHandController : MonoBehaviour
             cupStateController.SyncWristPointToReal();
 
             cupStateController.IsHandSwitchAllowed = true;
+            cupStateController.IsCupGrabLocked = false;
+
             ShowHandGrabPoseObject();
             ghostHandState = GhostHandState.WaitingToClone;
         }
@@ -159,9 +160,11 @@ public class GhostHandController : MonoBehaviour
             isDiffuseSmell = false;
         }
 
-        if (distance <= 0.06f && ghostHandClone == null)
+        if (distance <= 0.07f && ghostHandClone == null)
         {
             HideHandGrabPoseObject();
+
+            cupStateController.IsCupGrabLocked = true;
             cupStateController.IsHandSwitchAllowed = false;
 
             (handGrabPos.transform.position, handGrabPos.transform.rotation) = cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
