@@ -6,8 +6,8 @@ public class VideoTutorialManager : MonoBehaviour
     private VideoPlayer _videoPlayer;
 
     [SerializeField] private bool isClickPlayVideo = false;
-    [SerializeField] private bool _isRewindToLast10Seconds = false;
-    [SerializeField] private bool _isSkipForward10Seconds = false;
+    [SerializeField] private bool _isRewindToLast3Seconds = false;
+    [SerializeField] private bool _isSkipForward3Seconds = false;
 
     private bool _lastPlayState = false;
     void Awake()
@@ -18,8 +18,8 @@ public class VideoTutorialManager : MonoBehaviour
     void Update()
     {
         TogglePlayPause();
-        RewindToLast10Seconds();
-        SkipForward10Seconds(); 
+        RewindToLast3Seconds();
+        SkipForward3Seconds(); 
     }
 
     public void TogglePlayPause()
@@ -39,37 +39,37 @@ public class VideoTutorialManager : MonoBehaviour
         }
     }
 
-    public void RewindToLast10Seconds()
+    public void RewindToLast3Seconds()
     {
-        if (!_isRewindToLast10Seconds)
+        if (!_isRewindToLast3Seconds)
             return;
 
-        if (_videoPlayer.time > 10)
+        if (_videoPlayer.time > 3)
         {
-            _videoPlayer.time -= 10;
+            _videoPlayer.time -= 3;
         }
         else
         {
             _videoPlayer.time = 0;
         }
 
-        _isRewindToLast10Seconds = false;
+        _isRewindToLast3Seconds = false;
     }
 
-    public void SkipForward10Seconds()
+    public void SkipForward3Seconds()
     {
-        if (!_isSkipForward10Seconds)
+        if (!_isSkipForward3Seconds)
             return;
 
-        if (_videoPlayer.time < _videoPlayer.length - 10)
+        if (_videoPlayer.time < _videoPlayer.length - 3)
         {
-            _videoPlayer.time += 10;
+            _videoPlayer.time += 3;
         }
         else
         {
             _videoPlayer.time = _videoPlayer.length;
         }
 
-        _isSkipForward10Seconds = false;
+        _isSkipForward3Seconds = false;
     }
 }

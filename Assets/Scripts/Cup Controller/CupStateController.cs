@@ -112,6 +112,7 @@ namespace Cup
             {
                 isOnTable = true;
                 // Debug.Log("Cup has landed on the table!");
+                TCPClientManager.Instance.GetCupData();
                 OnCupThrown.Invoke();
                 AlignCupOnLanding();
             }

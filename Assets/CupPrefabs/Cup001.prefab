@@ -707,7 +707,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5590828063335521917}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -933,7 +933,7 @@ MonoBehaviour:
   _pointLightsEnabled: 1
   pointLightParams:
   - name: Light 1
-    targetPos: {x: -0.05663349, y: -0.4, z: -0.027933732}
+    targetPos: {x: 0.18616636, y: -0.15466571, z: -0.21636279}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -947,7 +947,7 @@ MonoBehaviour:
     color2: {r: 0.8477335, g: 0.8441614, b: 0.72563845, a: 1}
     colorSpeed: 0.5915744
   - name: Light 2
-    targetPos: {x: -0.0021752166, y: -0.154288, z: 0.33342794}
+    targetPos: {x: -0.04878548, y: -0.38439524, z: -0.14261295}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -961,7 +961,7 @@ MonoBehaviour:
     color2: {r: 0.69685274, g: 0.19038787, b: 0.20668414, a: 1}
     colorSpeed: 0.77507466
   - name: Light 3
-    targetPos: {x: -0.09433407, y: -0.4, z: 0.01575076}
+    targetPos: {x: 0.1862556, y: 0.1325715, z: -0.14254336}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -975,7 +975,7 @@ MonoBehaviour:
     color2: {r: 0.7679068, g: 0.25541726, b: 0.99003446, a: 1}
     colorSpeed: 1.6058117
   - name: Light 4
-    targetPos: {x: -0.034943298, y: -0.3190258, z: -0.20599818}
+    targetPos: {x: -0.30408624, y: -0.10907036, z: -0.13643016}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -989,7 +989,7 @@ MonoBehaviour:
     color2: {r: 0.8719964, g: 0.93060446, b: 0.24331489, a: 1}
     colorSpeed: 0.9112936
   - name: Light 5
-    targetPos: {x: 0.12159258, y: -0.4, z: 0.08207803}
+    targetPos: {x: 0.07852659, y: -0.24499102, z: 0.019150896}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -1003,7 +1003,7 @@ MonoBehaviour:
     color2: {r: 0.9825232, g: 0.9036646, b: 0.47428912, a: 1}
     colorSpeed: 1.8049672
   - name: Light 6
-    targetPos: {x: -0.34333742, y: 0.043736957, z: 0.031128293}
+    targetPos: {x: -0.35436863, y: 0.07121904, z: -0.10723444}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -1401,7 +1401,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.007426453, y: 0.00081797363, z: 0.00531965}
   m_Center: {x: -0.0038633817, y: 3.058953e-10, z: 0.0012}

@@ -649,7 +649,7 @@ namespace Oculus.Interaction.HandGrab
                         out Vector3 direction, out float distance))
                 {
                     // Debug.Log($"Va chạm! Hướng: {direction}, Khoảng cách cần dịch chuyển: {distance}");
-                    if(distance >= 0.045f)
+                    if(distance >= 0.039f)
                     {
                         return true;
                     }
