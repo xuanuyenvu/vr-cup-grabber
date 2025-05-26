@@ -177,11 +177,11 @@ public class GhostHandController : MonoBehaviour
             (handGrabPos.transform.position, handGrabPos.transform.rotation) = cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
 
             // ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, handGrabPos.transform.rotation, handGrabPos.transform);
-            ghostHandClone = Instantiate(ghostHand, childOpenXRHand.transform.position, childOpenXRHand.transform.rotation);
+            ghostHandClone = Instantiate(ghostHand, childOpenXRHand.transform.position, childOpenXRHand.transform.rotation, handGrabPos.transform);
             childOpenXRHandClone = GetChildByName(ghostHandClone, childName);
 
-            // // dòng for nằm nhằm xóa component HandVisual, 
-            // // vì lúc spawn cần script HandVisual để lấy mesh, nhưng sau đó không cần nữa
+            // dòng for nằm nhằm xóa component HandVisual, 
+            // vì lúc spawn cần script HandVisual để lấy mesh, nhưng sau đó không cần nữa
             foreach (var comp in ghostHandClone.GetComponents<Component>())
             {
                 if (!(comp is Transform))
