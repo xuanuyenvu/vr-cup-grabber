@@ -115,23 +115,30 @@ public class GhostHandController : MonoBehaviour
 
         if (distance >= 0.16f && ghostHandClone != null && cupStateController.IsTrackedDataValid)
         {
-            StartCoroutine(FlyToDestination(ghostHandClone.transform, childOpenXRHand.transform, 0.5f));
-            Destroy(ghostHandClone);
-            ghostHandClone = null;
-            childOpenXRHandClone = null;
-            // cupStateController.gameObject.SetActive(true);
-            // cupPrefabWithoutHandGrabPose.SetActive(false);
-
-            childOpenXRHand.SetActive(true);
-            cupStateController.SyncWristPointToReal();
-
-            cupStateController.IsHandSwitchAllowed = true;
-            cupStateController.IsCupGrabLocked = false;
-
-            ShowHandGrabPoseObject();
-            ghostHandState = GhostHandState.WaitingToClone;
+            StartCoroutine(FinishGhostHandSpawn());
         }
     }
+
+    private IEnumerator FinishGhostHandSpawn()
+    {
+        yield return StartCoroutine(FlyToDestination(ghostHandClone.transform, childOpenXRHand.transform, 0.1f));
+
+        ghostHandClone.SetActive(false);
+
+        childOpenXRHand.SetActive(true);
+        cupStateController.SyncWristPointToReal();
+
+        cupStateController.IsHandSwitchAllowed = true;
+        cupStateController.IsCupGrabLocked = false;
+
+        Destroy(ghostHandClone);
+        ghostHandClone = null;
+        childOpenXRHandClone = null;
+
+        ShowHandGrabPoseObject();
+        ghostHandState = GhostHandState.WaitingToClone;
+    }
+
 
     private GameObject GetChildByName(GameObject parent, string childName)
     {
@@ -169,7 +176,8 @@ public class GhostHandController : MonoBehaviour
 
             (handGrabPos.transform.position, handGrabPos.transform.rotation) = cupStateController.CalculateGhostHandSpawnTransform(spawnPoint.transform);
 
-            ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, handGrabPos.transform.rotation, handGrabPos.transform);
+            // ghostHandClone = Instantiate(ghostHand, handGrabPos.transform.position, handGrabPos.transform.rotation, handGrabPos.transform);
+            ghostHandClone = Instantiate(ghostHand, childOpenXRHand.transform.position, childOpenXRHand.transform.rotation);
             childOpenXRHandClone = GetChildByName(ghostHandClone, childName);
 
             // // dòng for nằm nhằm xóa component HandVisual, 
@@ -182,9 +190,8 @@ public class GhostHandController : MonoBehaviour
                 }
             }
 
-            ApplyTransformToGhostHand(ghostHand, ghostHandClone);
+            ApplyTransformToGhostHand(ghostHand, ghostHandClone, handGrabPos);
 
-            // StartCoroutine(FlyToDestination(ghostHandClone.transform, handGrabPos.transform, 0.5f));
             cupStateController.SyncWristPointToGhostHand(childOpenXRHandClone.transform.position, childOpenXRHandClone.transform.rotation);
             childOpenXRHand.SetActive(false);
 
@@ -210,14 +217,16 @@ public class GhostHandController : MonoBehaviour
         }
     }
 
-    private void ApplyTransformToGhostHand(GameObject originalHand, GameObject clonedHand)
+    private void ApplyTransformToGhostHand(GameObject originalHand, GameObject clonedHand, GameObject handGrabPos)
     {
         UpdateGhostHandPose(originalHand, clonedHand);
 
-        ghostHandClone.transform.localPosition = Vector3.zero;
+        // ghostHandClone.transform.localPosition = Vector3.zero;
         GameObject ghostHandCloneMesh = GetChildByName(ghostHandClone, isLeftHand ? "OpenXRLeftHand" : "OpenXRRightHand");
         ghostHandCloneMesh.transform.localPosition = Vector3.zero;
         ghostHandCloneMesh.transform.localRotation = Quaternion.identity;
+
+        StartCoroutine(FlyToDestination(ghostHandClone.transform, handGrabPos.transform, 0.09f));
     }
 
     private void UpdateGhostHandPose(GameObject originalHand, GameObject clonedHand)
@@ -290,14 +299,17 @@ public class GhostHandController : MonoBehaviour
             float t = elapsedTime / duration;
 
             ghostHand.position = Vector3.Lerp(startPosition, endPosition, t);
-            // ghostHand.rotation = Quaternion.Slerp(startRotation, endRotation, t);
+            ghostHand.rotation = Quaternion.Slerp(startRotation, endRotation, t);
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        ghostHand.position = endPosition;
-        ghostHand.rotation = endRotation;
+        if (ghostHand != null)
+        {
+            ghostHand.position = endPosition;
+            ghostHand.rotation = endRotation;
+        }
     }
 
     private void ResetAllPropertiesWhenCupThrown()
