@@ -1,0 +1,5 @@
+sep=;
+UserId;ExperimentType;FlavorType;Q1-Like;Q2-Intense;Q3-Sweet;Q4-Bitter;Q5-Sour
+test1;Color;Sweet;0;0;0;0;0
+test1;Color;Sweet;2,380925;32,3995;43,31043;40,33709;26,71935
+test1;Color;Sweet;9,917623;17,90137;50,99619;20,16608;13,63264
