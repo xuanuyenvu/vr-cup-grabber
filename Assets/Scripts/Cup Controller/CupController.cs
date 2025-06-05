@@ -1,6 +1,5 @@
 using UnityEngine;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
 using System;
 using System.Collections.Generic;
@@ -136,5 +135,14 @@ public class CupController : MonoBehaviour
                 liquidObject.SetActive(true);
             }
         }
+    }
+
+    public GameObject GetCurrentLiquidVisual()
+    {
+        if (_liquidObjects.TryGetValue(_currentLiquidColor, out GameObject liquidObject))
+        {
+            return liquidObject;
+        }
+        return null;
     }
 }

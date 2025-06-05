@@ -19,11 +19,15 @@ namespace Cup
 
     public class CupStateController : MonoBehaviour
     {
-        [SerializeField] private GameObject cuppSphere;
+        [SerializeField] private CupController cupController;
+        [SerializeField] private GameObject cupSphere;
         [SerializeField] private GameObject wristPoint; // vị trí cổ tay
         [SerializeField] private GameObject cupAttachPoint;
         public MeshRenderer cupMeshRenderer;
-        public GameObject liquid;
+        public GameObject liquid
+        {
+            get { return cupController.GetCurrentLiquidVisual(); }
+        }
         private bool isOnTable = true;
         private bool isNearTable = false;
         private bool isPendingRegrab = false;
