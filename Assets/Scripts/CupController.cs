@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class CupData
@@ -23,21 +24,59 @@ public class ServerMessage
     public CupData data;
 }
 
+public enum LiquidColor
+{
+    Red,
+    Black,
+    Green,
+    Neutral
+}
+
 public class CupController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject cupGameObject;
+
+    [Header("Liquid Visuals")]
+    [SerializeField] private GameObject redLiquidVisual;
+    [SerializeField] private GameObject blackLiquidVisual;
+    [SerializeField] private GameObject greenLiquidVisual;
+    [SerializeField] private GameObject neutralLiquidVisual;
 
     [Header("Transform Settings")]
     [SerializeField] private float scaleFactor = 0.01f; // mm to Unity units
 
     private CupData _latestCupData;
     private bool _hasNewCupData = false;
+    private LiquidColor _currentLiquidColor;
+    private Dictionary<LiquidColor, GameObject> _liquidObjects;
+
+    public LiquidColor CurrentLiquidColor
+    {
+        get => _currentLiquidColor;
+        set
+        {
+            _currentLiquidColor = value;
+            UpdateLiquidVisual(value);
+        }
+    }
 
     private void Start()
     {
         // Subscribe to cup data events
         TCPClientManager.Instance.OnCupDataReceived += OnCupDataReceived;
+    }
+
+    void Awake()
+    {
+        _liquidObjects = new Dictionary<LiquidColor, GameObject>
+        {
+            { LiquidColor.Red, redLiquidVisual },
+            { LiquidColor.Black, blackLiquidVisual },
+            { LiquidColor.Green, greenLiquidVisual },
+            { LiquidColor.Neutral, neutralLiquidVisual }
+        };
+        UpdateLiquidVisual(_currentLiquidColor);
     }
 
     private void OnDestroy()
@@ -77,6 +116,25 @@ public class CupController : MonoBehaviour
         if (!string.IsNullOrEmpty(cd.rotation.ToString()))
         {
             cupGameObject.transform.localEulerAngles = new Vector3(0, cd.rotation, 0);
+        }
+    }
+
+    private void UpdateLiquidVisual(LiquidColor color)
+    {
+        if (_liquidObjects != null)
+        {
+            foreach (var liquid in _liquidObjects.Values)
+            {
+                if (liquid != null)
+                {
+                    liquid.SetActive(false);
+                }
+            }
+
+            if (_liquidObjects.TryGetValue(color, out GameObject liquidObject) && liquidObject != null)
+            {
+                liquidObject.SetActive(true);
+            }
         }
     }
 }
