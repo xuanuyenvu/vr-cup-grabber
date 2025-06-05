@@ -7,16 +7,20 @@ public class UserStudyManager : MonoBehaviour
     [SerializeField] private CupController cupController;
     [SerializeField] private UserStudyFormManager userStudyFormManager;
 
-    [Space][Header("Smell Settings")]
+    [Space]
+    [Header("Smell Settings")]
     [SerializeField] private SmellType _currentSmellType;
 
-    [Space][Header("Liquid Settings")]
+    [Space]
+    [Header("Liquid Settings")]
     [SerializeField] private LiquidColor _currentLiquidColor;
 
-    [Space][Header("User Study Form Settings")]
+    [Space]
+    [Header("User Study Form Settings")]
     [SerializeField] private string _userId;
     [SerializeField] private UserStudyFormManager.ExperimentType _experimentType;
     [SerializeField] private UserStudyFormManager.FlavorType _flavorType;
+    public bool isOpenForm = false;
 
     void OnValidate()
     {
@@ -26,5 +30,19 @@ public class UserStudyManager : MonoBehaviour
         userStudyFormManager.userId = _userId;
         userStudyFormManager.experimentType = _experimentType;
         userStudyFormManager.flavorType = _flavorType;
+
+        OpenForm();
+    }
+
+    private void OpenForm()
+    {
+        if (isOpenForm)
+        {
+            userStudyFormManager.ShowUI();
+        }
+        else
+        {
+            userStudyFormManager.HideUI();
+        }
     }
 }
