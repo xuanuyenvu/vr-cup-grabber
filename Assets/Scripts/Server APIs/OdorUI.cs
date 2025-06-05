@@ -24,7 +24,7 @@ public class OdorUI : MonoBehaviour
             Debug.LogWarning("Không thể kích hoạt mùi hương: Mất kết nối với server!");
             return;
         }
-        SmellTasteManager.Instance.DiffuseSmell(new List<string> { dropdownOdor.options[dropdownOdor.value].text }, 60000);
+        // SmellTasteManager.Instance.DiffuseSmell(new List<string> { dropdownOdor.options[dropdownOdor.value].text }, 60000);
     }
     
     public void OnStopButtonClicked()
@@ -34,7 +34,7 @@ public class OdorUI : MonoBehaviour
             Debug.LogWarning("Không thể kích hoạt mùi hương: Mất kết nối với server!");
             return;
         }
-        SmellTasteManager.Instance.StopSmell(new List<string> { dropdownOdor.options[dropdownOdor.value].text });
+        // SmellTasteManager.Instance.StopSmell(new List<string> { dropdownOdor.options[dropdownOdor.value].text });
     }
 
 }
