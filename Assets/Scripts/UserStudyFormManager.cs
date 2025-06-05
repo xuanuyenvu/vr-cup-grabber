@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.IO;
 using System.Collections.Generic;
 using TMPro;
+using System;
 
 [System.Serializable]
 public struct QuestionUI
@@ -32,6 +33,7 @@ public class UserStudyFormManager : MonoBehaviour
     [SerializeField] private GameObject userStudyFormUI;
     [SerializeField] private List<QuestionUI> questions12;
     [SerializeField] private List<QuestionUI> questions345;
+    [SerializeField] private UserStudyManager userStudyManager;
     private List<float> questionValues = new List<float> { 0f, 0f, 0f, 0f, 0f };
     private string fileName = "user_study_form.csv";
     private int currentPage = -1;
@@ -41,13 +43,14 @@ public class UserStudyFormManager : MonoBehaviour
     [HideInInspector] public FlavorType flavorType = FlavorType.Sweet;
     [HideInInspector] public string userId = "no-data";
 
+
     void Start()
     {
         ResetValues();
         HideUI();
     }
 
-    private void ShowUI()
+    public void ShowUI()
     {
         userStudyFormUI.SetActive(true);
         currentPage = 0;
@@ -62,15 +65,16 @@ public class UserStudyFormManager : MonoBehaviour
         // xáo trộn các phần tử trong question345
         for (int i = questions345.Count - 1; i > 0; i--)
         {
-            int randomIndex = Random.Range(0, i + 1);
+            int randomIndex = UnityEngine.Random.Range(0, i + 1);
             var temp = questions345[i];
             questions345[i] = questions345[randomIndex];
             questions345[randomIndex] = temp;
         }
     }
 
-    private void HideUI()
+    public void HideUI()
     {
+        ResetValues();
         userStudyFormUI.SetActive(false);
         foreach (var q in questions12)
         {
@@ -80,9 +84,12 @@ public class UserStudyFormManager : MonoBehaviour
         {
             q.panel.SetActive(false);
         }
+
+        // VU code action do dayday
+        userStudyManager.isOpenForm = false;
     }
 
-   public void NextPage()
+    public void NextPage()
     {
         switch (currentPage)
         {
@@ -130,7 +137,7 @@ public class UserStudyFormManager : MonoBehaviour
                 questions345[2].panel.SetActive(false);
                 SubmitForm();
                 break;
-            
+
         }
     }
 
@@ -164,7 +171,6 @@ public class UserStudyFormManager : MonoBehaviour
             File.AppendAllText(filePath, csvData);
             Debug.Log($"Form submitted successfully! File saved at: {filePath}");
 
-            ResetValues();
             HideUI();
         }
         catch (System.Exception ex)
@@ -175,6 +181,7 @@ public class UserStudyFormManager : MonoBehaviour
 
     private void ResetValues()
     {
+        currentPage = -1;
         foreach (var q in questions12)
         {
             q.slider.value = 0.1111111f;
