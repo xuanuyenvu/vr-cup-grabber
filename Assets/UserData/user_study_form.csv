@@ -1,2 +1,17 @@
 sep=;
 UserId;ExperimentType;FlavorType;Q1-Like;Q2-Intense;Q3-Sweet;Q4-Bitter;Q5-Sour
+pilot1;Color;Sweet;0.3347158;16.22822;0;0;6.78161
+pilot1;Color;Sour;-26.5567;33.24261;5.857439;33.32244;34.03831
+pilot1;Color;Bitter;-20.54382;33.08263;6.3876;32.60727;0
+pilot2;Color;Sweet;-1.709145;12.69223;0;0;2.109521
+pilot2;Color;Bitter;-0.7276237;9.818519;0;0;0
+pilot2;Color;Sour;0.3656328;10.96689;0;0;0
+pilot2;SmellOrthonasal;Sweet;4.86998;6.488441;5.389872;0;0
+pilot2;SmellOrthonasal;Bitter;3.448713;14.17228;0;3.196964;0
+pilot2;SmellOrthonasal;Sour;13.18511;15.36135;0;0.5839301;2.493639
+pilot2;SmellOrthonasal;Bitter;2.183253;5.021661;0;0;3.160495
+pilot2;SmellOrthonasal;Sour;-2.22157;5.232517;1.971591;1.614241;0
+pilot2;SmellOrthonasal;Sweet;2.13629;3.971812;3.343645;0;0
+pilot2;Color;Bitter;0.9689033;5.334154;2.028283;0;0
+pilot2;Color;Sour;1.27058;4.246545;1.295905;0;0
+pilot2;Color;Sweet;1.998299;2.598368;0;0;0

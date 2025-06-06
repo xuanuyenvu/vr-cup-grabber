@@ -13,11 +13,11 @@ public static class SmellTypeNames
 {
     public static readonly Dictionary<SmellType, string> Names = new Dictionary<SmellType, string>
     {
-        { SmellType.Sweet, "odor1" },
-        { SmellType.Sour, "odor2" },
-        { SmellType.Bitter, "odor3" },
-        { SmellType.Neutral, "odor4" }
-    };
+        { SmellType.Sweet, "odor4" },
+        { SmellType.Sour, "odor6" },
+        { SmellType.Bitter, "odor5" },
+        { SmellType.Neutral, "odor1" }
+     };
 }
 
 public class SmellTasteManager : MonoBehaviour
