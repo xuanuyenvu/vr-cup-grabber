@@ -13,7 +13,7 @@ public class CalibrateTable : MonoBehaviour
     [Header("Calibration Settings")]
     [SerializeField] private HeadsetCalibrationData calibrationData;
     [SerializeField] private bool loadPositionOnStart = true;
-    
+
     [Header("Auto Save")]
     [Tooltip("Tự động lưu vị trí khi thoát ứng dụng")]
     [SerializeField] private bool savePositionOnQuit = true;
@@ -25,11 +25,6 @@ public class CalibrateTable : MonoBehaviour
     {
         if (loadPositionOnStart && calibrationData != null)
         {
-            // Tải dữ liệu từ file nếu đang chạy build
-            #if !UNITY_EDITOR
-            LoadCalibrationFromFile();
-            #endif
-            
             // Áp dụng vị trí đã lưu nếu có
             if (calibrationData.hasBeenCalibrated)
             {
@@ -44,7 +39,7 @@ public class CalibrateTable : MonoBehaviour
         {
             GetHeadsetPositionRelativeToController();
             AdjustHeadsetRelativeToTableAxis();
-            
+
             // Lưu vị trí sau khi hiệu chỉnh
             SaveHeadsetPosition();
         }
@@ -56,12 +51,8 @@ public class CalibrateTable : MonoBehaviour
         {
             // Lưu vị trí hiện tại
             calibrationData.SaveCurrentTransform(cameraRig.transform);
-            
+
             // Lưu xuống file nếu đang chạy build
-            #if !UNITY_EDITOR
-            SaveCalibrationToFile();
-            #endif
-            
             if (showDebugInfo)
             {
                 Debug.Log($"Headset position saved on quit: {cameraRig.transform.position}");
@@ -77,7 +68,7 @@ public class CalibrateTable : MonoBehaviour
         virtualHeadset.transform.position = cameraRig.transform.position;
         virtualHeadset.transform.rotation = cameraRig.transform.rotation;
     }
-    
+
     public void AdjustHeadsetRelativeToTableAxis()
     {
         virtualController.transform.position = virtualControllerTargetAxis.transform.position;
@@ -86,17 +77,13 @@ public class CalibrateTable : MonoBehaviour
         cameraRig.transform.position = virtualHeadset.transform.position;
         cameraRig.transform.rotation = virtualHeadset.transform.rotation;
     }
-    
+
     // Lưu vị trí và góc quay của Headset vào ScriptableObject
     public void SaveHeadsetPosition()
     {
         if (calibrationData != null)
         {
             calibrationData.SaveCurrentTransform(cameraRig.transform);
-            
-            #if !UNITY_EDITOR
-            SaveCalibrationToFile();
-            #endif
 
             if (showDebugInfo)
             {
@@ -108,7 +95,7 @@ public class CalibrateTable : MonoBehaviour
             Debug.LogError("Cannot save headset position: calibrationData is null. Assign a HeadsetCalibrationData asset in the Inspector.");
         }
     }
-    
+
     // Khôi phục vị trí và góc quay của Headset từ ScriptableObject
     public void LoadHeadsetPosition()
     {
@@ -130,5 +117,5 @@ public class CalibrateTable : MonoBehaviour
             }
         }
     }
-    
+
 }
