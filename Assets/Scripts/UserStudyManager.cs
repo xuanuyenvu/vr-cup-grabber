@@ -6,6 +6,11 @@ public class UserStudyManager : MonoBehaviour
 {
     [SerializeField] private CupController cupController;
     [SerializeField] private UserStudyFormManager userStudyFormManager;
+    [SerializeField] private GameObject tutorialVideo;
+
+    [Space]
+    [Header("Tutorial Video Settings")]
+    public VideoTutorialManager videoTutorialManager;
 
     [Space]
     [Header("Smell Settings")]
@@ -32,6 +37,11 @@ public class UserStudyManager : MonoBehaviour
         userStudyFormManager.flavorType = _flavorType;
 
         OpenForm();
+        OpenTutorialVideo();
+
+        videoTutorialManager.TogglePlayPause();
+        videoTutorialManager.RewindToLast3Seconds();
+        videoTutorialManager.SkipForward3Seconds();
     }
 
     private void OpenForm()
@@ -44,5 +54,17 @@ public class UserStudyManager : MonoBehaviour
         {
             userStudyFormManager.HideUI();
         }
+    }
+
+    private void OpenTutorialVideo()
+    {
+        // if (isOpenTutorialVideo)
+        // {
+        //     tutorialVideo.SetActive(true);
+        // }
+        // else
+        // {
+        //     tutorialVideo.SetActive(false);
+        // }
     }
 }

@@ -1,26 +1,17 @@
+using System;
 using UnityEngine;
 using UnityEngine.Video;
 
-public class VideoTutorialManager : MonoBehaviour
+[Serializable]
+public class VideoTutorialManager
 {
-    private VideoPlayer _videoPlayer;
+    [SerializeField] private VideoPlayer _videoPlayer;
 
-    [SerializeField] private bool isClickPlayVideo = false;
-    [SerializeField] private bool _isRewindToLast3Seconds = false;
-    [SerializeField] private bool _isSkipForward3Seconds = false;
+    public bool isClickPlayVideo = false;
+    public bool _isRewindToLast3Seconds = false;
+    public bool _isSkipForward3Seconds = false;
 
     private bool _lastPlayState = false;
-    void Awake()
-    {
-        _videoPlayer = GetComponent<VideoPlayer>();
-    }
-
-    void Update()
-    {
-        TogglePlayPause();
-        RewindToLast3Seconds();
-        SkipForward3Seconds(); 
-    }
 
     public void TogglePlayPause()
     {
