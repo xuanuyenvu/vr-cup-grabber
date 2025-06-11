@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headsetPosition: {x: 8.1636305, y: 0.031050801, z: 3.0196624}
   headsetRotation: {x: 0.011227965, y: -0.5605432, z: 0.012047932, w: -0.82796144}
-  lastCalibrationTime: 6/8/2025 4:48:32 PM
+  lastCalibrationTime: 6/11/2025 11:55:33 AM
   hasBeenCalibrated: 1

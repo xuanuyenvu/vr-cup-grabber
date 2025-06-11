@@ -53,14 +53,23 @@ public class TCPClientManager : MonoBehaviour
     public bool IsConnected => _isConnected;
     public string ServerIP { get => serverIP; set => serverIP = value; }
     public int ServerPort { get => _serverPort; set => _serverPort = value; }
+
     private bool _isReconnecting = false;
+
+    public Action<SmellType> OnSmellChanged;
+    public Action<string> OnLiquidColorChanged;
+    public Action<string, string, string> OnUserStudyFormOpened;
+    public Action OnUserStudyFormClosed;
+    public Action<bool> OnVideoVisibilityChanged;
+    public Action<bool> OnVideoPlayPauseChanged;
+    public Action OnRewindVideo;
+    public Action OnSkipFowardVideo;
 
     private void Awake()
     {
         if (_instance != null && _instance != this)
         {
-            _instance.ServerIP = this.serverIP;
-            _instance.ServerPort = this._serverPort;
+            _instance = this;
 
             Destroy(gameObject);
             return;
@@ -344,6 +353,7 @@ public class TCPClientManager : MonoBehaviour
     {
         try
         {
+            print($"Received JSON object: {jsonObject.ToString(Formatting.None)}");
             // Check if this is a real-time update message
             if (jsonObject["type"]?.ToString() == "real_time_update")
             {
@@ -355,6 +365,72 @@ public class TCPClientManager : MonoBehaviour
                     OnCupDataReceived?.Invoke(cupDataObject);
                 }
             }
+
+            // // Xử lí request về User Study Form
+            else if (jsonObject["type"]?.ToString() == "user_study_command")
+            {
+                var command = jsonObject["command"]?.ToString();
+
+                if (command == "change_smell")
+                {
+                    // print("Received change_smell command");
+                    var paramsObject = jsonObject["params"] as JObject;
+                    paramsObject.TryGetValue("smell", out JToken smellTypeToken);
+                    string smellType = smellTypeToken?.ToString();
+                    OnSmellChanged?.Invoke((SmellType)Enum.Parse(typeof(SmellType), smellType, true));
+                }
+                else if (command == "change_liquid_color")
+                {
+                    var paramsObject = jsonObject["params"] as JObject;
+                    paramsObject.TryGetValue("color", out JToken colorToken);
+                    string color = colorToken?.ToString();
+                    OnLiquidColorChanged?.Invoke(color);
+                }
+                else if (command == "open_form")
+                {
+                    var paramsObject = jsonObject["params"] as JObject;
+
+                    paramsObject.TryGetValue("userId", out JToken userIdToken);
+                    string userId = userIdToken?.ToString();
+
+                    paramsObject.TryGetValue("experimentType", out JToken experimentTypeToken);
+                    string experimentType = experimentTypeToken?.ToString();
+
+                    paramsObject.TryGetValue("flavorType", out JToken flavorTypeToken);
+                    string flavorType = flavorTypeToken?.ToString();
+
+                    OnUserStudyFormOpened?.Invoke(userId, experimentType, flavorType);
+                }
+                else if (command == "close_form")
+                {
+                    OnUserStudyFormClosed?.Invoke();
+                }
+                else if (command == "toggle_video_visibility")
+                {
+                    var paramsObject = jsonObject["params"] as JObject;
+
+                    paramsObject.TryGetValue("visible", out JToken isVisibleToken);
+                    bool isVisible = bool.Parse(isVisibleToken.ToString());
+                    OnVideoVisibilityChanged?.Invoke(isVisible);
+                }
+                else if (command == "rewind_video")
+                {
+                    OnRewindVideo?.Invoke();
+                }
+                else if (command == "forward_video")
+                {
+                    OnSkipFowardVideo?.Invoke();
+                }
+                else if (command == "toggle_play_pause")
+                {
+                    var paramsObject = jsonObject["params"] as JObject;
+                    paramsObject.TryGetValue("isPlaying", out JToken isPlayingToken);
+
+                    bool isPlaying = bool.Parse(isPlayingToken.ToString());
+                    OnVideoPlayPauseChanged?.Invoke(isPlaying);
+                }
+            }
+
             // Thêm các kiểu message khác nếu cần
             else if (jsonObject["result"]?["status"] != null)
             {
