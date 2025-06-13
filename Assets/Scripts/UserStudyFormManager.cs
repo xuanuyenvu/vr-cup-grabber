@@ -20,10 +20,16 @@ public class UserStudyFormManager : MonoBehaviour
     public enum ExperimentType
     {
         Color,
-        SmellOrthonasal,
-        SmellRetronasal
+        SmellOrthonasal
     }
-    public enum FlavorType
+    public enum SmellType
+    {
+        Sweet,
+        Sour,
+        Bitter,
+        Neutral
+    }
+    public enum TasteType
     {
         Sweet,
         Sour,
@@ -31,17 +37,20 @@ public class UserStudyFormManager : MonoBehaviour
     }
 
     [SerializeField] private GameObject userStudyFormUI;
-    [SerializeField] private List<QuestionUI> questions12;
+    [SerializeField] private QuestionUI questions1;
     [SerializeField] private List<QuestionUI> questions345;
     [SerializeField] private UserStudyManager userStudyManager;
-    private List<float> questionValues = new List<float> { 0f, 0f, 0f, 0f, 0f };
-    private string fileName = "user_study_form.csv";
+    private List<float> questionValues = new List<float> { 0f, 0f, 0f, 0f, 0f, 0f };
     private int currentPage = -1;
 
 
     [HideInInspector] public ExperimentType experimentType = ExperimentType.Color;
-    [HideInInspector] public FlavorType flavorType = FlavorType.Sweet;
     [HideInInspector] public string userId = "no-data";
+
+    [HideInInspector] public SmellType smellType = SmellType.Sweet;
+    [HideInInspector] public TasteType tasteType = TasteType.Sweet;
+    [HideInInspector] public LiquidColor liquidColor = LiquidColor.Red;
+
 
 
     void Start()
@@ -54,9 +63,8 @@ public class UserStudyFormManager : MonoBehaviour
     {
         userStudyFormUI.SetActive(true);
         currentPage = 0;
-        questions12[0].panel.SetActive(true);
+        questions1.panel.SetActive(true);
 
-        questions12[1].panel.SetActive(false);
         foreach (var q in questions345)
         {
             q.panel.SetActive(false);
@@ -76,16 +84,13 @@ public class UserStudyFormManager : MonoBehaviour
     {
         ResetValues();
         userStudyFormUI.SetActive(false);
-        foreach (var q in questions12)
-        {
-            q.panel.SetActive(false);
-        }
+
+        questions1.panel.SetActive(false);
         foreach (var q in questions345)
         {
             q.panel.SetActive(false);
         }
 
-        // VU code action do dayday
         userStudyManager.isOpenForm = false;
     }
 
@@ -94,50 +99,58 @@ public class UserStudyFormManager : MonoBehaviour
         switch (currentPage)
         {
             case 0:
-                if (!IsValid(questions12[0])) return;
-                questionValues[currentPage] = questions12[0].slider.value;
+                if (!IsValid(questions1)) return;
+                questionValues[0] = questions1.slider.value;
 
-                questions12[0].panel.SetActive(false);
-                questions12[1].panel.SetActive(true);
-
-                currentPage++;
-                break;
-            case 1:
-                if (!IsValid(questions12[1])) return;
-                questionValues[currentPage] = questions12[1].slider.value;
-
-                questions12[1].panel.SetActive(false);
+                questions1.panel.SetActive(false);
                 questions345[0].panel.SetActive(true);
 
                 currentPage++;
                 break;
-            case 2:
+            case 1:
                 if (!IsValid(questions345[0])) return;
-                questionValues[currentPage] = questions345[0].slider.value;
+                questionValues[questions345[0].id - 1] = questions345[0].slider.value;
 
                 questions345[0].panel.SetActive(false);
                 questions345[1].panel.SetActive(true);
 
                 currentPage++;
                 break;
-            case 3:
+            case 2:
                 if (!IsValid(questions345[1])) return;
-                questionValues[currentPage] = questions345[1].slider.value;
+                questionValues[questions345[1].id - 1] = questions345[1].slider.value;
 
                 questions345[1].panel.SetActive(false);
-                questions345[2].buttonText.text = "Gửi";
                 questions345[2].panel.SetActive(true);
 
                 currentPage++;
                 break;
-            case 4:
+            case 3:
                 if (!IsValid(questions345[2])) return;
-                questionValues[currentPage] = questions345[2].slider.value;
+                questionValues[questions345[2].id - 1] = questions345[2].slider.value;
 
                 questions345[2].panel.SetActive(false);
+                questions345[3].panel.SetActive(true);
+
+                currentPage++;
+                break;
+            case 4:
+                if (!IsValid(questions345[3])) return;
+                questionValues[questions345[3].id - 1] = questions345[3].slider.value;
+
+                questions345[3].panel.SetActive(false);
+                questions345[4].buttonText.text = "Gửi";
+                questions345[4].panel.SetActive(true);
+
+                currentPage++;
+                break;
+            case 5:
+                if (!IsValid(questions345[4])) return;
+                questionValues[questions345[4].id - 1] = questions345[4].slider.value;
+
+                questions345[4].panel.SetActive(false);
                 SubmitForm();
                 break;
-
         }
     }
 
@@ -155,41 +168,54 @@ public class UserStudyFormManager : MonoBehaviour
             Directory.CreateDirectory(userDataFolder);
         }
 
-        string filePath = Path.Combine(userDataFolder, fileName);
-
+        string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         string questionsCsv = string.Join(";", questionValues);
-        string csvData = $"{userId};{experimentType};{flavorType};{questionsCsv}\n";
+        string filePath, csvData, csvHeader;
+        
+        if (experimentType == ExperimentType.Color)
+        {
+            filePath = Path.Combine(userDataFolder, "user_study_color.csv");
+            csvHeader = "sep=;\nSubmitTime;UserId;ExperimentType;TasteType;LiquidColor;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami\n";
+
+            csvData = $"{timestamp};{userId};{experimentType};{tasteType};{liquidColor};{questionsCsv}\n";
+        }
+        else
+        {
+            filePath = Path.Combine(userDataFolder, "user_study_smell.csv");
+            csvHeader = "sep=;\nSubmitTime;UserId;ExperimentType;TasteType;SmellType;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami\n";
+
+            csvData = $"{timestamp};{userId};{experimentType};{tasteType};{smellType};{questionsCsv}\n";
+        }
+
 
         try
-        {
-            if (!File.Exists(filePath))
             {
-                string csvHeader = "sep=;\nUserId;ExperimentType;FlavorType;Q1-Like;Q2-Intense;Q3-Sweet;Q4-Bitter;Q5-Sour\n";
-                File.WriteAllText(filePath, csvHeader);
+                if (!File.Exists(filePath))
+                {
+                    File.WriteAllText(filePath, csvHeader);
+                }
+
+                File.AppendAllText(filePath, csvData);
+                Debug.Log($"Form submitted successfully! File saved at: {filePath}");
+
+                HideUI();
             }
-
-            File.AppendAllText(filePath, csvData);
-            Debug.Log($"Form submitted successfully! File saved at: {filePath}");
-
-            HideUI();
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError($"Failed to save form: {ex.Message}");
-        }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Failed to save form: {ex.Message}");
+            }
     }
 
     private void ResetValues()
     {
         currentPage = -1;
-        foreach (var q in questions12)
-        {
-            q.slider.value = 0.1111111f;
-        }
+
+        questions1.slider.value = 0.1111111f;
         foreach (var q in questions345)
         {
             q.slider.value = 0.1111111f;
         }
+
         for (int i = 0; i < questionValues.Count; i++)
         {
             questionValues[i] = 0f;

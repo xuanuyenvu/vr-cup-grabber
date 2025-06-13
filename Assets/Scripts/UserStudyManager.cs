@@ -28,7 +28,9 @@ public class UserStudyManager : MonoBehaviour
     [Header("User Study Form Settings")]
     [SerializeField] private string _userId;
     [SerializeField] private UserStudyFormManager.ExperimentType _experimentType;
-    [SerializeField] private UserStudyFormManager.FlavorType _flavorType;
+    [SerializeField] private UserStudyFormManager.SmellType _smellType;
+    [SerializeField] private UserStudyFormManager.TasteType _tasteType;
+    [SerializeField] private LiquidColor _liquidColor;
     public bool isOpenForm = false;
 
     void OnEnable()
@@ -62,7 +64,10 @@ public class UserStudyManager : MonoBehaviour
 
         userStudyFormManager.userId = _userId;
         userStudyFormManager.experimentType = _experimentType;
-        userStudyFormManager.flavorType = _flavorType;
+        
+        userStudyFormManager.tasteType = _tasteType;
+        userStudyFormManager.smellType = _smellType;
+        userStudyFormManager.liquidColor = _liquidColor;
 
         DisplayUserStudyForm();
 
@@ -103,15 +108,21 @@ public class UserStudyManager : MonoBehaviour
         }
     }
 
-    private void SetUserStudyFormOpen(string userId, string experimentType, string flavorType)
+    private void SetUserStudyFormOpen(string userId, string experimentType, string tasteType, string smellType, string liquidColor)
     {
         _userId = userId;
         _experimentType = (UserStudyFormManager.ExperimentType)Enum.Parse(typeof(UserStudyFormManager.ExperimentType), experimentType, true);
-        _flavorType = (UserStudyFormManager.FlavorType)Enum.Parse(typeof(UserStudyFormManager.FlavorType), flavorType, true);
+
+        _tasteType = (UserStudyFormManager.TasteType)Enum.Parse(typeof(UserStudyFormManager.TasteType), tasteType, true);
+        _smellType = (UserStudyFormManager.SmellType)Enum.Parse(typeof(UserStudyFormManager.SmellType), smellType, true);
+        _liquidColor = (LiquidColor)Enum.Parse(typeof(LiquidColor), liquidColor, true);
 
         userStudyFormManager.userId = _userId;
         userStudyFormManager.experimentType = _experimentType;
-        userStudyFormManager.flavorType = _flavorType;
+
+        userStudyFormManager.tasteType = _tasteType;
+        userStudyFormManager.smellType = _smellType;
+        userStudyFormManager.liquidColor = _liquidColor;
 
         isOpenForm = true;
         DisplayUserStudyForm();

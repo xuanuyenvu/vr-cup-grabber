@@ -58,7 +58,7 @@ public class TCPClientManager : MonoBehaviour
 
     public Action<SmellType> OnSmellChanged;
     public Action<string> OnLiquidColorChanged;
-    public Action<string, string, string> OnUserStudyFormOpened;
+    public Action<string, string, string, string, string> OnUserStudyFormOpened;
     public Action OnUserStudyFormClosed;
     public Action<bool> OnVideoVisibilityChanged;
     public Action<bool> OnVideoPlayPauseChanged;
@@ -396,10 +396,16 @@ public class TCPClientManager : MonoBehaviour
                     paramsObject.TryGetValue("experimentType", out JToken experimentTypeToken);
                     string experimentType = experimentTypeToken?.ToString();
 
-                    paramsObject.TryGetValue("flavorType", out JToken flavorTypeToken);
-                    string flavorType = flavorTypeToken?.ToString();
+                    paramsObject.TryGetValue("tasteType", out JToken tasteTypeToken);
+                    string tasteType = tasteTypeToken?.ToString();
 
-                    OnUserStudyFormOpened?.Invoke(userId, experimentType, flavorType);
+                    paramsObject.TryGetValue("smellType", out JToken smellTypeToken);
+                    string smellType = smellTypeToken?.ToString();
+
+                    paramsObject.TryGetValue("color", out JToken colorToken);
+                    string liquidColor = colorToken?.ToString();
+
+                    OnUserStudyFormOpened?.Invoke(userId, experimentType, tasteType, smellType, liquidColor);
                 }
                 else if (command == "close_form")
                 {
