@@ -1,0 +1,3 @@
+sep=;
+SubmitTime;UserId;ExperimentType;TasteType;SmellType;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami
+2025-06-13 16:06:45;uyentest;SmellOrthonasal;Sour;Sour;-15,99118;0;14,81307;42,75986;74,89643;100
