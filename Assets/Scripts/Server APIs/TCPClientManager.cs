@@ -353,7 +353,7 @@ public class TCPClientManager : MonoBehaviour
     {
         try
         {
-            print($"Received JSON object: {jsonObject.ToString(Formatting.None)}");
+            // print($"Received JSON object: {jsonObject.ToString(Formatting.None)}");
             // Check if this is a real-time update message
             if (jsonObject["type"]?.ToString() == "real_time_update")
             {
@@ -399,10 +399,10 @@ public class TCPClientManager : MonoBehaviour
                     paramsObject.TryGetValue("tasteType", out JToken tasteTypeToken);
                     string tasteType = tasteTypeToken?.ToString();
 
-                    paramsObject.TryGetValue("smellType", out JToken smellTypeToken);
+                    paramsObject.TryGetValue("smell", out JToken smellTypeToken);
                     string smellType = smellTypeToken?.ToString();
 
-                    paramsObject.TryGetValue("color", out JToken colorToken);
+                    paramsObject.TryGetValue("liquidColor", out JToken colorToken);
                     string liquidColor = colorToken?.ToString();
 
                     OnUserStudyFormOpened?.Invoke(userId, experimentType, tasteType, smellType, liquidColor);
