@@ -28,8 +28,8 @@ public class UserStudyManager : MonoBehaviour
     [Header("User Study Form Settings")]
     [SerializeField] private string _userId;
     [SerializeField] private UserStudyFormManager.ExperimentType _experimentType;
-    [SerializeField] private UserStudyFormManager.SmellType _smellType;
     [SerializeField] private UserStudyFormManager.TasteType _tasteType;
+    [SerializeField] private UserStudyFormManager.SmellType _smellType;
     [SerializeField] private LiquidColor _liquidColor;
     public bool isOpenForm = false;
 
@@ -99,7 +99,6 @@ public class UserStudyManager : MonoBehaviour
         try
         {
             _currentLiquidColor = (LiquidColor)Enum.Parse(typeof(LiquidColor), liquidColor, true);
-            Debug.Log($"Changed liquid color to: {_currentLiquidColor}");
             cupController.CurrentLiquidColor = _currentLiquidColor;
         }
         catch (Exception ex)
