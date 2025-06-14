@@ -17,7 +17,7 @@ MonoBehaviour:
   vectorField: {fileID: 11700000, guid: 08937e3134903c5488be506a2dac71e9, type: 2}
   signedDistanceField: {fileID: 11700000, guid: 5c2949c31aafddd4e8011ffdebb8fdf7,
     type: 2}
-  mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 3}
   animationCurve:
     serializedVersion: 2
     m_Curve:

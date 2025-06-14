@@ -1,8 +1,8 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
 Shader "Kinect/DepthHistImageShader" {
-    Properties {
-        //_MainTex ("Base (RGB)", 2D) = "white" {}
+	Properties {
+		//_MainTex ("Base (RGB)", 2D) = "white" {}
 		_FrontColor("Front color", Color) = (1, 1, 0, 1)
 		_BackColor("Back color", Color) = (0, 0, 1, 1)
 		_InvalidColor("Invalid color", Color) = (0, 0, 0, 0)
@@ -59,11 +59,9 @@ Shader "Kinect/DepthHistImageShader" {
 				
 				//return float4((float)dx / (float)_TexResX, (float)dy / (float)_TexResY, 0, 1);
 
-				//int depth = _DepthMap[di];
-				bool isOdd = di % 2 == 1;
 				uint depth2 = _DepthMap[di >> 1];
-				uint depth = (di % 2 == 0 ? depth2 <<= 16 : depth2) >> 16;
-				depth = depth >= _MinDepth && depth <= _MaxDepth ? depth : 0;
+				uint depth = di & 1 != 0 ? depth2 >> 16 : depth2 & 0xffff;
+				depth = (depth >= _MinDepth && depth <= _MaxDepth) * depth;
 
 				float hist = 1.0 - ((float)_HistMap[depth] / (float)_TotalPoints);
 				float4 clr = lerp(_BackColor, _FrontColor, hist);

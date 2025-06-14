@@ -20,51 +20,70 @@ namespace com.rfilkov.components
         public Camera backgroundCamera;
 
 
+        // last camera rect width & height
+        private float lastCamRectW = 0;
+        private float lastCamRectH = 0;
+
+        // references
+        private KinectManager kinectManager = null;
+        private KinectInterop.SensorData sensorData = null;
+        private Vector2 initialAnchorPos = Vector2.zero;
+
+
         void Start()
         {
             if (backgroundImage == null)
             {
                 backgroundImage = GetComponent<UnityEngine.UI.RawImage>();
             }
+
+            kinectManager = KinectManager.Instance;
+            sensorData = kinectManager != null ? kinectManager.GetSensorData(sensorIndex) : null;
         }
 
 
         void Update()
         {
-            KinectManager kinectManager = KinectManager.Instance;
-
             if (kinectManager && kinectManager.IsInitialized())
             {
-                if (backgroundImage && (backgroundImage.texture == null))
+                float cameraWidth = backgroundCamera ? backgroundCamera.pixelRect.width : 0f;
+                float cameraHeight = backgroundCamera ? backgroundCamera.pixelRect.height : 0f;
+
+                Texture imageTex = kinectManager.GetColorImageTex(sensorIndex);
+                if (backgroundImage && imageTex != null && (backgroundImage.texture == null || 
+                    backgroundImage.texture.width != imageTex.width || backgroundImage.texture.height != imageTex.height ||
+                    lastCamRectW != cameraWidth || lastCamRectH != cameraHeight))
                 {
-                    backgroundImage.texture = kinectManager.GetColorImageTex(sensorIndex);
-                    backgroundImage.rectTransform.localScale = kinectManager.GetColorImageScale(sensorIndex);
+                    lastCamRectW = cameraWidth;
+                    lastCamRectH = cameraHeight;
+
+                    backgroundImage.texture = imageTex;
+                    backgroundImage.rectTransform.localScale = sensorData.colorImageScale;  // kinectManager.GetColorImageScale(sensorIndex);
                     backgroundImage.color = Color.white;
 
                     //Debug.Log("aPos: " + backgroundImage.rectTransform.anchoredPosition + ", aMin: " + backgroundImage.rectTransform.anchorMin +
-                    //    ", aMax:" + backgroundImage.rectTransform.anchorMax + ", pivot: " + backgroundImage.rectTransform.pivot + 
+                    //    ", aMax:" + backgroundImage.rectTransform.anchorMax + ", pivot: " + backgroundImage.rectTransform.pivot +
                     //    ", size: " + backgroundImage.rectTransform.sizeDelta);
 
                     if (backgroundCamera != null)
                     {
                         // adjust image's size and position to match the stream aspect ratio
-                        int depthImageWidth = kinectManager.GetColorImageWidth(sensorIndex);
-                        int depthImageHeight = kinectManager.GetColorImageHeight(sensorIndex);
-
-                        float cameraWidth = backgroundCamera.pixelRect.width;
-                        float cameraHeight = backgroundCamera.pixelRect.height;
+                        int colorImageWidth = sensorData.colorImageWidth;  // kinectManager.GetColorImageWidth(sensorIndex);
+                        int colorImageHeight = sensorData.colorImageHeight;  // kinectManager.GetColorImageHeight(sensorIndex);
+                        if (colorImageWidth == 0 || colorImageHeight == 0)
+                            return;
 
                         RectTransform rectImage = backgroundImage.rectTransform;
                         float rectWidth = (rectImage.anchorMin.x != rectImage.anchorMax.x) ? cameraWidth * (rectImage.anchorMax.x - rectImage.anchorMin.x) : rectImage.sizeDelta.x;
                         float rectHeight = (rectImage.anchorMin.y != rectImage.anchorMax.y) ? cameraHeight * (rectImage.anchorMax.y - rectImage.anchorMin.y) : rectImage.sizeDelta.y;
 
-                        if (rectWidth > rectHeight)
-                            rectWidth = rectHeight * depthImageWidth / depthImageHeight;
+                        if (colorImageWidth > colorImageHeight)
+                            rectWidth = rectHeight * colorImageWidth / colorImageHeight;
                         else
-                            rectHeight = rectWidth * depthImageHeight / depthImageWidth;
+                            rectHeight = rectWidth * colorImageHeight / colorImageWidth;
 
                         Vector2 pivotOffset = (rectImage.pivot - new Vector2(0.5f, 0.5f)) * 2f;
-                        Vector2 imageScale = (Vector2)kinectManager.GetColorImageScale(sensorIndex);
+                        Vector2 imageScale = sensorData.colorImageScale;  // (Vector2)kinectManager.GetColorImageScale(sensorIndex);
                         Vector2 anchorPos = rectImage.anchoredPosition + pivotOffset * imageScale * new Vector2(rectWidth, rectHeight);
 
                         if (rectImage.anchorMin.x != rectImage.anchorMax.x)
@@ -78,10 +97,26 @@ namespace com.rfilkov.components
                         }
 
                         rectImage.sizeDelta = new Vector2(rectWidth, rectHeight);
-                        rectImage.anchoredPosition = anchorPos;
+                        rectImage.anchoredPosition = initialAnchorPos = anchorPos;
                     }
                 }
+
+                //if(backgroundImage)
+                //{
+                //    // update the anchor position, if needed
+                //    if(sensorData != null && sensorData.sensorInterface != null)
+                //    {
+                //        Vector2 updatedAnchorPos = initialAnchorPos + sensorData.sensorInterface.GetBackgroundImageAnchorPos(sensorData);
+                //        if(backgroundImage.rectTransform.anchoredPosition != updatedAnchorPos)
+                //        {
+                //            backgroundImage.rectTransform.anchoredPosition = updatedAnchorPos;
+                //        }
+                //    }
+                //}
             }
+
+            //RectTransform rectTransform = backgroundImage.rectTransform;
+            //Debug.Log("pivot: " + rectTransform.pivot + ", anchorPos: " + rectTransform.anchoredPosition + ", \nanchorMin: " + rectTransform.anchorMin + ", anchorMax: " + rectTransform.anchorMax);
         }
 
     }
