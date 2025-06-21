@@ -19,6 +19,7 @@ TagManager:
   - LeftHand
   - RightHand
   - Headset
+  - QDSUITextInputField
   layers:
   - Default
   - TransparentFX
@@ -26,8 +27,8 @@ TagManager:
   - HiddenMesh
   - Water
   - UI
-  - 
-  - 
+  - Point Cloud
+  - Ghost Hand
   - 
   - 
   - Character

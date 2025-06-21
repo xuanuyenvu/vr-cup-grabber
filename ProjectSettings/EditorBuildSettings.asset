@@ -5,12 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Neutral Scene.unity
     guid: d5fdef5bb8cc49d4c84d3f96c7d6cf8e
   - enabled: 0
     path: Assets/Scenes/Royal Scene.unity
     guid: 2154c913dfca0394a899dbe471eff6a5
+  - enabled: 1
+    path: Assets/Scenes/Royal Point Cloud Scene.unity
+    guid: a029072305fd90a4689a1aa7a04dedbf
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 95079f259127bea479dda9d8ade791ff, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: b0b26ce9a0d2ede43b81940c514a2968, type: 2}
