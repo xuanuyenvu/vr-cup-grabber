@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Globalization;
 
 public class ReadTableTransform : MonoBehaviour
 {
@@ -50,33 +51,50 @@ public class ReadTableTransform : MonoBehaviour
         {
             if (cornersData[0].TryGetValue("Corner1_X", out string corner1X) && cornersData[0].TryGetValue("Corner1_Y", out string corner1Y) && cornersData[0].TryGetValue("Corner1_Z", out string corner1Z))
             {
-                Corner1.transform.position = new Vector3(float.Parse(corner1X) * 0.001f, float.Parse(corner1Y) * -0.001f, float.Parse(corner1Z) * 0.001f);
+                Corner1.transform.position = new Vector3(
+                    float.Parse(corner1X, CultureInfo.InvariantCulture) * 0.001f,
+                    float.Parse(corner1Y, CultureInfo.InvariantCulture) * -0.001f,
+                    float.Parse(corner1Z, CultureInfo.InvariantCulture) * 0.001f
+                );
+                Debug.Log($"Corner1 X: {corner1X}, Y: {corner1Y}, Z: {corner1Z}");
                 markerCorners.Add(Corner1.transform.position);
             }
             if (cornersData[0].TryGetValue("Corner2_X", out string corner2X) && cornersData[0].TryGetValue("Corner2_Y", out string corner2Y) && cornersData[0].TryGetValue("Corner2_Z", out string corner2Z))
             {
-                Corner2.transform.position = new Vector3(float.Parse(corner2X) * 0.001f, float.Parse(corner2Y) * -0.001f, float.Parse(corner2Z) * 0.001f);
+                Corner2.transform.position = new Vector3(
+                    float.Parse(corner2X, CultureInfo.InvariantCulture) * 0.001f,
+                    float.Parse(corner2Y, CultureInfo.InvariantCulture) * -0.001f,
+                    float.Parse(corner2Z, CultureInfo.InvariantCulture) * 0.001f
+                );
                 markerCorners.Add(Corner2.transform.position);
             }
             if (cornersData[0].TryGetValue("Corner3_X", out string corner3X) && cornersData[0].TryGetValue("Corner3_Y", out string corner3Y) && cornersData[0].TryGetValue("Corner3_Z", out string corner3Z))
             {
-                Corner3.transform.position = new Vector3(float.Parse(corner3X) * 0.001f, float.Parse(corner3Y) * -0.001f, float.Parse(corner3Z) * 0.001f);
+                Corner3.transform.position = new Vector3(
+                    float.Parse(corner3X, CultureInfo.InvariantCulture) * 0.001f,
+                    float.Parse(corner3Y, CultureInfo.InvariantCulture) * -0.001f,
+                    float.Parse(corner3Z, CultureInfo.InvariantCulture) * 0.001f
+                );
                 markerCorners.Add(Corner3.transform.position);
             }
             if (cornersData[0].TryGetValue("Corner4_X", out string corner4X) && cornersData[0].TryGetValue("Corner4_Y", out string corner4Y) && cornersData[0].TryGetValue("Corner4_Z", out string corner4Z))
             {
-                Corner4.transform.position = new Vector3(float.Parse(corner4X) * 0.001f, float.Parse(corner4Y) * -0.001f, float.Parse(corner4Z) * 0.001f);
+                Corner4.transform.position = new Vector3(
+                    float.Parse(corner4X, CultureInfo.InvariantCulture) * 0.001f,
+                    float.Parse(corner4Y, CultureInfo.InvariantCulture) * -0.001f,
+                    float.Parse(corner4Z, CultureInfo.InvariantCulture) * 0.001f
+                );
                 markerCorners.Add(Corner4.transform.position);
             }
         }
 
         if (markerCorners.Count == 4)
         {
+            vfxPointCloud.transform.position = new Vector3(0, 0, 0);
+            vfxPointCloud.transform.rotation = Quaternion.Euler(0, 0, 0);
+            vfxPointCloud.transform.localScale = new Vector3(-1, 1, 1);
+
             Vector3 center = (markerCorners[0] + markerCorners[1] + markerCorners[2] + markerCorners[3]) / 4f;
-            Debug.Log($"Corner1: ({markerCorners[0].x:F6}, {markerCorners[0].y:F6}, {markerCorners[0].z:F6})");
-            Debug.Log($"Corner2: ({markerCorners[1].x:F6}, {markerCorners[1].y:F6}, {markerCorners[1].z:F6})");
-            Debug.Log($"Corner3: ({markerCorners[2].x:F6}, {markerCorners[2].y:F6}, {markerCorners[2].z:F6})");
-            Debug.Log($"Corner4: ({markerCorners[3].x:F6}, {markerCorners[3].y:F6}, {markerCorners[3].z:F6})");
             centerMarker.transform.position = center;
 
             Vector3 vectorX = markerCorners[3] - markerCorners[0];
@@ -97,7 +115,7 @@ public class ReadTableTransform : MonoBehaviour
             centerMarker.transform.rotation = tableAxis.transform.rotation;
             vfxPointCloud.transform.position = centerMarker.transform.TransformPoint(localPosOfKinectInCenterMarker);
             vfxPointCloud.transform.rotation = centerMarker.transform.rotation * localRotationOfKinectInCenterMarker;
-            
+
             Corner1.transform.position = centerMarker.transform.TransformPoint(localPosOfCorner1InCenterMarker);
             Corner2.transform.position = centerMarker.transform.TransformPoint(localPosOfCorner2InCenterMarker);
             Corner3.transform.position = centerMarker.transform.TransformPoint(localPosOfCorner3InCenterMarker);

@@ -13,7 +13,8 @@ namespace com.rfilkov.kinect
     {
         // body tracking sdk's tools folder - used to copy the needed libraries and files.
         // TODO - please change the path below, if the BT-SDK tools-folder in your case is different 
-        internal const string BODY_TRACKING_TOOLS_FOLDER = "C:/Program Files/Azure Kinect Body Tracking SDK/tools";
+        // internal const string BODY_TRACKING_TOOLS_FOLDER = "C:/Program Files/Azure Kinect Body Tracking SDK/tools";
+        internal const string BODY_TRACKING_TOOLS_FOLDER = "D:/Azure Body Tracking/";
 
         // body tracking model file name - lite or full model
         internal const string BODY_TRACKING_MODEL_FILE = "dnn_model_2_0_op11.onnx";  // "dnn_model_2_0_lite_op11.onnx";  // 
