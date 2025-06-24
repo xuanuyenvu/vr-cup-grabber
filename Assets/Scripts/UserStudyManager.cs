@@ -64,7 +64,7 @@ public class UserStudyManager : MonoBehaviour
 
         userStudyFormManager.userId = _userId;
         userStudyFormManager.experimentType = _experimentType;
-        
+
         userStudyFormManager.tasteType = _tasteType;
         userStudyFormManager.smellType = _smellType;
         userStudyFormManager.liquidColor = _liquidColor;
@@ -80,11 +80,11 @@ public class UserStudyManager : MonoBehaviour
     {
         if (isOpenForm)
         {
-            userStudyFormManager.ShowUI();
+            userStudyFormManager.ShowUserStudyFormUI();
         }
         else
         {
-            userStudyFormManager.HideUI();
+            userStudyFormManager.HideUserStudyFormUI();
         }
     }
 
