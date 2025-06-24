@@ -64,6 +64,8 @@ public class TCPClientManager : MonoBehaviour
     public Action<bool> OnVideoPlayPauseChanged;
     public Action OnRewindVideo;
     public Action OnSkipFowardVideo;
+    public Action OnTutorialFormOpened;
+    public Action OnTutorialFormClosed;
 
     private void Awake()
     {
@@ -317,6 +319,7 @@ public class TCPClientManager : MonoBehaviour
                     string jsonString = data.Substring(startIndex, i - startIndex + 1);
                     try
                     {
+                        Debug.Log($"Received JSON segment: {jsonString}");
                         JObject jsonObject = JObject.Parse(jsonString);
                         // Xử lý từng JSON object riêng lẻ
                         ProcessSingleJsonObject(jsonObject);
@@ -434,6 +437,18 @@ public class TCPClientManager : MonoBehaviour
 
                     bool isPlaying = bool.Parse(isPlayingToken.ToString());
                     OnVideoPlayPauseChanged?.Invoke(isPlaying);
+                }
+                else if (command == "open_tutorial_form")
+                {
+                    OnTutorialFormOpened?.Invoke();
+                }
+                else if (command == "close_tutorial_form")
+                {
+                    OnTutorialFormClosed?.Invoke();
+                }
+                else
+                {
+                    Debug.LogWarning($"Unknown user study command: {command}");
                 }
             }
 
