@@ -35,6 +35,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4592393083831728394}
+  - {fileID: 7970992461377250281}
+  - {fileID: 5276566203044469276}
+  - {fileID: 8695862398922129459}
   m_Father: {fileID: 6239270460245381959}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8559658396142101837
@@ -852,6 +855,285 @@ MonoBehaviour:
     arcOffset: 0
     arcLength: 360
   _relativeTo: {fileID: 6239270460245381959}
+--- !u!1 &3330867931671696169
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5276566203044469276}
+  - component: {fileID: 3810786454398201593}
+  - component: {fileID: 1831968861541765170}
+  - component: {fileID: 1014996323190336346}
+  m_Layer: 0
+  m_Name: red liquid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5276566203044469276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3330867931671696169}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.53546727, y: -0.52229726, z: -0.4729168, w: -0.46565026}
+  m_LocalPosition: {x: 0.0018007107, y: -0.0073561775, z: -0.0036315408}
+  m_LocalScale: {x: 1.2763604, y: 1.2763605, z: 1.2763611}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 3170810181115823470}
+  m_LocalEulerAnglesHint: {x: -1.322, y: 96.39, z: 94.527}
+--- !u!33 &3810786454398201593
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3330867931671696169}
+  m_Mesh: {fileID: 4300000, guid: ae99a0cc624bb5a4abca5800f9a6ec9f, type: 2}
+--- !u!23 &1831968861541765170
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3330867931671696169}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1014996323190336346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3330867931671696169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f61dcfd7077c46509132f92d2df65fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _topology: 10
+  _detail: 11
+  _level: 0.51
+  _levelMultiplier: 1
+  _liquidLayers: []
+  _smoothContactSurface: 3
+  _ditherStrength: 0.5
+  _layersAdjustmentSpeed: 1
+  _layersAdjustmentCompact: 1
+  _useLightColor: 1
+  _directionalLight: {fileID: 0}
+  _liquidColor1: {r: 0.9622642, g: 0.64453536, b: 0.6596934, a: 0.14117648}
+  _liquidScale1: 4.2
+  _liquidColor2: {r: 0.91823894, g: 0.5515208, b: 0.58626264, a: 0.2509804}
+  _liquidScale2: 4.85
+  _alpha: 0.373
+  _emissionColor: {r: 0.654088, g: 0.65084136, b: 0.60677975, a: 1}
+  _ditherShadows: 1
+  _murkiness: 0
+  _turbulence1: 0.5
+  _turbulence2: 0.09
+  _frecuency: 30
+  _speed: 1
+  _sparklingIntensity: 0.54
+  _sparklingAmount: 0.068
+  _deepObscurance: 1.12
+  _foamColor: {r: 0.97735846, g: 0.9275685, b: 0.9275685, a: 0.8862745}
+  _foamScale: 0.404
+  _foamThickness: 0.0217
+  _foamDensity: -0.299
+  _foamWeight: 100
+  _foamTurbulence: 1
+  _foamVisibleFromBottom: 1
+  _smokeEnabled: 0
+  _smokeColor: {r: 1, g: 1, b: 1, a: 0.31764707}
+  _smokeScale: 0.134
+  _smokeBaseObscurance: 4.86
+  _smokeHeightAtten: 0.8
+  _smokeSpeed: 3.21
+  _fixMesh: 0
+  originalMesh: {fileID: 0}
+  originalPivotOffset: {x: 0, y: 0.000000017695129, z: -0.00000047683716}
+  _pivotOffset: {x: 0, y: 0, z: 0}
+  _autoCloseMesh: 0
+  _upperLimit: 1.5
+  _lowerLimit: -1.5
+  _subMeshIndex: 0
+  _flaskMaterial: {fileID: 0}
+  _flaskThickness: 0
+  _glossinessInternal: 0.3
+  _scatteringEnabled: 1
+  _scatteringPower: 5
+  _scatteringAmount: 0.3
+  _refractionBlur: 0
+  _blurIntensity: 0.75
+  _liquidRaySteps: 10
+  _foamRaySteps: 7
+  _smokeRaySteps: 5
+  _bumpMap: {fileID: 0}
+  _bumpStrength: 1
+  _bumpDistortionScale: 1
+  _bumpDistortionOffset: {x: 0, y: 0}
+  _distortionMap: {fileID: 0}
+  _texture: {fileID: 0}
+  _textureScale: {x: 1, y: 1}
+  _textureOffset: {x: 0, y: 0}
+  _distortionAmount: 1
+  _depthAware: 0
+  _depthAwareOffset: 1
+  _irregularDepthDebug: 0
+  _depthAwareCustomPass: 0
+  _depthAwareCustomPassDebug: 0
+  _doubleSidedBias: 0
+  _backDepthBias: 0
+  _rotationLevelCompensation: 0
+  _ignoreGravity: 0
+  _reactToForces: 1
+  _extentsScale: {x: 1, y: 1, z: 1}
+  _noiseVariation: 2
+  _allowViewFromInside: 1
+  _debugSpillPoint: 0
+  _renderQueue: 3001
+  _reflectionTexture: {fileID: 0}
+  _physicsMass: 1.2
+  _physicsAngularDamp: 0.02
+  _bubblesAmount: 32
+  _bubblesSizeMin: 2
+  _bubblesSizeMax: 4
+  _bubblesScale: 3
+  _bubblesBrightness: 1
+  _bubblesVerticalSpeed: 1
+  _bubblesSeed: 1
+  _pointLightsEnabled: 1
+  pointLightParams:
+  - name: Light 1
+    targetPos: {x: -0.20404859, y: 0.19965914, z: -0.19189666}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.091211736
+    lightRange: 0.027706645
+    intensityMin: 1.1250396
+    intensityMax: 1.6481215
+    intensitySpeed: 1.2988844
+    color1: {r: 0.30423465, g: 0.7443021, b: 0.30686215, a: 1}
+    color2: {r: 0.8477335, g: 0.8441614, b: 0.72563845, a: 1}
+    colorSpeed: 0.5915744
+  - name: Light 2
+    targetPos: {x: -0.086649805, y: -0.008578606, z: 0.21474765}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.029612927
+    lightRange: 0.031351704
+    intensityMin: 0.72897124
+    intensityMax: 1.7381389
+    intensitySpeed: 1.9782984
+    color1: {r: 0.2919555, g: 0.44736975, b: 0.07297922, a: 1}
+    color2: {r: 0.69685274, g: 0.19038787, b: 0.20668414, a: 1}
+    colorSpeed: 0.77507466
+  - name: Light 3
+    targetPos: {x: -0.04273506, y: -0.28128338, z: 0.2540898}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.03511341
+    lightRange: 0.042339947
+    intensityMin: 1.1176406
+    intensityMax: 1.5151675
+    intensitySpeed: 1.9648459
+    color1: {r: 0.109132186, g: 0.17878522, b: 0.7707367, a: 1}
+    color2: {r: 0.7679068, g: 0.25541726, b: 0.99003446, a: 1}
+    colorSpeed: 1.6058117
+  - name: Light 4
+    targetPos: {x: -0.25352213, y: -0.1385589, z: 0.30113447}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.024570396
+    lightRange: 0.07043067
+    intensityMin: 1.3986576
+    intensityMax: 1.6415709
+    intensitySpeed: 0.83772767
+    color1: {r: 0.80953646, g: 0.029764537, b: 0.76208293, a: 1}
+    color2: {r: 0.8719964, g: 0.93060446, b: 0.24331489, a: 1}
+    colorSpeed: 0.9112936
+  - name: Light 5
+    targetPos: {x: -0.13661562, y: 0.13266625, z: -0.09570579}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.045029324
+    lightRange: 0.03356555
+    intensityMin: 1.0421687
+    intensityMax: 2.521473
+    intensitySpeed: 0.56443167
+    color1: {r: 0.6865645, g: 0.49212724, b: 0.93139637, a: 1}
+    color2: {r: 0.9825232, g: 0.9036646, b: 0.47428912, a: 1}
+    colorSpeed: 1.8049672
+  - name: Light 6
+    targetPos: {x: 0.16285896, y: 0.17226577, z: -0.044432886}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.07560895
+    lightRange: 0.06924299
+    intensityMin: 1.0964082
+    intensityMax: 1.4888561
+    intensitySpeed: 1.2531295
+    color1: {r: 0.58371013, g: 0.1634344, b: 0.6070822, a: 1}
+    color2: {r: 0.29942146, g: 0.29703823, b: 0.80799174, a: 1}
+    colorSpeed: 0.86512303
+  pointLightsScatteringAmount: 0.8
+  pointLightsIntensity: 1
+  pointLightInsideAtten: 0
+  fixedMesh: {fileID: 0}
+  closedMesh: {fileID: 0}
 --- !u!1 &4223959165529690627
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,6 +1249,285 @@ MonoBehaviour:
     arcOffset: 0
     arcLength: 360
   _relativeTo: {fileID: 6239270460245381959}
+--- !u!1 &5093310166312934907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8695862398922129459}
+  - component: {fileID: 5290541748933940067}
+  - component: {fileID: 4172863945213742384}
+  - component: {fileID: 3008715812225079943}
+  m_Layer: 0
+  m_Name: neutral liquid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8695862398922129459
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5093310166312934907}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.53546727, y: -0.52229726, z: -0.4729168, w: -0.46565026}
+  m_LocalPosition: {x: 0.0018007107, y: -0.0073561775, z: -0.0036315408}
+  m_LocalScale: {x: 1.2763604, y: 1.2763605, z: 1.2763611}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 3170810181115823470}
+  m_LocalEulerAnglesHint: {x: -1.322, y: 96.39, z: 94.527}
+--- !u!33 &5290541748933940067
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5093310166312934907}
+  m_Mesh: {fileID: 4300000, guid: ae99a0cc624bb5a4abca5800f9a6ec9f, type: 2}
+--- !u!23 &4172863945213742384
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5093310166312934907}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3008715812225079943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5093310166312934907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f61dcfd7077c46509132f92d2df65fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _topology: 10
+  _detail: 11
+  _level: 0.51
+  _levelMultiplier: 1
+  _liquidLayers: []
+  _smoothContactSurface: 3
+  _ditherStrength: 0.5
+  _layersAdjustmentSpeed: 1
+  _layersAdjustmentCompact: 1
+  _useLightColor: 1
+  _directionalLight: {fileID: 0}
+  _liquidColor1: {r: 0.46226403, g: 0.70880497, b: 0.9245283, a: 0.14117648}
+  _liquidScale1: 4.2
+  _liquidColor2: {r: 0.4243503, g: 0.681049, b: 0.9056604, a: 0.2509804}
+  _liquidScale2: 4.85
+  _alpha: 0.075
+  _emissionColor: {r: 0.8634349, g: 0.917128, b: 0.93710685, a: 1}
+  _ditherShadows: 1
+  _murkiness: 0
+  _turbulence1: 0.5
+  _turbulence2: 0.09
+  _frecuency: 30
+  _speed: 1
+  _sparklingIntensity: 0.54
+  _sparklingAmount: 0.068
+  _deepObscurance: 1.12
+  _foamColor: {r: 0.97735846, g: 0.9275685, b: 0.9275685, a: 0.8862745}
+  _foamScale: 0.168
+  _foamThickness: 0.0217
+  _foamDensity: -0.299
+  _foamWeight: 100
+  _foamTurbulence: 1
+  _foamVisibleFromBottom: 1
+  _smokeEnabled: 0
+  _smokeColor: {r: 1, g: 1, b: 1, a: 0.31764707}
+  _smokeScale: 0.134
+  _smokeBaseObscurance: 4.86
+  _smokeHeightAtten: 0.8
+  _smokeSpeed: 3.21
+  _fixMesh: 0
+  originalMesh: {fileID: 0}
+  originalPivotOffset: {x: 0, y: 0.000000017695129, z: -0.00000047683716}
+  _pivotOffset: {x: 0, y: 0, z: 0}
+  _autoCloseMesh: 0
+  _upperLimit: 1.5
+  _lowerLimit: -1.5
+  _subMeshIndex: 0
+  _flaskMaterial: {fileID: 0}
+  _flaskThickness: 0
+  _glossinessInternal: 0.3
+  _scatteringEnabled: 1
+  _scatteringPower: 5
+  _scatteringAmount: 0.3
+  _refractionBlur: 0
+  _blurIntensity: 0.75
+  _liquidRaySteps: 10
+  _foamRaySteps: 7
+  _smokeRaySteps: 5
+  _bumpMap: {fileID: 0}
+  _bumpStrength: 1
+  _bumpDistortionScale: 1
+  _bumpDistortionOffset: {x: 0, y: 0}
+  _distortionMap: {fileID: 0}
+  _texture: {fileID: 0}
+  _textureScale: {x: 1, y: 1}
+  _textureOffset: {x: 0, y: 0}
+  _distortionAmount: 1
+  _depthAware: 0
+  _depthAwareOffset: 1
+  _irregularDepthDebug: 0
+  _depthAwareCustomPass: 0
+  _depthAwareCustomPassDebug: 0
+  _doubleSidedBias: 0
+  _backDepthBias: 0
+  _rotationLevelCompensation: 0
+  _ignoreGravity: 0
+  _reactToForces: 1
+  _extentsScale: {x: 1, y: 1, z: 1}
+  _noiseVariation: 2
+  _allowViewFromInside: 1
+  _debugSpillPoint: 0
+  _renderQueue: 3001
+  _reflectionTexture: {fileID: 0}
+  _physicsMass: 1.2
+  _physicsAngularDamp: 0.02
+  _bubblesAmount: 32
+  _bubblesSizeMin: 2
+  _bubblesSizeMax: 4
+  _bubblesScale: 3
+  _bubblesBrightness: 1
+  _bubblesVerticalSpeed: 1
+  _bubblesSeed: 1
+  _pointLightsEnabled: 1
+  pointLightParams:
+  - name: Light 1
+    targetPos: {x: -0.24588118, y: 0.11578134, z: 0.14769398}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.091211736
+    lightRange: 0.027706645
+    intensityMin: 1.1250396
+    intensityMax: 1.6481215
+    intensitySpeed: 1.2988844
+    color1: {r: 0.30423465, g: 0.7443021, b: 0.30686215, a: 1}
+    color2: {r: 0.8477335, g: 0.8441614, b: 0.72563845, a: 1}
+    colorSpeed: 0.5915744
+  - name: Light 2
+    targetPos: {x: 0.0015896095, y: -0.34509972, z: -0.26247922}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.029612927
+    lightRange: 0.031351704
+    intensityMin: 0.72897124
+    intensityMax: 1.7381389
+    intensitySpeed: 1.9782984
+    color1: {r: 0.2919555, g: 0.44736975, b: 0.07297922, a: 1}
+    color2: {r: 0.69685274, g: 0.19038787, b: 0.20668414, a: 1}
+    colorSpeed: 0.77507466
+  - name: Light 3
+    targetPos: {x: -0.15828978, y: 0.1369085, z: -0.21165088}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.03511341
+    lightRange: 0.042339947
+    intensityMin: 1.1176406
+    intensityMax: 1.5151675
+    intensitySpeed: 1.9648459
+    color1: {r: 0.109132186, g: 0.17878522, b: 0.7707367, a: 1}
+    color2: {r: 0.7679068, g: 0.25541726, b: 0.99003446, a: 1}
+    colorSpeed: 1.6058117
+  - name: Light 4
+    targetPos: {x: 0.26317367, y: 0.020039976, z: 0.04984501}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.024570396
+    lightRange: 0.07043067
+    intensityMin: 1.3986576
+    intensityMax: 1.6415709
+    intensitySpeed: 0.83772767
+    color1: {r: 0.80953646, g: 0.029764537, b: 0.76208293, a: 1}
+    color2: {r: 0.8719964, g: 0.93060446, b: 0.24331489, a: 1}
+    colorSpeed: 0.9112936
+  - name: Light 5
+    targetPos: {x: 0.11705859, y: 0.27679974, z: -0.08881865}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.045029324
+    lightRange: 0.03356555
+    intensityMin: 1.0421687
+    intensityMax: 2.521473
+    intensitySpeed: 0.56443167
+    color1: {r: 0.6865645, g: 0.49212724, b: 0.93139637, a: 1}
+    color2: {r: 0.9825232, g: 0.9036646, b: 0.47428912, a: 1}
+    colorSpeed: 1.8049672
+  - name: Light 6
+    targetPos: {x: -0.31068274, y: -0.30243102, z: -0.09593462}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.07560895
+    lightRange: 0.06924299
+    intensityMin: 1.0964082
+    intensityMax: 1.4888561
+    intensitySpeed: 1.2531295
+    color1: {r: 0.58371013, g: 0.1634344, b: 0.6070822, a: 1}
+    color2: {r: 0.29942146, g: 0.29703823, b: 0.80799174, a: 1}
+    colorSpeed: 0.86512303
+  pointLightsScatteringAmount: 0.8
+  pointLightsIntensity: 1
+  pointLightInsideAtten: 0
+  fixedMesh: {fileID: 0}
+  closedMesh: {fileID: 0}
 --- !u!1 &5663639218613272852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,12 +2124,12 @@ GameObject:
   - component: {fileID: 8011201904820022569}
   - component: {fileID: 2800607631405670093}
   m_Layer: 0
-  m_Name: Jue-Cup-Liquid_edited
+  m_Name: green liquid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4592393083831728394
 Transform:
   m_ObjectHideFlags: 0
@@ -1657,12 +2218,12 @@ MonoBehaviour:
   _layersAdjustmentCompact: 1
   _useLightColor: 1
   _directionalLight: {fileID: 0}
-  _liquidColor1: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.14117648}
+  _liquidColor1: {r: 0.65882355, g: 0.77254903, b: 0.32941177, a: 0.14117648}
   _liquidScale1: 4.2
-  _liquidColor2: {r: 0.7254902, g: 0.7607843, b: 0.10980392, a: 0.2509804}
+  _liquidColor2: {r: 0.44705883, g: 0.64705884, b: 0.21960784, a: 0.2509804}
   _liquidScale2: 4.85
   _alpha: 0.373
-  _emissionColor: {r: 0.6830188, g: 0.65379447, b: 0.2822285, a: 1}
+  _emissionColor: {r: 0.49685526, g: 0.48111928, b: 0.27655146, a: 1}
   _ditherShadows: 1
   _murkiness: 0
   _turbulence1: 0.5
@@ -1741,7 +2302,7 @@ MonoBehaviour:
   _pointLightsEnabled: 1
   pointLightParams:
   - name: Light 1
-    targetPos: {x: -0.27651542, y: -0.3368709, z: 0.032810975}
+    targetPos: {x: 0.08579757, y: -0.0791173, z: 0.034297585}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -1755,7 +2316,7 @@ MonoBehaviour:
     color2: {r: 0.8477335, g: 0.8441614, b: 0.72563845, a: 1}
     colorSpeed: 0.5915744
   - name: Light 2
-    targetPos: {x: 0.11122818, y: -0.4, z: 0.12495362}
+    targetPos: {x: 0.036533352, y: -0.11166753, z: 0.013678196}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -1769,7 +2330,7 @@ MonoBehaviour:
     color2: {r: 0.69685274, g: 0.19038787, b: 0.20668414, a: 1}
     colorSpeed: 0.77507466
   - name: Light 3
-    targetPos: {x: -0.13306163, y: 0.024337396, z: -0.076150306}
+    targetPos: {x: 0.23535411, y: -0.0713635, z: -0.21600096}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -1783,7 +2344,7 @@ MonoBehaviour:
     color2: {r: 0.7679068, g: 0.25541726, b: 0.99003446, a: 1}
     colorSpeed: 1.6058117
   - name: Light 4
-    targetPos: {x: 0.22036617, y: 0.027774379, z: 0.03069306}
+    targetPos: {x: -0.08893817, y: -0.25918788, z: -0.15211205}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -1797,7 +2358,7 @@ MonoBehaviour:
     color2: {r: 0.8719964, g: 0.93060446, b: 0.24331489, a: 1}
     colorSpeed: 0.9112936
   - name: Light 5
-    targetPos: {x: 0.13724951, y: -0.4, z: 0.03424787}
+    targetPos: {x: -0.27914715, y: 0.13587186, z: 0.1160919}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -1811,7 +2372,286 @@ MonoBehaviour:
     color2: {r: 0.9825232, g: 0.9036646, b: 0.47428912, a: 1}
     colorSpeed: 1.8049672
   - name: Light 6
-    targetPos: {x: -0.10967006, y: 0.24621949, z: 0.080007225}
+    targetPos: {x: 0.2323648, y: -0.12267237, z: 0.13226257}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.07560895
+    lightRange: 0.06924299
+    intensityMin: 1.0964082
+    intensityMax: 1.4888561
+    intensitySpeed: 1.2531295
+    color1: {r: 0.58371013, g: 0.1634344, b: 0.6070822, a: 1}
+    color2: {r: 0.29942146, g: 0.29703823, b: 0.80799174, a: 1}
+    colorSpeed: 0.86512303
+  pointLightsScatteringAmount: 0.8
+  pointLightsIntensity: 1
+  pointLightInsideAtten: 0
+  fixedMesh: {fileID: 0}
+  closedMesh: {fileID: 0}
+--- !u!1 &7332475815673687685
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7970992461377250281}
+  - component: {fileID: 2593092551830534739}
+  - component: {fileID: 9092675731074019872}
+  - component: {fileID: 5178974898906088433}
+  m_Layer: 0
+  m_Name: black liquid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7970992461377250281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332475815673687685}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.53546727, y: -0.52229726, z: -0.4729168, w: -0.46565026}
+  m_LocalPosition: {x: 0.0018007107, y: -0.0073561775, z: -0.0036315408}
+  m_LocalScale: {x: 1.2763604, y: 1.2763605, z: 1.2763611}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 3170810181115823470}
+  m_LocalEulerAnglesHint: {x: -1.322, y: 96.39, z: 94.527}
+--- !u!33 &2593092551830534739
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332475815673687685}
+  m_Mesh: {fileID: 4300000, guid: ae99a0cc624bb5a4abca5800f9a6ec9f, type: 2}
+--- !u!23 &9092675731074019872
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332475815673687685}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5178974898906088433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332475815673687685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f61dcfd7077c46509132f92d2df65fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _topology: 10
+  _detail: 11
+  _level: 0.51
+  _levelMultiplier: 1
+  _liquidLayers: []
+  _smoothContactSurface: 3
+  _ditherStrength: 0.5
+  _layersAdjustmentSpeed: 1
+  _layersAdjustmentCompact: 1
+  _useLightColor: 1
+  _directionalLight: {fileID: 0}
+  _liquidColor1: {r: 0.16078432, g: 0.09019608, b: 0.06666667, a: 0.14117648}
+  _liquidScale1: 4.2
+  _liquidColor2: {r: 0.00624951, g: 0.006289184, b: 0.0055574235, a: 0.2509804}
+  _liquidScale2: 4.85
+  _alpha: 0.373
+  _emissionColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
+  _ditherShadows: 1
+  _murkiness: 0
+  _turbulence1: 0.5
+  _turbulence2: 0.09
+  _frecuency: 30
+  _speed: 1
+  _sparklingIntensity: 0.54
+  _sparklingAmount: 0.068
+  _deepObscurance: 1.12
+  _foamColor: {r: 0.97735846, g: 0.9275685, b: 0.9275685, a: 0.8862745}
+  _foamScale: 0.242
+  _foamThickness: 0.0217
+  _foamDensity: -0.299
+  _foamWeight: 100
+  _foamTurbulence: 1
+  _foamVisibleFromBottom: 1
+  _smokeEnabled: 0
+  _smokeColor: {r: 1, g: 1, b: 1, a: 0.31764707}
+  _smokeScale: 0.134
+  _smokeBaseObscurance: 4.86
+  _smokeHeightAtten: 0.8
+  _smokeSpeed: 3.21
+  _fixMesh: 0
+  originalMesh: {fileID: 0}
+  originalPivotOffset: {x: 0, y: 0.000000017695129, z: -0.00000047683716}
+  _pivotOffset: {x: 0, y: 0, z: 0}
+  _autoCloseMesh: 0
+  _upperLimit: 1.5
+  _lowerLimit: -1.5
+  _subMeshIndex: 0
+  _flaskMaterial: {fileID: 0}
+  _flaskThickness: 0
+  _glossinessInternal: 0.3
+  _scatteringEnabled: 1
+  _scatteringPower: 5
+  _scatteringAmount: 0.3
+  _refractionBlur: 0
+  _blurIntensity: 0.75
+  _liquidRaySteps: 10
+  _foamRaySteps: 7
+  _smokeRaySteps: 5
+  _bumpMap: {fileID: 0}
+  _bumpStrength: 1
+  _bumpDistortionScale: 1
+  _bumpDistortionOffset: {x: 0, y: 0}
+  _distortionMap: {fileID: 0}
+  _texture: {fileID: 0}
+  _textureScale: {x: 1, y: 1}
+  _textureOffset: {x: 0, y: 0}
+  _distortionAmount: 1
+  _depthAware: 0
+  _depthAwareOffset: 1
+  _irregularDepthDebug: 0
+  _depthAwareCustomPass: 0
+  _depthAwareCustomPassDebug: 0
+  _doubleSidedBias: 0
+  _backDepthBias: 0
+  _rotationLevelCompensation: 0
+  _ignoreGravity: 0
+  _reactToForces: 1
+  _extentsScale: {x: 1, y: 1, z: 1}
+  _noiseVariation: 2
+  _allowViewFromInside: 1
+  _debugSpillPoint: 0
+  _renderQueue: 3001
+  _reflectionTexture: {fileID: 0}
+  _physicsMass: 1.2
+  _physicsAngularDamp: 0.02
+  _bubblesAmount: 32
+  _bubblesSizeMin: 2
+  _bubblesSizeMax: 4
+  _bubblesScale: 3
+  _bubblesBrightness: 1
+  _bubblesVerticalSpeed: 1
+  _bubblesSeed: 1
+  _pointLightsEnabled: 1
+  pointLightParams:
+  - name: Light 1
+    targetPos: {x: 0.21852294, y: 0.055666238, z: -0.17195868}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.091211736
+    lightRange: 0.027706645
+    intensityMin: 1.1250396
+    intensityMax: 1.6481215
+    intensitySpeed: 1.2988844
+    color1: {r: 0.30423465, g: 0.7443021, b: 0.30686215, a: 1}
+    color2: {r: 0.8477335, g: 0.8441614, b: 0.72563845, a: 1}
+    colorSpeed: 0.5915744
+  - name: Light 2
+    targetPos: {x: 0.100264944, y: -0.37219784, z: 0.066365324}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.029612927
+    lightRange: 0.031351704
+    intensityMin: 0.72897124
+    intensityMax: 1.7381389
+    intensitySpeed: 1.9782984
+    color1: {r: 0.2919555, g: 0.44736975, b: 0.07297922, a: 1}
+    color2: {r: 0.69685274, g: 0.19038787, b: 0.20668414, a: 1}
+    colorSpeed: 0.77507466
+  - name: Light 3
+    targetPos: {x: 0.007526763, y: 0.10187341, z: 0.026924316}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.03511341
+    lightRange: 0.042339947
+    intensityMin: 1.1176406
+    intensityMax: 1.5151675
+    intensitySpeed: 1.9648459
+    color1: {r: 0.109132186, g: 0.17878522, b: 0.7707367, a: 1}
+    color2: {r: 0.7679068, g: 0.25541726, b: 0.99003446, a: 1}
+    colorSpeed: 1.6058117
+  - name: Light 4
+    targetPos: {x: -0.13383742, y: 0.08538015, z: -0.061800208}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.024570396
+    lightRange: 0.07043067
+    intensityMin: 1.3986576
+    intensityMax: 1.6415709
+    intensitySpeed: 0.83772767
+    color1: {r: 0.80953646, g: 0.029764537, b: 0.76208293, a: 1}
+    color2: {r: 0.8719964, g: 0.93060446, b: 0.24331489, a: 1}
+    colorSpeed: 0.9112936
+  - name: Light 5
+    targetPos: {x: -0.14812717, y: 0.14423677, z: -0.2777411}
+    randomTarget: 1
+    randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
+    randomTargetRadius: 0.4
+    nextTargetInterval: 1
+    moveSpeed: 0.045029324
+    lightRange: 0.03356555
+    intensityMin: 1.0421687
+    intensityMax: 2.521473
+    intensitySpeed: 0.56443167
+    color1: {r: 0.6865645, g: 0.49212724, b: 0.93139637, a: 1}
+    color2: {r: 0.9825232, g: 0.9036646, b: 0.47428912, a: 1}
+    colorSpeed: 1.8049672
+  - name: Light 6
+    targetPos: {x: -0.3050206, y: -0.025410164, z: 0.12573008}
     randomTarget: 1
     randomTargetCenter: {x: 0, y: -0.076000005, z: 0}
     randomTargetRadius: 0.4
@@ -2432,6 +3272,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cupGameObject: {fileID: 8909705655526411762}
+  redLiquidVisual: {fileID: 3330867931671696169}
+  blackLiquidVisual: {fileID: 7332475815673687685}
+  greenLiquidVisual: {fileID: 6758834151345683477}
+  neutralLiquidVisual: {fileID: 5093310166312934907}
   scaleFactor: 0.001
 --- !u!114 &1061410509616533511
 MonoBehaviour:
@@ -2445,11 +3289,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9699ae6b89916314da57830e213d0a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cuppSphere: {fileID: 0}
+  cupController: {fileID: 7412980322648976416}
+  cupSphere: {fileID: 0}
   wristPoint: {fileID: 0}
   cupAttachPoint: {fileID: 0}
   cupMeshRenderer: {fileID: 9173309444638719076}
-  liquid: {fileID: 6758834151345683477}
   grabbedByHand: 2
   IsTrackedDataValid: 0
   debugText: {fileID: 0}
