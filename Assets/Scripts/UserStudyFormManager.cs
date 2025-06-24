@@ -103,6 +103,7 @@ public class UserStudyFormManager : MonoBehaviour
                 questionValues[0] = questions1.slider.value;
 
                 questions1.panel.SetActive(false);
+                questions345[0].buttonText.text = "Tiếp tục";
                 questions345[0].panel.SetActive(true);
 
                 currentPage++;
@@ -112,6 +113,7 @@ public class UserStudyFormManager : MonoBehaviour
                 questionValues[questions345[0].id - 1] = questions345[0].slider.value;
 
                 questions345[0].panel.SetActive(false);
+                questions345[1].buttonText.text = "Tiếp tục";
                 questions345[1].panel.SetActive(true);
 
                 currentPage++;
@@ -121,6 +123,7 @@ public class UserStudyFormManager : MonoBehaviour
                 questionValues[questions345[1].id - 1] = questions345[1].slider.value;
 
                 questions345[1].panel.SetActive(false);
+                questions345[2].buttonText.text = "Tiếp tục";
                 questions345[2].panel.SetActive(true);
 
                 currentPage++;
@@ -130,6 +133,7 @@ public class UserStudyFormManager : MonoBehaviour
                 questionValues[questions345[2].id - 1] = questions345[2].slider.value;
 
                 questions345[2].panel.SetActive(false);
+                questions345[3].buttonText.text = "Tiếp tục";
                 questions345[3].panel.SetActive(true);
 
                 currentPage++;
