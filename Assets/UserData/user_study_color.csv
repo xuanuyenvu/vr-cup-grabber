@@ -1,3 +1,5 @@
 sep=;
 SubmitTime;UserId;ExperimentType;TasteType;LiquidColor;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami
 2025-06-13 16:02:43;uyentest;Color;Sweet;Red;14,71865;0;48,22587;29,83901;75,26898;100
+2025-06-24 17:13:16;uyentest;Color;Sweet;Red;13,70674;39,00656;36,8677;39,14061;39,63219;31,53677
+2025-06-24 17:13:38;uyentest;Color;Sweet;Red;14,65651;28,42897;31,21528;19,45445;44,66191;24,56954
