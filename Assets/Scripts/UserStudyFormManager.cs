@@ -36,6 +36,12 @@ public class UserStudyFormManager : MonoBehaviour
         Bitter
     }
 
+    [Header("Tutorial Form")]
+    [SerializeField] private GameObject tutoFormUI;
+    [SerializeField] private List<QuestionUI> tutoQuestions;
+
+    [Space]
+    [Header("User Study Form")]
     [SerializeField] private GameObject userStudyFormUI;
     [SerializeField] private QuestionUI questions1;
     [SerializeField] private List<QuestionUI> questions345;
@@ -56,10 +62,59 @@ public class UserStudyFormManager : MonoBehaviour
     void Start()
     {
         ResetValues();
-        HideUI();
+        HideUserStudyFormUI();
     }
 
-    public void ShowUI()
+    public void ShowTutorialFormUI()
+    {
+        tutoFormUI.SetActive(true);
+        foreach (var q in tutoQuestions)
+        {
+            q.panel.SetActive(false);
+            q.slider.value = 0.1111111f; 
+        }
+
+        currentPage = 0;
+        tutoQuestions[0].buttonText.text = "Tiếp tục";
+        tutoQuestions[0].panel.SetActive(true);
+    }
+
+    public void NextTutorialPage()
+    {
+        if (!IsValid(tutoQuestions[currentPage])) return;
+        tutoQuestions[currentPage].panel.SetActive(false);
+        tutoQuestions[currentPage].slider.value = 0.1111111f;
+        currentPage++;
+        if (currentPage < tutoQuestions.Count)
+        {
+            if (currentPage == tutoQuestions.Count - 1)
+            {
+                tutoQuestions[currentPage].buttonText.text = "Gửi";
+            }
+            else
+            {
+                tutoQuestions[currentPage].buttonText.text = "Tiếp tục";
+            }
+            tutoQuestions[currentPage].panel.SetActive(true);
+        }
+        else
+        {
+            HideTutorialFormUI();
+        }
+    }
+
+    public void HideTutorialFormUI()
+    {
+        tutoFormUI.SetActive(false);
+        currentPage = -1;
+        foreach (var q in tutoQuestions)
+        {
+            q.panel.SetActive(false);
+            q.slider.value = 0.1111111f;
+        }
+    }
+
+    public void ShowUserStudyFormUI()
     {
         userStudyFormUI.SetActive(true);
         currentPage = 0;
@@ -80,7 +135,7 @@ public class UserStudyFormManager : MonoBehaviour
         }
     }
 
-    public void HideUI()
+    public void HideUserStudyFormUI()
     {
         ResetValues();
         userStudyFormUI.SetActive(false);
@@ -175,7 +230,7 @@ public class UserStudyFormManager : MonoBehaviour
         string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         string questionsCsv = string.Join(";", questionValues);
         string filePath, csvData, csvHeader;
-        
+
         if (experimentType == ExperimentType.Color)
         {
             filePath = Path.Combine(userDataFolder, "user_study_color.csv");
@@ -193,21 +248,21 @@ public class UserStudyFormManager : MonoBehaviour
 
 
         try
+        {
+            if (!File.Exists(filePath))
             {
-                if (!File.Exists(filePath))
-                {
-                    File.WriteAllText(filePath, csvHeader);
-                }
-
-                File.AppendAllText(filePath, csvData);
-                Debug.Log($"Form submitted successfully! File saved at: {filePath}");
-
-                HideUI();
+                File.WriteAllText(filePath, csvHeader);
             }
-            catch (Exception ex)
-            {
-                Debug.LogError($"Failed to save form: {ex.Message}");
-            }
+
+            File.AppendAllText(filePath, csvData);
+            Debug.Log($"Form submitted successfully! File saved at: {filePath}");
+
+            HideUserStudyFormUI();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to save form: {ex.Message}");
+        }
     }
 
     private void ResetValues()
