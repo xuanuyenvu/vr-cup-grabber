@@ -67,6 +67,12 @@ public class TCPClientManager : MonoBehaviour
     public Action OnTutorialFormOpened;
     public Action OnTutorialFormClosed;
 
+    // [Header("Debug Marker Corners")]
+    // [SerializeField] private GameObject markerCorners1;
+    // [SerializeField] private GameObject markerCorners2;
+    // [SerializeField] private GameObject markerCorners3;
+    // [SerializeField] private GameObject markerCorners4;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -366,6 +372,12 @@ public class TCPClientManager : MonoBehaviour
                 {
                     // Trigger the event with the cup data
                     OnCupDataReceived?.Invoke(cupDataObject);
+
+                    // var markerCorners = cupDataObject["marker_corners"];
+                    // if (markerCorners != null)
+                    // {
+                    //     ProcessMarkerCorners(markerCorners);
+                    // }
                 }
             }
 
@@ -519,6 +531,36 @@ public class TCPClientManager : MonoBehaviour
         };
 
         SendRequest(request);
+    }
+
+    // DEBUG: 4 cup marker corners
+    private void ProcessMarkerCorners(JToken markerCornersToken)
+    {
+        List<Vector3> markerCorners = new List<Vector3>();
+
+        if (markerCornersToken is JArray cornersArray)
+        {
+            foreach (var cornerToken in cornersArray)
+            {
+                if (cornerToken is JArray coordinatesArray && coordinatesArray.Count >= 3)
+                {
+                    float x = coordinatesArray[0].ToObject<float>();
+                    float y = coordinatesArray[1].ToObject<float>();
+                    float z = coordinatesArray[2].ToObject<float>();
+
+                    Vector3 position = new Vector3(x * 0.001f, y * 0.001f, z * 0.001f);
+                    markerCorners.Add(position);
+                }
+            }
+            if (markerCorners.Count == 4)
+            {
+                // markerCorners1.transform.localPosition = markerCorners[0];
+                // markerCorners2.transform.localPosition = markerCorners[1];
+                // markerCorners3.transform.localPosition = markerCorners[2];
+                // markerCorners4.transform.localPosition = markerCorners[3];
+            }
+        }
+
     }
 
     public void ChangeDetector(string modelPath, int? cupClassId, bool detectHandles)
