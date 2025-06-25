@@ -44,6 +44,8 @@ public class UserStudyManager : MonoBehaviour
         TCPClientManager.Instance.OnVideoPlayPauseChanged += TogglePlayPauseVideo;
         TCPClientManager.Instance.OnRewindVideo += RewindVideo;
         TCPClientManager.Instance.OnSkipFowardVideo += SkipForwardVideo;
+        TCPClientManager.Instance.OnTutorialFormOpened += OpenTutorialForm;
+        TCPClientManager.Instance.OnTutorialFormClosed += CloseTutorialForm;
     }
 
     void OnDisable()
@@ -56,6 +58,8 @@ public class UserStudyManager : MonoBehaviour
         TCPClientManager.Instance.OnVideoPlayPauseChanged -= TogglePlayPauseVideo;
         TCPClientManager.Instance.OnRewindVideo -= RewindVideo;
         TCPClientManager.Instance.OnSkipFowardVideo -= SkipForwardVideo;
+        TCPClientManager.Instance.OnTutorialFormOpened -= OpenTutorialForm;
+        TCPClientManager.Instance.OnTutorialFormClosed -= CloseTutorialForm;
     }
 
     void OnValidate()
@@ -71,6 +75,7 @@ public class UserStudyManager : MonoBehaviour
         userStudyFormManager.liquidColor = _liquidColor;
 
         DisplayUserStudyForm();
+        DisplayTutorialForm();
 
         videoTutorialManager.TogglePlayPause();
         videoTutorialManager.RewindToLast3Seconds();
@@ -83,13 +88,20 @@ public class UserStudyManager : MonoBehaviour
         {
             userStudyFormManager.ShowUserStudyFormUI();
         }
-        else if (isOpenTuToForm)
+        else
+        {
+            userStudyFormManager.HideUserStudyFormUI();
+        }
+    }
+
+    private void DisplayTutorialForm()
+    {
+        if (isOpenTuToForm)
         {
             userStudyFormManager.ShowTutorialFormUI();
         }
         else
         {
-            userStudyFormManager.HideUserStudyFormUI();
             userStudyFormManager.HideTutorialFormUI();
         }
     }
@@ -161,5 +173,17 @@ public class UserStudyManager : MonoBehaviour
     {
         videoTutorialManager._isSkipForward3Seconds = true;
         videoTutorialManager.SkipForward3Seconds();
+    }
+
+    private void OpenTutorialForm()
+    {
+        isOpenTuToForm = true;
+        DisplayTutorialForm();
+    }
+
+    private void CloseTutorialForm()
+    {
+        isOpenTuToForm = false;
+        DisplayTutorialForm();
     }
 }
