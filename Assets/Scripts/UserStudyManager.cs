@@ -32,6 +32,7 @@ public class UserStudyManager : MonoBehaviour
     [SerializeField] private UserStudyFormManager.SmellType _smellType;
     [SerializeField] private LiquidColor _liquidColor;
     public bool isOpenForm = false;
+    public bool isOpenTuToForm = false;
 
     void OnEnable()
     {
@@ -82,9 +83,14 @@ public class UserStudyManager : MonoBehaviour
         {
             userStudyFormManager.ShowUserStudyFormUI();
         }
+        else if (isOpenTuToForm)
+        {
+            userStudyFormManager.ShowTutorialFormUI();
+        }
         else
         {
             userStudyFormManager.HideUserStudyFormUI();
+            userStudyFormManager.HideTutorialFormUI();
         }
     }
 

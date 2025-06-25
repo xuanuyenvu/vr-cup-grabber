@@ -81,6 +81,7 @@ public class UserStudyFormManager : MonoBehaviour
 
     public void NextTutorialPage()
     {
+        if (!IsValid(tutoQuestions[currentPage])) return;
         tutoQuestions[currentPage].panel.SetActive(false);
         tutoQuestions[currentPage].slider.value = 0.1111111f;
         currentPage++;
@@ -102,7 +103,7 @@ public class UserStudyFormManager : MonoBehaviour
         }
     }
 
-    private void HideTutorialFormUI()
+    public void HideTutorialFormUI()
     {
         tutoFormUI.SetActive(false);
         currentPage = -1;
