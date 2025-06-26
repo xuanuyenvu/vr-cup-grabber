@@ -14,7 +14,7 @@ public class UDPCupClient : MonoBehaviour
     private IPEndPoint serverEndPoint;
 
     [SerializeField] private Transform cupTransform;
-    [SerializeField] private string serverIP = "127.0.0.1";
+    [SerializeField] private string serverIP = "192.168.2.55";
     [SerializeField] private int serverPort = 5555;
     [SerializeField] private Kinect4AzureInterface kinectInterface;
 
@@ -116,6 +116,7 @@ public class UDPCupClient : MonoBehaviour
         {
             hasNewMessage = false;
             lastMessageTime = Time.time;
+            Debug.Log("Received message: " + latestMessage);
             ProcessReceivedMessage(latestMessage);
         }
     }
