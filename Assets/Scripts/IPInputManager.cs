@@ -1,19 +1,19 @@
- using UnityEngine;
+using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
 public class IPInputManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI ipInputFieldText; 
-    [SerializeField] private GameObject placeholder;  
-    [SerializeField] private GameObject ui; 
+    [SerializeField] private TextMeshProUGUI ipInputFieldText;
+    [SerializeField] private GameObject placeholder;
+    [SerializeField] private GameObject ui;
     [SerializeField] private GameObject statusLight;
     [SerializeField] private GameObject statusText;
 
     [SerializeField] private Sprite connectedSprite;
     [SerializeField] private Sprite disconnectedSprite;
     [SerializeField] private Image btn;
-    
+
     public enum ConnectionStatus
     {
         Disconnected,
@@ -26,7 +26,7 @@ public class IPInputManager : MonoBehaviour
 
     void Start()
     {
-        _currentInput = "192.168.2.243";
+        _currentInput = TCPClientManager.Instance.ServerIP;
         placeholder.SetActive(false);
         UpdateInputField();
     }
@@ -40,7 +40,7 @@ public class IPInputManager : MonoBehaviour
     private void OnDisable()
     {
         if (TCPClientManager.Instance == null) return;
-        
+
         TCPClientManager.Instance.OnConnected -= OnServerConnected;
         TCPClientManager.Instance.OnDisconnected -= OnServerDisconnected;
     }
@@ -111,7 +111,7 @@ public class IPInputManager : MonoBehaviour
             if (isConnected)
             {
                 btn.GetComponent<Image>().sprite = connectedSprite;
-                OnDisconnectToServer();                
+                OnDisconnectToServer();
             }
             else
             {
