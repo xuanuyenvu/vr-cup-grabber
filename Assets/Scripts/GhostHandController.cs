@@ -160,12 +160,12 @@ public class GhostHandController : MonoBehaviour
             SmellTasteManager.Instance.DiffuseSmell( 900000);
             isDiffuseSmell = true;
         }
-        else if (distance >= 0.4f && isDiffuseSmell)
-        {
-            Debug.Log("Stop smell");
-            SmellTasteManager.Instance.StopSmell();
-            isDiffuseSmell = false;
-        }
+        // else if (distance >= 0.4f && isDiffuseSmell)
+        // {
+        //     Debug.Log("Stop smell");
+        //     SmellTasteManager.Instance.StopSmell();
+        //     isDiffuseSmell = false;
+        // }
 
         if (distance <= 0.07f && ghostHandClone == null)
         {
