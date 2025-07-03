@@ -325,7 +325,7 @@ public class TCPClientManager : MonoBehaviour
                     string jsonString = data.Substring(startIndex, i - startIndex + 1);
                     try
                     {
-                        Debug.Log($"Received JSON segment: {jsonString}");
+                        // Debug.Log($"Received JSON segment: {jsonString}");
                         JObject jsonObject = JObject.Parse(jsonString);
                         // Xử lý từng JSON object riêng lẻ
                         ProcessSingleJsonObject(jsonObject);
