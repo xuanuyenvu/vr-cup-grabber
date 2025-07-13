@@ -19,8 +19,8 @@ public class UserStudyFormManager : MonoBehaviour
 {
     public enum ExperimentType
     {
-        Color,
-        SmellOrthonasal
+        ColorTaste,
+        ColorTastePureWater
     }
     public enum SmellType
     {
@@ -33,7 +33,8 @@ public class UserStudyFormManager : MonoBehaviour
     {
         Sweet,
         Sour,
-        Bitter
+        Bitter,
+        Neutral
     }
 
     [Header("Tutorial Form")]
@@ -50,7 +51,7 @@ public class UserStudyFormManager : MonoBehaviour
     private int currentPage = -1;
 
 
-    [HideInInspector] public ExperimentType experimentType = ExperimentType.Color;
+    [HideInInspector] public ExperimentType experimentType = ExperimentType.ColorTaste;
     [HideInInspector] public string userId = "no-data";
 
     [HideInInspector] public SmellType smellType = SmellType.Sweet;
@@ -231,19 +232,19 @@ public class UserStudyFormManager : MonoBehaviour
         string questionsCsv = string.Join(";", questionValues);
         string filePath, csvData, csvHeader;
 
-        if (experimentType == ExperimentType.Color)
+        if (experimentType == ExperimentType.ColorTaste)
         {
-            filePath = Path.Combine(userDataFolder, "user_study_color.csv");
+            filePath = Path.Combine(userDataFolder, "user_study_color_taste.csv");
             csvHeader = "sep=;\nSubmitTime;UserId;ExperimentType;TasteType;LiquidColor;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami\n";
 
             csvData = $"{timestamp};{userId};{experimentType};{tasteType};{liquidColor};{questionsCsv}\n";
         }
         else
         {
-            filePath = Path.Combine(userDataFolder, "user_study_smell.csv");
-            csvHeader = "sep=;\nSubmitTime;UserId;ExperimentType;TasteType;SmellType;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami\n";
+            filePath = Path.Combine(userDataFolder, "user_study_color_smell_purewater.csv");
+            csvHeader = "sep=;\nSubmitTime;UserId;ExperimentType;LiquidColor;SmellType;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami\n";
 
-            csvData = $"{timestamp};{userId};{experimentType};{tasteType};{smellType};{questionsCsv}\n";
+            csvData = $"{timestamp};{userId};{experimentType};{liquidColor};{smellType};{questionsCsv}\n";
         }
 
 
