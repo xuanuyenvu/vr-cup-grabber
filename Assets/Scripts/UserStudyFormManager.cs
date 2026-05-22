@@ -52,8 +52,11 @@ public class UserStudyFormManager : MonoBehaviour
     [SerializeField] private GameObject userStudyFormUI;
     [SerializeField] private QuestionUI questions1;
     [SerializeField] private List<QuestionUI> questions345;
+    [SerializeField] private List<QuestionUI> pqQuestions;
     [SerializeField] private UserStudyManager userStudyManager;
-    private List<float> questionValues = new List<float> { 0f, 0f, 0f, 0f, 0f, 0f };
+
+    private List<QuestionUI> currentQuestions = new List<QuestionUI>();
+    private List<float> questionValues = new List<float>(new float[16]);
     private int currentPage = -1;
 
 
@@ -126,14 +129,12 @@ public class UserStudyFormManager : MonoBehaviour
     {
         userStudyFormUI.SetActive(true);
         currentPage = 0;
-        questions1.panel.SetActive(true);
+        currentQuestions.Clear();
 
-        foreach (var q in questions345)
-        {
-            q.panel.SetActive(false);
-        }
+        // 1. Q1 Like always first
+        currentQuestions.Add(questions1);
 
-        // xáo trộn các phần tử trong question345
+        // 2. Shuffle taste questions (Fisher-Yates)
         for (int i = questions345.Count - 1; i > 0; i--)
         {
             int randomIndex = UnityEngine.Random.Range(0, i + 1);
@@ -141,6 +142,26 @@ public class UserStudyFormManager : MonoBehaviour
             questions345[i] = questions345[randomIndex];
             questions345[randomIndex] = temp;
         }
+
+        // 3. Add shuffled taste (preserve shuffle in original list for reference)
+        foreach (var q in questions345)
+        {
+            q.panel.SetActive(false);
+            q.slider.value = 0.1111111f;
+            currentQuestions.Add(q);
+        }
+
+        // 4. Add PQ questions in fixed order (not shuffled)
+        foreach (var q in pqQuestions)
+        {
+            q.panel.SetActive(false);
+            q.slider.value = 0.1111111f;
+            currentQuestions.Add(q);
+        }
+
+        // Show first question
+        currentQuestions[0].panel.SetActive(true);
+        currentQuestions[0].buttonText.text = "Tiếp tục";
     }
 
     public void HideUserStudyFormUI()
@@ -153,71 +174,40 @@ public class UserStudyFormManager : MonoBehaviour
         {
             q.panel.SetActive(false);
         }
+        foreach (var q in pqQuestions)
+        {
+            q.panel.SetActive(false);
+        }
 
         userStudyManager.isOpenForm = false;
     }
 
     public void NextPage()
     {
-        switch (currentPage)
+        if (currentPage < 0 || currentPage >= currentQuestions.Count) return;
+
+        QuestionUI current = currentQuestions[currentPage];
+
+        if (!IsValid(current)) return;
+
+        // Save slider value by question id
+        questionValues[current.id - 1] = current.slider.value;
+
+        // Hide current panel
+        current.panel.SetActive(false);
+        current.slider.value = 0.1111111f;
+
+        currentPage++;
+
+        if (currentPage < currentQuestions.Count)
         {
-            case 0:
-                if (!IsValid(questions1)) return;
-                questionValues[0] = questions1.slider.value;
-
-                questions1.panel.SetActive(false);
-                questions345[0].buttonText.text = "Tiếp tục";
-                questions345[0].panel.SetActive(true);
-
-                currentPage++;
-                break;
-            case 1:
-                if (!IsValid(questions345[0])) return;
-                questionValues[questions345[0].id - 1] = questions345[0].slider.value;
-
-                questions345[0].panel.SetActive(false);
-                questions345[1].buttonText.text = "Tiếp tục";
-                questions345[1].panel.SetActive(true);
-
-                currentPage++;
-                break;
-            case 2:
-                if (!IsValid(questions345[1])) return;
-                questionValues[questions345[1].id - 1] = questions345[1].slider.value;
-
-                questions345[1].panel.SetActive(false);
-                questions345[2].buttonText.text = "Tiếp tục";
-                questions345[2].panel.SetActive(true);
-
-                currentPage++;
-                break;
-            case 3:
-                if (!IsValid(questions345[2])) return;
-                questionValues[questions345[2].id - 1] = questions345[2].slider.value;
-
-                questions345[2].panel.SetActive(false);
-                questions345[3].buttonText.text = "Tiếp tục";
-                questions345[3].panel.SetActive(true);
-
-                currentPage++;
-                break;
-            case 4:
-                if (!IsValid(questions345[3])) return;
-                questionValues[questions345[3].id - 1] = questions345[3].slider.value;
-
-                questions345[3].panel.SetActive(false);
-                questions345[4].buttonText.text = "Gửi";
-                questions345[4].panel.SetActive(true);
-
-                currentPage++;
-                break;
-            case 5:
-                if (!IsValid(questions345[4])) return;
-                questionValues[questions345[4].id - 1] = questions345[4].slider.value;
-
-                questions345[4].panel.SetActive(false);
-                SubmitForm();
-                break;
+            QuestionUI next = currentQuestions[currentPage];
+            next.buttonText.text = (currentPage == currentQuestions.Count - 1) ? "Gửi" : "Tiếp tục";
+            next.panel.SetActive(true);
+        }
+        else
+        {
+            SubmitForm();
         }
     }
 
@@ -283,9 +273,14 @@ public class UserStudyFormManager : MonoBehaviour
     private void ResetValues()
     {
         currentPage = -1;
+        currentQuestions.Clear();
 
         questions1.slider.value = 0.1111111f;
         foreach (var q in questions345)
+        {
+            q.slider.value = 0.1111111f;
+        }
+        foreach (var q in pqQuestions)
         {
             q.slider.value = 0.1111111f;
         }
