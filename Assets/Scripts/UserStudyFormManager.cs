@@ -229,24 +229,27 @@ public class UserStudyFormManager : MonoBehaviour
         string questionsCsv = string.Join(";", questionValues);
         string filePath, csvData, csvHeader;
 
+        string pqHeader = "PQ1-Presence;PQ2-VisualEngagement;PQ3-BeingThere;PQ4-NaturalMovement;PQ5-RealWorldReflection;" +
+                          "PQ6-Predictability;PQ7-VisualInspection;PQ8-Immersion;PQ9-Adaptation;PQ10-TaskFocus";
+
         if (experimentType == ExperimentType.ColorTaste)
         {
-            filePath = Path.Combine(userDataFolder, "user_study_color_taste.csv");
-            csvHeader = "sep=;\nSubmitTime;UserId;ExperimentType;TasteType;LiquidColor;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami\n";
+            filePath = Path.Combine(userDataFolder, "user_study_color_taste_pq.csv");
+            csvHeader = $"sep=;\nSubmitTime;UserId;ExperimentType;TasteType;LiquidColor;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami;{pqHeader}\n";
 
             csvData = $"{timestamp};{userId};{experimentType};{tasteType};{liquidColor};{questionsCsv}\n";
         }
         else if (experimentType == ExperimentType.VisualFruitScentPureWater)
         {
-            filePath = Path.Combine(userDataFolder, "user_study_vfs_purewater.csv");
-            csvHeader = "sep=;\nSubmitTime;UserId;ExperimentType;FruitType;SmellType;LiquidColor;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami\n";
+            filePath = Path.Combine(userDataFolder, "user_study_vfs_purewater_pq.csv");
+            csvHeader = $"sep=;\nSubmitTime;UserId;ExperimentType;FruitType;SmellType;LiquidColor;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami;{pqHeader}\n";
 
             csvData = $"{timestamp};{userId};{experimentType};{fruitType};{smellType};{liquidColor};{questionsCsv}\n";
         }
         else
         {
-            filePath = Path.Combine(userDataFolder, "user_study_color_smell_purewater.csv");
-            csvHeader = "sep=;\nSubmitTime;UserId;ExperimentType;LiquidColor;SmellType;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami\n";
+            filePath = Path.Combine(userDataFolder, "user_study_color_smell_purewater_pq.csv");
+            csvHeader = $"sep=;\nSubmitTime;UserId;ExperimentType;LiquidColor;SmellType;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami;{pqHeader}\n";
 
             csvData = $"{timestamp};{userId};{experimentType};{liquidColor};{smellType};{questionsCsv}\n";
         }
