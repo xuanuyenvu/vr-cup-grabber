@@ -152,11 +152,14 @@ public class UserStudyFormManager : MonoBehaviour
         }
 
         // 4. Add PQ questions in fixed order (not shuffled)
-        foreach (var q in pqQuestions)
+        if (pqQuestions != null)
         {
-            q.panel.SetActive(false);
-            q.slider.value = 0.1111111f;
-            currentQuestions.Add(q);
+            foreach (var q in pqQuestions)
+            {
+                q.panel.SetActive(false);
+                q.slider.value = 0.1111111f;
+                currentQuestions.Add(q);
+            }
         }
 
         // Show first question
@@ -174,9 +177,12 @@ public class UserStudyFormManager : MonoBehaviour
         {
             q.panel.SetActive(false);
         }
-        foreach (var q in pqQuestions)
+        if (pqQuestions != null)
         {
-            q.panel.SetActive(false);
+            foreach (var q in pqQuestions)
+            {
+                q.panel.SetActive(false);
+            }
         }
 
         userStudyManager.isOpenForm = false;
@@ -189,6 +195,13 @@ public class UserStudyFormManager : MonoBehaviour
         QuestionUI current = currentQuestions[currentPage];
 
         if (!IsValid(current)) return;
+
+        // Validate question id before accessing questionValues
+        if (current.id < 1 || current.id > questionValues.Count)
+        {
+            Debug.LogError($"Invalid question id {current.id} (expected 1-{questionValues.Count})");
+            return;
+        }
 
         // Save slider value by question id
         questionValues[current.id - 1] = current.slider.value;
@@ -283,9 +296,12 @@ public class UserStudyFormManager : MonoBehaviour
         {
             q.slider.value = 0.1111111f;
         }
-        foreach (var q in pqQuestions)
+        if (pqQuestions != null)
         {
-            q.slider.value = 0.1111111f;
+            foreach (var q in pqQuestions)
+            {
+                q.slider.value = 0.1111111f;
+            }
         }
 
         for (int i = 0; i < questionValues.Count; i++)
