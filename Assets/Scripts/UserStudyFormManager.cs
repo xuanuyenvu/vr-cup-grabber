@@ -20,21 +20,27 @@ public class UserStudyFormManager : MonoBehaviour
     public enum ExperimentType
     {
         ColorTaste,
-        ColorTastePureWater
+        ColorTastePureWater,
+        VisualFruitScentPureWater
     }
     public enum SmellType
     {
         Sweet,
         Sour,
         Bitter,
-        Neutral
+        Neutral,
+        Strawberry,
+        Lemon,
+        Coffee,
+        None
     }
     public enum TasteType
     {
         Sweet,
         Sour,
         Bitter,
-        Neutral
+        Neutral,
+        None
     }
 
     [Header("Tutorial Form")]
@@ -57,6 +63,7 @@ public class UserStudyFormManager : MonoBehaviour
     [HideInInspector] public SmellType smellType = SmellType.Sweet;
     [HideInInspector] public TasteType tasteType = TasteType.Sweet;
     [HideInInspector] public LiquidColor liquidColor = LiquidColor.Red;
+    [HideInInspector] public string fruitType = "";
 
 
 
@@ -238,6 +245,13 @@ public class UserStudyFormManager : MonoBehaviour
             csvHeader = "sep=;\nSubmitTime;UserId;ExperimentType;TasteType;LiquidColor;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami\n";
 
             csvData = $"{timestamp};{userId};{experimentType};{tasteType};{liquidColor};{questionsCsv}\n";
+        }
+        else if (experimentType == ExperimentType.VisualFruitScentPureWater)
+        {
+            filePath = Path.Combine(userDataFolder, "user_study_vfs_purewater.csv");
+            csvHeader = "sep=;\nSubmitTime;UserId;ExperimentType;FruitType;SmellType;LiquidColor;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami\n";
+
+            csvData = $"{timestamp};{userId};{experimentType};{fruitType};{smellType};{liquidColor};{questionsCsv}\n";
         }
         else
         {

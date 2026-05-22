@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e727c449f032fd54093e059f009b4aca, type: 3}
   m_Name: HeadsetCalibrationData
   m_EditorClassIdentifier: 
-  headsetPosition: {x: 7.8879347, y: -0.52826285, z: 2.8497539}
-  headsetRotation: {x: -0.0024523512, y: 0.67859143, z: -0.0048643653, w: 0.7344958}
-  lastCalibrationTime: 7/13/2025 10:34:49 AM
+  headsetPosition: {x: 8.071274, y: -0.45871735, z: 3.0146694}
+  headsetRotation: {x: 0.0043572346, y: -0.69521636, z: 0.010492922, w: -0.71871084}
+  lastCalibrationTime: 3/13/2026 3:09:08 PM
   hasBeenCalibrated: 1

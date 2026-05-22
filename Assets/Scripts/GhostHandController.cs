@@ -281,6 +281,7 @@ public class GhostHandController : MonoBehaviour
     {
         if (cupStateController.IsPendingRegrab && cupStateController.grabbedByHand != CupStateController.GrabbedBy.None)
         {
+            Debug.Log("Placing cup in ghost hand");
             cupStateController.PlaceCupInHand();
         }
     }
@@ -330,6 +331,7 @@ public class GhostHandController : MonoBehaviour
 
             cupStateController.cupMeshRenderer.enabled = true;
             cupStateController.liquid.SetActive(true);
+            cupStateController.RestoreVisuals(); // also restores fruit decor
             childOpenXRHand.SetActive(true);
 
             ShowHandGrabPoseObject();
