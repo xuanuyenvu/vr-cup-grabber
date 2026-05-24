@@ -31,6 +31,7 @@ public class UserStudyManager : MonoBehaviour
     [SerializeField] private UserStudyFormManager.TasteType _tasteType;
     [SerializeField] private UserStudyFormManager.SmellType _smellType;
     [SerializeField] private LiquidColor _liquidColor;
+    private string _fruitType = "";
     public bool isOpenForm = false;
     public bool isOpenTuToForm = false;
 
@@ -46,6 +47,7 @@ public class UserStudyManager : MonoBehaviour
         TCPClientManager.Instance.OnSkipFowardVideo += SkipForwardVideo;
         TCPClientManager.Instance.OnTutorialFormOpened += OpenTutorialForm;
         TCPClientManager.Instance.OnTutorialFormClosed += CloseTutorialForm;
+        TCPClientManager.Instance.OnVisualFruitChanged += ChangeVisualFruit;
     }
 
     void OnDisable()
@@ -60,6 +62,7 @@ public class UserStudyManager : MonoBehaviour
         TCPClientManager.Instance.OnSkipFowardVideo -= SkipForwardVideo;
         TCPClientManager.Instance.OnTutorialFormOpened -= OpenTutorialForm;
         TCPClientManager.Instance.OnTutorialFormClosed -= CloseTutorialForm;
+        TCPClientManager.Instance.OnVisualFruitChanged -= ChangeVisualFruit;
     }
 
     void OnValidate()
@@ -125,7 +128,13 @@ public class UserStudyManager : MonoBehaviour
         }
     }
 
-    private void SetUserStudyFormOpen(string userId, string experimentType, string tasteType, string smellType, string liquidColor)
+    private void ChangeVisualFruit(string fruitType)
+    {
+        _fruitType = string.IsNullOrWhiteSpace(fruitType) ? "None" : fruitType;
+        cupController.SetFruitDecor(_fruitType);
+    }
+
+    private void SetUserStudyFormOpen(string userId, string experimentType, string tasteType, string smellType, string liquidColor, string fruitType)
     {
         _userId = userId;
         _experimentType = (UserStudyFormManager.ExperimentType)Enum.Parse(typeof(UserStudyFormManager.ExperimentType), experimentType, true);
@@ -133,6 +142,12 @@ public class UserStudyManager : MonoBehaviour
         _tasteType = (UserStudyFormManager.TasteType)Enum.Parse(typeof(UserStudyFormManager.TasteType), tasteType, true);
         _smellType = (UserStudyFormManager.SmellType)Enum.Parse(typeof(UserStudyFormManager.SmellType), smellType, true);
         _liquidColor = (LiquidColor)Enum.Parse(typeof(LiquidColor), liquidColor, true);
+        _fruitType = string.IsNullOrWhiteSpace(fruitType) ? "None" : fruitType;
+
+        // Apply visuals immediately so the cup matches the trial config from open_form,
+        // even if the server doesn't follow up with a separate change_visual_fruit command.
+        cupController.CurrentLiquidColor = _liquidColor;
+        cupController.SetFruitDecor(_fruitType);
 
         userStudyFormManager.userId = _userId;
         userStudyFormManager.experimentType = _experimentType;
@@ -140,6 +155,7 @@ public class UserStudyManager : MonoBehaviour
         userStudyFormManager.tasteType = _tasteType;
         userStudyFormManager.smellType = _smellType;
         userStudyFormManager.liquidColor = _liquidColor;
+        userStudyFormManager.fruitType = _fruitType;
 
         isOpenForm = true;
         DisplayUserStudyForm();

@@ -241,12 +241,21 @@ namespace Cup
 
             cupMeshRenderer.enabled = false;
             liquid.SetActive(false);
+            cupController.HideAllFruitDecor();
         }
 
         private void ShowCup()
         {
             cupMeshRenderer.enabled = true;
             liquid.SetActive(true);
+            cupController.ShowCurrentFruitDecor();
+        }
+
+        // Public restore for external callers (e.g. GhostHandController throw reset)
+        // so fruit decor is never left hidden after a visual reset.
+        public void RestoreVisuals()
+        {
+            ShowCup();
         }
 
         public void SyncWristPointToGhostHand(Vector3 position, Quaternion rotation)

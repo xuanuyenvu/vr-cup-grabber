@@ -19,21 +19,28 @@ public class UserStudyFormManager : MonoBehaviour
 {
     public enum ExperimentType
     {
-        Color,
-        SmellOrthonasal
+        ColorTaste,
+        ColorTastePureWater,
+        VisualFruitScentPureWater
     }
     public enum SmellType
     {
         Sweet,
         Sour,
         Bitter,
-        Neutral
+        Neutral,
+        Strawberry,
+        Lemon,
+        Coffee,
+        None
     }
     public enum TasteType
     {
         Sweet,
         Sour,
-        Bitter
+        Bitter,
+        Neutral,
+        None
     }
 
     [Header("Tutorial Form")]
@@ -45,17 +52,48 @@ public class UserStudyFormManager : MonoBehaviour
     [SerializeField] private GameObject userStudyFormUI;
     [SerializeField] private QuestionUI questions1;
     [SerializeField] private List<QuestionUI> questions345;
+    [SerializeField] private List<QuestionUI> pqQuestions;
     [SerializeField] private UserStudyManager userStudyManager;
-    private List<float> questionValues = new List<float> { 0f, 0f, 0f, 0f, 0f, 0f };
+
+    private List<QuestionUI> currentQuestions = new List<QuestionUI>();
+    private List<float> questionValues = new List<float>(new float[16]);
+    private HashSet<int> answeredQuestionIds = new HashSet<int>();
+    private HashSet<Slider> registeredAnswerSliders = new HashSet<Slider>();
     private int currentPage = -1;
 
+    // Slider default values — user must drag to activate, default sits near centre
+    private const float NeutralVasDefaultValue = 0.111f;   // Q1 -50..50 midpoint
+    private const float MidScaleDefaultValue = 50.111f;     // 0..100 scales (taste + PQ)
 
-    [HideInInspector] public ExperimentType experimentType = ExperimentType.Color;
+    private float GetDefaultSliderValue(QuestionUI question)
+    {
+        return question.id == 1 ? NeutralVasDefaultValue : MidScaleDefaultValue;
+    }
+
+    /// <summary>Reset slider to its scale-appropriate default without marking as answered.</summary>
+    private void ResetSliderWithoutAnswer(QuestionUI question)
+    {
+        if (question.slider != null)
+            question.slider.SetValueWithoutNotify(GetDefaultSliderValue(question));
+    }
+
+    /// <summary>Add a one-time onValueChanged listener that marks the question as answered.</summary>
+    private void RegisterAnswerListener(QuestionUI question)
+    {
+        if (question.slider == null || registeredAnswerSliders.Contains(question.slider)) return;
+        int capturedId = question.id;
+        question.slider.onValueChanged.AddListener(_ => answeredQuestionIds.Add(capturedId));
+        registeredAnswerSliders.Add(question.slider);
+    }
+
+
+    [HideInInspector] public ExperimentType experimentType = ExperimentType.ColorTaste;
     [HideInInspector] public string userId = "no-data";
 
     [HideInInspector] public SmellType smellType = SmellType.Sweet;
     [HideInInspector] public TasteType tasteType = TasteType.Sweet;
     [HideInInspector] public LiquidColor liquidColor = LiquidColor.Red;
+    [HideInInspector] public string fruitType = "";
 
 
 
@@ -67,11 +105,17 @@ public class UserStudyFormManager : MonoBehaviour
 
     public void ShowTutorialFormUI()
     {
+        answeredQuestionIds.Clear();
         tutoFormUI.SetActive(true);
         foreach (var q in tutoQuestions)
         {
             q.panel.SetActive(false);
-            q.slider.value = 0.1111111f; 
+            if (q.slider != null)
+            {
+                q.slider.value = 0f;
+                int capturedId = q.id;
+                q.slider.onValueChanged.AddListener(_ => answeredQuestionIds.Add(capturedId));
+            }
         }
 
         currentPage = 0;
@@ -83,7 +127,7 @@ public class UserStudyFormManager : MonoBehaviour
     {
         if (!IsValid(tutoQuestions[currentPage])) return;
         tutoQuestions[currentPage].panel.SetActive(false);
-        tutoQuestions[currentPage].slider.value = 0.1111111f;
+        if (tutoQuestions[currentPage].slider != null) tutoQuestions[currentPage].slider.value = 0f;
         currentPage++;
         if (currentPage < tutoQuestions.Count)
         {
@@ -105,27 +149,27 @@ public class UserStudyFormManager : MonoBehaviour
 
     public void HideTutorialFormUI()
     {
+        answeredQuestionIds.Clear();
         tutoFormUI.SetActive(false);
         currentPage = -1;
         foreach (var q in tutoQuestions)
         {
             q.panel.SetActive(false);
-            q.slider.value = 0.1111111f;
+            if (q.slider != null) q.slider.value = 0f;
         }
     }
 
     public void ShowUserStudyFormUI()
     {
+        answeredQuestionIds.Clear();
         userStudyFormUI.SetActive(true);
         currentPage = 0;
-        questions1.panel.SetActive(true);
+        currentQuestions.Clear();
 
-        foreach (var q in questions345)
-        {
-            q.panel.SetActive(false);
-        }
+        // 1. Q1 Like always first
+        currentQuestions.Add(questions1);
 
-        // xáo trộn các phần tử trong question345
+        // 2. Shuffle taste questions (Fisher-Yates)
         for (int i = questions345.Count - 1; i > 0; i--)
         {
             int randomIndex = UnityEngine.Random.Range(0, i + 1);
@@ -133,6 +177,33 @@ public class UserStudyFormManager : MonoBehaviour
             questions345[i] = questions345[randomIndex];
             questions345[randomIndex] = temp;
         }
+
+        // 3. Add shuffled taste (preserve shuffle in original list for reference)
+        foreach (var q in questions345)
+        {
+            q.panel.SetActive(false);
+            ResetSliderWithoutAnswer(q);
+            currentQuestions.Add(q);
+        }
+
+        // 4. Add PQ questions in fixed order (not shuffled)
+        if (pqQuestions != null)
+        {
+            foreach (var q in pqQuestions)
+            {
+                q.panel.SetActive(false);
+                ResetSliderWithoutAnswer(q);
+                currentQuestions.Add(q);
+            }
+        }
+
+        // Track answered state via slider interaction
+        foreach (var q in currentQuestions)
+            RegisterAnswerListener(q);
+
+        // Show first question
+        currentQuestions[0].panel.SetActive(true);
+        currentQuestions[0].buttonText.text = "Tiếp tục";
     }
 
     public void HideUserStudyFormUI()
@@ -145,77 +216,56 @@ public class UserStudyFormManager : MonoBehaviour
         {
             q.panel.SetActive(false);
         }
+        if (pqQuestions != null)
+        {
+            foreach (var q in pqQuestions)
+            {
+                q.panel.SetActive(false);
+            }
+        }
 
         userStudyManager.isOpenForm = false;
     }
 
     public void NextPage()
     {
-        switch (currentPage)
+        if (currentPage < 0 || currentPage >= currentQuestions.Count) return;
+
+        QuestionUI current = currentQuestions[currentPage];
+
+        if (!IsValid(current)) return;
+
+        // Validate question id before accessing questionValues
+        if (current.id < 1 || current.id > questionValues.Count)
         {
-            case 0:
-                if (!IsValid(questions1)) return;
-                questionValues[0] = questions1.slider.value;
+            Debug.LogError($"Invalid question id {current.id} (expected 1-{questionValues.Count})");
+            return;
+        }
 
-                questions1.panel.SetActive(false);
-                questions345[0].buttonText.text = "Tiếp tục";
-                questions345[0].panel.SetActive(true);
+        // Save slider value by question id
+        questionValues[current.id - 1] = current.slider.value;
 
-                currentPage++;
-                break;
-            case 1:
-                if (!IsValid(questions345[0])) return;
-                questionValues[questions345[0].id - 1] = questions345[0].slider.value;
+        // Hide current panel
+        current.panel.SetActive(false);
+        ResetSliderWithoutAnswer(current);
 
-                questions345[0].panel.SetActive(false);
-                questions345[1].buttonText.text = "Tiếp tục";
-                questions345[1].panel.SetActive(true);
+        currentPage++;
 
-                currentPage++;
-                break;
-            case 2:
-                if (!IsValid(questions345[1])) return;
-                questionValues[questions345[1].id - 1] = questions345[1].slider.value;
-
-                questions345[1].panel.SetActive(false);
-                questions345[2].buttonText.text = "Tiếp tục";
-                questions345[2].panel.SetActive(true);
-
-                currentPage++;
-                break;
-            case 3:
-                if (!IsValid(questions345[2])) return;
-                questionValues[questions345[2].id - 1] = questions345[2].slider.value;
-
-                questions345[2].panel.SetActive(false);
-                questions345[3].buttonText.text = "Tiếp tục";
-                questions345[3].panel.SetActive(true);
-
-                currentPage++;
-                break;
-            case 4:
-                if (!IsValid(questions345[3])) return;
-                questionValues[questions345[3].id - 1] = questions345[3].slider.value;
-
-                questions345[3].panel.SetActive(false);
-                questions345[4].buttonText.text = "Gửi";
-                questions345[4].panel.SetActive(true);
-
-                currentPage++;
-                break;
-            case 5:
-                if (!IsValid(questions345[4])) return;
-                questionValues[questions345[4].id - 1] = questions345[4].slider.value;
-
-                questions345[4].panel.SetActive(false);
-                SubmitForm();
-                break;
+        if (currentPage < currentQuestions.Count)
+        {
+            QuestionUI next = currentQuestions[currentPage];
+            next.buttonText.text = (currentPage == currentQuestions.Count - 1) ? "Gửi" : "Tiếp tục";
+            next.panel.SetActive(true);
+        }
+        else
+        {
+            SubmitForm();
         }
     }
 
     private bool IsValid(QuestionUI question)
     {
-        return question.slider.value != 0.1111111f; // Kiểm tra xem giá trị của slider có khác giá trị mặc định không
+        return answeredQuestionIds.Contains(question.id); // Kiểm tra user đã kéo slider hay chưa
     }
 
     private void SubmitForm()
@@ -231,19 +281,29 @@ public class UserStudyFormManager : MonoBehaviour
         string questionsCsv = string.Join(";", questionValues);
         string filePath, csvData, csvHeader;
 
-        if (experimentType == ExperimentType.Color)
+        string pqHeader = "PQ1-Presence;PQ2-VisualEngagement;PQ3-BeingThere;PQ4-NaturalMovement;PQ5-RealWorldReflection;" +
+                          "PQ6-Predictability;PQ7-VisualInspection;PQ8-Immersion;PQ9-Adaptation;PQ10-TaskFocus";
+
+        if (experimentType == ExperimentType.ColorTaste)
         {
-            filePath = Path.Combine(userDataFolder, "user_study_color.csv");
-            csvHeader = "sep=;\nSubmitTime;UserId;ExperimentType;TasteType;LiquidColor;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami\n";
+            filePath = Path.Combine(userDataFolder, "user_study_color_taste_pq.csv");
+            csvHeader = $"sep=;\nSubmitTime;UserId;ExperimentType;TasteType;LiquidColor;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami;{pqHeader}\n";
 
             csvData = $"{timestamp};{userId};{experimentType};{tasteType};{liquidColor};{questionsCsv}\n";
         }
+        else if (experimentType == ExperimentType.VisualFruitScentPureWater)
+        {
+            filePath = Path.Combine(userDataFolder, "user_study_vfs_purewater_pq.csv");
+            csvHeader = $"sep=;\nSubmitTime;UserId;ExperimentType;FruitType;SmellType;LiquidColor;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami;{pqHeader}\n";
+
+            csvData = $"{timestamp};{userId};{experimentType};{fruitType};{smellType};{liquidColor};{questionsCsv}\n";
+        }
         else
         {
-            filePath = Path.Combine(userDataFolder, "user_study_smell.csv");
-            csvHeader = "sep=;\nSubmitTime;UserId;ExperimentType;TasteType;SmellType;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami\n";
+            filePath = Path.Combine(userDataFolder, "user_study_color_smell_purewater_pq.csv");
+            csvHeader = $"sep=;\nSubmitTime;UserId;ExperimentType;LiquidColor;SmellType;Q1-Like;Q2-Sweet;Q3-Bitter;Q4-Sour;Q5-Salty;Q6-Umami;{pqHeader}\n";
 
-            csvData = $"{timestamp};{userId};{experimentType};{tasteType};{smellType};{questionsCsv}\n";
+            csvData = $"{timestamp};{userId};{experimentType};{liquidColor};{smellType};{questionsCsv}\n";
         }
 
 
@@ -267,12 +327,17 @@ public class UserStudyFormManager : MonoBehaviour
 
     private void ResetValues()
     {
+        answeredQuestionIds.Clear();
         currentPage = -1;
+        currentQuestions.Clear();
 
-        questions1.slider.value = 0.1111111f;
+        ResetSliderWithoutAnswer(questions1);
         foreach (var q in questions345)
+            ResetSliderWithoutAnswer(q);
+        if (pqQuestions != null)
         {
-            q.slider.value = 0.1111111f;
+            foreach (var q in pqQuestions)
+                ResetSliderWithoutAnswer(q);
         }
 
         for (int i = 0; i < questionValues.Count; i++)

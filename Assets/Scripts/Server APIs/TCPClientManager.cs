@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading;
 using System.IO;
+using System.Collections.Concurrent;
 
 public class TCPClientManager : MonoBehaviour
 {
@@ -58,7 +59,7 @@ public class TCPClientManager : MonoBehaviour
 
     public Action<SmellType> OnSmellChanged;
     public Action<string> OnLiquidColorChanged;
-    public Action<string, string, string, string, string> OnUserStudyFormOpened;
+    public Action<string, string, string, string, string, string> OnUserStudyFormOpened;
     public Action OnUserStudyFormClosed;
     public Action<bool> OnVideoVisibilityChanged;
     public Action<bool> OnVideoPlayPauseChanged;
@@ -66,6 +67,16 @@ public class TCPClientManager : MonoBehaviour
     public Action OnSkipFowardVideo;
     public Action OnTutorialFormOpened;
     public Action OnTutorialFormClosed;
+    public Action<string> OnVisualFruitChanged;
+
+
+
+    public GameObject hmdTrackingMarker;
+    // Queue actions to execute on Unity main thread
+    private readonly ConcurrentQueue<Action> _mainThreadActions = new ConcurrentQueue<Action>();
+
+    // Event for external subscribers when a marker pose is updated (markerId, position, rotation)
+    public Action<int, Vector3, Quaternion> OnMarkerPoseReceived;
 
     // [Header("Debug Marker Corners")]
     // [SerializeField] private GameObject markerCorners1;
@@ -95,6 +106,19 @@ public class TCPClientManager : MonoBehaviour
             // Attempt to reconnect every 3 seconds
             _isReconnecting = true;
             _ = ReconnectAsync();
+        }
+
+        // Execute actions that must run on Unity main thread (e.g., Transform updates)
+        while (_mainThreadActions.TryDequeue(out var action))
+        {
+            try
+            {
+                action?.Invoke();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error executing main-thread action: {e.Message}");
+            }
         }
     }
 
@@ -273,8 +297,14 @@ public class TCPClientManager : MonoBehaviour
             }
             catch (OperationCanceledException)
             {
-                Debug.Log("Data receiving operation was cancelled");
-                break;
+                // Distinguish between intentional cancellation and read timeout
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    Debug.Log("Data receiving operation was cancelled");
+                    break;
+                }
+                // Timeout fired but connection is still alive — continue listening
+                continue;
             }
             catch (IOException ioEx)
             {
@@ -325,7 +355,7 @@ public class TCPClientManager : MonoBehaviour
                     string jsonString = data.Substring(startIndex, i - startIndex + 1);
                     try
                     {
-                        // Debug.Log($"Received JSON segment: {jsonString}");
+                        Debug.Log($"Received JSON segment: {jsonString}");
                         JObject jsonObject = JObject.Parse(jsonString);
                         // Xử lý từng JSON object riêng lẻ
                         ProcessSingleJsonObject(jsonObject);
@@ -381,6 +411,47 @@ public class TCPClientManager : MonoBehaviour
                 }
             }
 
+            else if (jsonObject["type"]?.ToString() == "marker_pose")
+            {
+                int markerId = jsonObject["marker_id"]?.ToObject<int>() ?? -1;
+
+                var posObj = jsonObject["position"] as JObject;
+                var rotObj = jsonObject["rotation"] as JObject;
+
+                if (posObj != null && rotObj != null && markerId >= 0)
+                {
+                    float x = posObj["x"]?.ToObject<float>() ?? 0f;
+                    float y = posObj["y"]?.ToObject<float>() ?? 0f;
+                    float z = posObj["z"]?.ToObject<float>() ?? 0f;
+
+                    // Convert from millimeters to meters (if data is in mm)
+                    Vector3 position = new Vector3(x * 0.001f, y * 0.001f, z * 0.001f);
+
+                    float rx = rotObj["x"]?.ToObject<float>() ?? 0f;
+                    float ry = rotObj["y"]?.ToObject<float>() ?? 0f;
+                    float rz = rotObj["z"]?.ToObject<float>() ?? 0f;
+                    float rw = rotObj["w"]?.ToObject<float>() ?? 1f;
+
+                    Quaternion rotation = new Quaternion(rx, ry, rz, rw);
+
+                    // Enqueue an action to run on the main thread (safe to modify transforms)
+                    _mainThreadActions.Enqueue(() =>
+                    {
+
+                        hmdTrackingMarker.transform.localPosition = position;
+                        hmdTrackingMarker.transform.localRotation = rotation;
+                        Debug.Log($"Updated marker {markerId} pose: pos={position}, rot={rotation}");
+
+                        // Notify any listeners on main thread
+                        OnMarkerPoseReceived?.Invoke(markerId, position, rotation);
+                    });
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid marker_pose message: missing position/rotation or marker_id");
+                }
+            }
+
             // // Xử lí request về User Study Form
             else if (jsonObject["type"]?.ToString() == "user_study_command")
             {
@@ -393,6 +464,13 @@ public class TCPClientManager : MonoBehaviour
                     paramsObject.TryGetValue("smell", out JToken smellTypeToken);
                     string smellType = smellTypeToken?.ToString();
                     OnSmellChanged?.Invoke((SmellType)Enum.Parse(typeof(SmellType), smellType, true));
+                }
+                else if (command == "change_visual_fruit")
+                {
+                    var paramsObject = jsonObject["params"] as JObject;
+                    paramsObject.TryGetValue("fruitType", out JToken fruitTypeToken);
+                    string fruitType = fruitTypeToken?.ToString() ?? "None";
+                    OnVisualFruitChanged?.Invoke(fruitType);
                 }
                 else if (command == "change_liquid_color")
                 {
@@ -420,7 +498,10 @@ public class TCPClientManager : MonoBehaviour
                     paramsObject.TryGetValue("liquidColor", out JToken colorToken);
                     string liquidColor = colorToken?.ToString();
 
-                    OnUserStudyFormOpened?.Invoke(userId, experimentType, tasteType, smellType, liquidColor);
+                    paramsObject.TryGetValue("fruitType", out JToken fruitTypeToken);
+                    string fruitType = fruitTypeToken?.ToString() ?? "";
+
+                    OnUserStudyFormOpened?.Invoke(userId, experimentType, tasteType, smellType, liquidColor, fruitType);
                 }
                 else if (command == "close_form")
                 {

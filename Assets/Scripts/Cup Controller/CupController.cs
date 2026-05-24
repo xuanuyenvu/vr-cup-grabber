@@ -42,6 +42,11 @@ public class CupController : MonoBehaviour
     [SerializeField] private GameObject greenLiquidVisual;
     [SerializeField] private GameObject neutralLiquidVisual;
 
+    [Header("Fruit Decor Visuals")]
+    [SerializeField] private GameObject strawberryDecor;
+    [SerializeField] private GameObject lemonDecor;
+    [SerializeField] private GameObject coffeeDecor;
+
     [Header("Transform Settings")]
     [SerializeField] private float scaleFactor = 0.01f; // mm to Unity units
 
@@ -49,6 +54,8 @@ public class CupController : MonoBehaviour
     private bool _hasNewCupData = false;
     private LiquidColor _currentLiquidColor;
     private Dictionary<LiquidColor, GameObject> _liquidObjects;
+    private Dictionary<string, GameObject> _fruitDecorObjects;
+    private string _currentFruitType = "None";
 
     public LiquidColor CurrentLiquidColor
     {
@@ -76,6 +83,15 @@ public class CupController : MonoBehaviour
             { LiquidColor.Neutral, neutralLiquidVisual }
         };
         UpdateLiquidVisual(_currentLiquidColor);
+
+        _fruitDecorObjects = new Dictionary<string, GameObject>
+        {
+            { "Strawberry", strawberryDecor },
+            { "Lemon", lemonDecor },
+            { "Coffee", coffeeDecor }
+        };
+        // Normalize: hide all fruit decor at startup
+        HideAllFruitDecor();
     }
 
     private void OnDestroy()
@@ -115,6 +131,50 @@ public class CupController : MonoBehaviour
         if (!string.IsNullOrEmpty(cd.rotation.ToString()))
         {
             cupGameObject.transform.localEulerAngles = new Vector3(0, cd.rotation, 0);
+        }
+    }
+
+    public void SetFruitDecor(string fruitType)
+    {
+        _currentFruitType = NormalizeFruitType(fruitType);
+        HideAllFruitDecor();
+
+        if (_currentFruitType != "None" && _fruitDecorObjects != null &&
+            _fruitDecorObjects.TryGetValue(_currentFruitType, out GameObject decorObject) && decorObject != null)
+        {
+            decorObject.SetActive(true);
+        }
+    }
+
+    // Normalize fruit type from server: case-insensitive, empty/null/"None" -> "None".
+    // Accepts "strawberry", "STRAWBERRY", "Strawberry" -> "Strawberry".
+    private static string NormalizeFruitType(string raw)
+    {
+        if (string.IsNullOrWhiteSpace(raw)) return "None";
+        string trimmed = raw.Trim();
+        if (string.Equals(trimmed, "None", System.StringComparison.OrdinalIgnoreCase)) return "None";
+        if (string.Equals(trimmed, "Strawberry", System.StringComparison.OrdinalIgnoreCase)) return "Strawberry";
+        if (string.Equals(trimmed, "Lemon", System.StringComparison.OrdinalIgnoreCase)) return "Lemon";
+        if (string.Equals(trimmed, "Coffee", System.StringComparison.OrdinalIgnoreCase)) return "Coffee";
+        Debug.LogWarning($"[CupController] Unknown fruitType '{raw}', treating as None.");
+        return "None";
+    }
+
+    public void HideAllFruitDecor()
+    {
+        if (_fruitDecorObjects == null) return;
+        foreach (var decor in _fruitDecorObjects.Values)
+        {
+            if (decor != null) decor.SetActive(false);
+        }
+    }
+
+    public void ShowCurrentFruitDecor()
+    {
+        if (_currentFruitType != "None" && _fruitDecorObjects != null &&
+            _fruitDecorObjects.TryGetValue(_currentFruitType, out GameObject decorObject) && decorObject != null)
+        {
+            decorObject.SetActive(true);
         }
     }
 
