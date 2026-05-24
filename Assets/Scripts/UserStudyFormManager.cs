@@ -57,7 +57,34 @@ public class UserStudyFormManager : MonoBehaviour
 
     private List<QuestionUI> currentQuestions = new List<QuestionUI>();
     private List<float> questionValues = new List<float>(new float[16]);
+    private HashSet<int> answeredQuestionIds = new HashSet<int>();
+    private HashSet<Slider> registeredAnswerSliders = new HashSet<Slider>();
     private int currentPage = -1;
+
+    // Slider default values — user must drag to activate, default sits near centre
+    private const float NeutralVasDefaultValue = 0.111f;   // Q1 -50..50 midpoint
+    private const float MidScaleDefaultValue = 50.111f;     // 0..100 scales (taste + PQ)
+
+    private float GetDefaultSliderValue(QuestionUI question)
+    {
+        return question.id == 1 ? NeutralVasDefaultValue : MidScaleDefaultValue;
+    }
+
+    /// <summary>Reset slider to its scale-appropriate default without marking as answered.</summary>
+    private void ResetSliderWithoutAnswer(QuestionUI question)
+    {
+        if (question.slider != null)
+            question.slider.SetValueWithoutNotify(GetDefaultSliderValue(question));
+    }
+
+    /// <summary>Add a one-time onValueChanged listener that marks the question as answered.</summary>
+    private void RegisterAnswerListener(QuestionUI question)
+    {
+        if (question.slider == null || registeredAnswerSliders.Contains(question.slider)) return;
+        int capturedId = question.id;
+        question.slider.onValueChanged.AddListener(_ => answeredQuestionIds.Add(capturedId));
+        registeredAnswerSliders.Add(question.slider);
+    }
 
 
     [HideInInspector] public ExperimentType experimentType = ExperimentType.ColorTaste;
@@ -78,11 +105,17 @@ public class UserStudyFormManager : MonoBehaviour
 
     public void ShowTutorialFormUI()
     {
+        answeredQuestionIds.Clear();
         tutoFormUI.SetActive(true);
         foreach (var q in tutoQuestions)
         {
             q.panel.SetActive(false);
-            q.slider.value = 0.1111111f; 
+            if (q.slider != null)
+            {
+                q.slider.value = 0f;
+                int capturedId = q.id;
+                q.slider.onValueChanged.AddListener(_ => answeredQuestionIds.Add(capturedId));
+            }
         }
 
         currentPage = 0;
@@ -94,7 +127,7 @@ public class UserStudyFormManager : MonoBehaviour
     {
         if (!IsValid(tutoQuestions[currentPage])) return;
         tutoQuestions[currentPage].panel.SetActive(false);
-        tutoQuestions[currentPage].slider.value = 0.1111111f;
+        if (tutoQuestions[currentPage].slider != null) tutoQuestions[currentPage].slider.value = 0f;
         currentPage++;
         if (currentPage < tutoQuestions.Count)
         {
@@ -116,17 +149,19 @@ public class UserStudyFormManager : MonoBehaviour
 
     public void HideTutorialFormUI()
     {
+        answeredQuestionIds.Clear();
         tutoFormUI.SetActive(false);
         currentPage = -1;
         foreach (var q in tutoQuestions)
         {
             q.panel.SetActive(false);
-            q.slider.value = 0.1111111f;
+            if (q.slider != null) q.slider.value = 0f;
         }
     }
 
     public void ShowUserStudyFormUI()
     {
+        answeredQuestionIds.Clear();
         userStudyFormUI.SetActive(true);
         currentPage = 0;
         currentQuestions.Clear();
@@ -147,7 +182,7 @@ public class UserStudyFormManager : MonoBehaviour
         foreach (var q in questions345)
         {
             q.panel.SetActive(false);
-            q.slider.value = 0.1111111f;
+            ResetSliderWithoutAnswer(q);
             currentQuestions.Add(q);
         }
 
@@ -157,10 +192,14 @@ public class UserStudyFormManager : MonoBehaviour
             foreach (var q in pqQuestions)
             {
                 q.panel.SetActive(false);
-                q.slider.value = 0.1111111f;
+                ResetSliderWithoutAnswer(q);
                 currentQuestions.Add(q);
             }
         }
+
+        // Track answered state via slider interaction
+        foreach (var q in currentQuestions)
+            RegisterAnswerListener(q);
 
         // Show first question
         currentQuestions[0].panel.SetActive(true);
@@ -208,7 +247,7 @@ public class UserStudyFormManager : MonoBehaviour
 
         // Hide current panel
         current.panel.SetActive(false);
-        current.slider.value = 0.1111111f;
+        ResetSliderWithoutAnswer(current);
 
         currentPage++;
 
@@ -226,7 +265,7 @@ public class UserStudyFormManager : MonoBehaviour
 
     private bool IsValid(QuestionUI question)
     {
-        return question.slider.value != 0.1111111f; // Kiểm tra xem giá trị của slider có khác giá trị mặc định không
+        return answeredQuestionIds.Contains(question.id); // Kiểm tra user đã kéo slider hay chưa
     }
 
     private void SubmitForm()
@@ -288,20 +327,17 @@ public class UserStudyFormManager : MonoBehaviour
 
     private void ResetValues()
     {
+        answeredQuestionIds.Clear();
         currentPage = -1;
         currentQuestions.Clear();
 
-        questions1.slider.value = 0.1111111f;
+        ResetSliderWithoutAnswer(questions1);
         foreach (var q in questions345)
-        {
-            q.slider.value = 0.1111111f;
-        }
+            ResetSliderWithoutAnswer(q);
         if (pqQuestions != null)
         {
             foreach (var q in pqQuestions)
-            {
-                q.slider.value = 0.1111111f;
-            }
+                ResetSliderWithoutAnswer(q);
         }
 
         for (int i = 0; i < questionValues.Count; i++)

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f42d8ba421389764f9454a8b4ded3884, type: 3}
+  m_Name: Marker Rig Offset Data
+  m_EditorClassIdentifier: 
+  offsetPosition: {x: -0.40804318, y: -0.49014416, z: 0.029965026}
+  offsetRotation: {x: -0.12757915, y: -0.716734, z: -0.6794985, w: -0.09109332}
+  lastCalibrationTime: 1/23/2026 6:13:51 PM
+  hasBeenCalibrated: 1

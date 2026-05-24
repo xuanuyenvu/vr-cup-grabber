@@ -70,3 +70,21 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# IDE
+.idea/
+.vscode/
+
+# Logs
+debug.log
+
+# Runtime config
+caveman.json
+
+# User test data output
+Assets/UserData/
+
+# AI agent local state (not synced)
+.beads/
+.opencode/
+AGENTS.md
